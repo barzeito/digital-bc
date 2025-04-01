@@ -1,0 +1,21 @@
+{
+    "app": {
+        "name": "digital-bc",
+        "port": 8080,
+        "protocol": "http",
+        "host": "localhost",
+        "secret": "dbc-secret",
+        "jwt": {
+            "expires": "24h",
+            "secret": "dbc-secret"
+        }
+    },
+    "mysql": {
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "database": "digital_bc",
+        "port": 3306,
+        "connectionLimit": 10
+    }
+}
