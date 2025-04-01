@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "2ae5c5cc-4c9d-4252-ba46-86c610fc4a49",
+		"name": "digital-bc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32497130"
+	},
+	"item": [
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/cards",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll SLinks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/social",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"social"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOne",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/cards/d7ecf24c-ae80-4cab-88ca-77349db39eba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cards",
+						"d7ecf24c-ae80-4cab-88ca-77349db39eba"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOne SLink",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/social/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"social",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Card",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjA1OTgyNzFmLTBjOTEtNDY3OS05NjQwLTNjMWY5MzNkNDM3ZiIsImZpcnN0TmFtZSI6IkJhciIsImxhc3ROYW1lIjoiWmVpdG9ueSIsImVtYWlsIjoiYmFyemVpdG9ueUBnbWFpbC5jb20iLCJwYXNzd29yZCI6ImExNjNkZGU0YWJjZjI3MDA3M2Q1YjhkNDFjNzNjYWM4Iiwicm9sZUlkIjoyfSwiaWF0IjoxNzE1MjAwMDU2LCJleHAiOjE3MTUyMTA4NTZ9.x9jMurvAhgioW3yh04TEtwSTRLs2-r5YXBafTSJGD84",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"company\": \"test2\",\n  \"description\": \"this is test2\",\n  \"email\": \"test@gmail.com\",\n  \"phone\": \"+1234567890\",\n  \"website\": \"https://test.com\",\n  \"address\": \"123 Silicon Valley, CA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/cards/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cards",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add SocialLink",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjA1OTgyNzFmLTBjOTEtNDY3OS05NjQwLTNjMWY5MzNkNDM3ZiIsImZpcnN0TmFtZSI6IkJhciIsImxhc3ROYW1lIjoiWmVpdG9ueSIsImVtYWlsIjoiYmFyemVpdG9ueUBnbWFpbC5jb20iLCJwYXNzd29yZCI6ImExNjNkZGU0YWJjZjI3MDA3M2Q1YjhkNDFjNzNjYWM4Iiwicm9sZUlkIjoyfSwiaWF0IjoxNzE1MjAwMDU2LCJleHAiOjE3MTUyMTA4NTZ9.x9jMurvAhgioW3yh04TEtwSTRLs2-r5YXBafTSJGD84",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"company_id\": \"74e121ec-0e96-11f0-80c6-feb49e4b3f7a\",\n    \"company\": \"Test\",\n    \"platform\": \"insws\",\n    \"url\": \"teasfsad.co.il\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/social/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"social",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Card",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/cards/d7ecf24c-ae80-4cab-88ca-77349db39eba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cards",
+						"d7ecf24c-ae80-4cab-88ca-77349db39eba"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateCard",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test12@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/cards/741d6a44-a98d-4576-958d-4aa76fd2e773",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cards",
+						"741d6a44-a98d-4576-958d-4aa76fd2e773"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Social Link",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test12@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/social/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"social",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
