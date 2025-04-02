@@ -6,8 +6,6 @@ import { OkPacketParams } from "mysql2";
 
 class BusinessCards implements Model {
 
-    //TODO: Fix created_at changing on update
-
     public async getAll(): Promise<DTO[]> {
         const cards = (await query(`
             SELECT  id,
