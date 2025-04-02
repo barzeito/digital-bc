@@ -15,7 +15,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getOne = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const card = await getModel().getOne(req.params.id);
+        const card = await getModel().getOne(req.params.company);
         if (!card) return next();
         res.json(card)
     } catch (err) {
