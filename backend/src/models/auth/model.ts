@@ -1,0 +1,12 @@
+import { promises } from 'dns';
+import DTO from './credential-dto';
+import userDTO from './user-dto';
+import CredentialsDTO from './credential-dto';
+
+export default interface Model {
+    getOne(userId: string): Promise<userDTO>;
+    signUp(user: userDTO): Promise<userDTO>;
+    signIn(credentials: CredentialsDTO): Promise<CredentialsDTO>;
+    getByEmail(email: string): Promise<userDTO | null>;
+    isAdmin(id: string): Promise<boolean>;
+}
