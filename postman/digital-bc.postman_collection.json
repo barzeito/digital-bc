@@ -105,7 +105,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"company\": \"test2\",\n  \"description\": \"this is test2\",\n  \"email\": \"test@gmail.com\",\n  \"phone\": \"+1234567890\",\n  \"website\": \"https://test.com\",\n  \"address\": \"123 Silicon Valley, CA\"\n}",
+					"raw": "{\n  \"company\": \"test2\",\n  \"description\": \"this is test2\",\n  \"email\": \"test@gmail.com\",\n  \"phone\": \"1234567890\",\n  \"website\": \"https://test.com\",\n  \"address\": \"123 Silicon Valley, CA\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -196,7 +196,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"test12@gmail.com\"\n}",
+					"raw": "{\n    \"email\": \"test4@gmail.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -244,6 +244,124 @@
 						"api",
 						"social",
 						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePassword",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/new-password/62a98347-ffe4-4069-8128-55e9e08fc392",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"new-password",
+						"62a98347-ffe4-4069-8128-55e9e08fc392"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Bar\",\n    \"lastName\": \"Zeitony\",\n    \"email\": \"barzeitony@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgotPassword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"barzeitony@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/forgot-Password/8a1c87715a6c9b7071fab0ffc1a53045",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"forgot-Password",
+						"8a1c87715a6c9b7071fab0ffc1a53045"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"barzeitony@gmail.com\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"signin"
 					]
 				}
 			},
