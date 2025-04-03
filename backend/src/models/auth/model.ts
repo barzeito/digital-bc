@@ -6,7 +6,10 @@ import CredentialsDTO from './credential-dto';
 export default interface Model {
     getOne(userId: string): Promise<userDTO>;
     signUp(user: userDTO): Promise<userDTO>;
-    signIn(credentials: CredentialsDTO): Promise<CredentialsDTO>;
+    signIn(credentials: CredentialsDTO): Promise<userDTO>;
     getByEmail(email: string): Promise<userDTO | null>;
     isAdmin(id: string): Promise<boolean>;
+    updatePassword(user: userDTO): Promise<DTO>;
+    forgotPassword(user: userDTO): Promise<DTO>;
+
 }

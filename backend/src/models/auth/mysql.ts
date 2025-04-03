@@ -4,9 +4,11 @@ import { v4 } from "uuid";
 import { OkPacketParams } from "mysql2";
 import userDTO, { Roles } from "./user-dto";
 import CredentialsDTO from "./credential-dto";
-import generateRandomPassword from "../../../passwordGenerator";
+import generateRandomPassword from "../../utils/passwordGenerator";
 import { hashPassword } from "../../utils/crypto";
 import config from "config";
+import { sendResetEmail, sendWelcomeEmail } from "../../utils/emailService";
+import crypto from "crypto";
 class Auth implements Model {
 
     // public async getAll(): Promise<DTO[]> {
@@ -28,7 +30,8 @@ class Auth implements Model {
                     lastName,
                     email,
                     password,
-                    roleId
+                    roleId,
+                    isTemporaryPassword
             FROM    users  
             WHERE   userId = ?
         `, [userId]))[0];
@@ -42,14 +45,15 @@ class Auth implements Model {
         const tempPassword = generateRandomPassword(10, true);
 
         const result: OkPacketParams = await query(`
-            INSERT INTO users(userId, firstName, lastName, email, password, roleId)
-            VALUES(?, ?, ?, ?, ?, ?)
-        `, [userId, firstName, lastName, email, hashPassword(tempPassword, config.get<string>('app.secret')), Roles.USER]);
-        console.log(tempPassword);
+            INSERT INTO users(userId, firstName, lastName, email, password, roleId, isTemporaryPassword)
+            VALUES(?, ?, ?, ?, ?, ?,?)
+        `, [userId, firstName, lastName, email, hashPassword(tempPassword, config.get<string>('app.secret')), Roles.USER, true]);
+        console.log(`${firstName} ${lastName} temporary password is: ${tempPassword}`);
+        await sendWelcomeEmail(email, firstName, tempPassword)
         return this.getOne(userId);
     }
 
-    public async signIn(credentials: CredentialsDTO): Promise<userDTO> {
+    public async signIn(credentials: CredentialsDTO): Promise<userDTO | null> {
         const { email, password } = credentials;
         const user = (await query(`
             SELECT  userId,
@@ -57,14 +61,48 @@ class Auth implements Model {
                     lastName,
                     email,
                     password,
-                    roleId
+                    roleId,
+                    isTemporaryPassword
             FROM    users  
             WHERE   email = ?
             AND     password = ?
             `, [email, hashPassword(password, config.get<string>('app.secret'))]))[0];
-        return user;
+        console.log("User from DB (signIn):", user); // Debugging
+        return user || null;
     }
 
+    public async updatePassword(user: userDTO): Promise<userDTO> {
+        const { userId, password } = user;
+
+        await query(`
+            UPDATE users
+            SET password = ?,
+                isTemporaryPassword = ?,
+                resetPasswordToken = NULL,
+                resetPasswordExpires = NULL
+            WHERE userId = ?
+        `, [hashPassword(password, config.get<string>('app.secret')), 0, userId]);
+        console.log(`User updated password is ${password}`)
+        return this.getOne(userId);
+    }
+
+    public async forgotPassword(user: userDTO): Promise<userDTO> {
+        const { userId, email } = user;
+        const passwordResetToken = crypto.randomBytes(32).toString("hex");
+        const tokenExpire = new Date(Date.now() + 15 * 60 * 1000)
+
+        await query(`
+            UPDATE users
+            SET resetPasswordToken = ?,
+                resetPasswordExpires = ?
+            WHERE userId = ?
+        `, [passwordResetToken, tokenExpire, userId]);
+
+        const resetLink = `https://example.com/reset-password?token=${passwordResetToken}`;
+        await sendResetEmail(email, resetLink);
+
+        return this.getOne(userId);
+    }
 
     public async getByEmail(email: string): Promise<userDTO | null> {
         const user = (await query(`
