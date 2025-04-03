@@ -4,7 +4,9 @@ import { v4 } from "uuid";
 import { OkPacketParams } from "mysql2";
 import userDTO, { Roles } from "./user-dto";
 import CredentialsDTO from "./credential-dto";
-
+import generateRandomPassword from "../../../passwordGenerator";
+import { hashPassword } from "../../utils/crypto";
+import config from "config";
 class Auth implements Model {
 
     // public async getAll(): Promise<DTO[]> {
@@ -34,13 +36,16 @@ class Auth implements Model {
     }
 
     public async signUp(user: userDTO): Promise<userDTO> {
-        const { firstName, lastName, email, password } = user;
+        const { firstName, lastName, email } = user;
         const userId = v4();
+
+        const tempPassword = generateRandomPassword(10, true);
 
         const result: OkPacketParams = await query(`
             INSERT INTO users(userId, firstName, lastName, email, password, roleId)
             VALUES(?, ?, ?, ?, ?, ?)
-        `, [userId, firstName, lastName, email, password, Roles.USER]);
+        `, [userId, firstName, lastName, email, hashPassword(tempPassword, config.get<string>('app.secret')), Roles.USER]);
+        console.log(tempPassword);
         return this.getOne(userId);
     }
 
@@ -56,7 +61,7 @@ class Auth implements Model {
             FROM    users  
             WHERE   email = ?
             AND     password = ?
-            `, [email, password]))[0];
+            `, [email, hashPassword(password, config.get<string>('app.secret'))]))[0];
         return user;
     }
 
