@@ -43,10 +43,10 @@ class BusinessCards implements Model {
     public async add(card: DTO): Promise<DTO> {
         const { company, description, email, phone, website, address, created_at, updated_at } = card;
         const id = v4();
-        const existingCard = await this.getOne(company);
-        if (existingCard) {
-            throw new Error('Company name already exists.');
-        }
+        // const existingCard = await this.getOne(company);
+        // if (existingCard) {
+        //     throw new Error('Company name already exists.');
+        // }
         const addCard: OkPacketParams = await query(`
             INSERT INTO business_cards(id, company, description, email, phone, website, address, created_at, updated_at)
             VALUES(?, ?, ?, ?, ?, ?, ?, ? ,?)

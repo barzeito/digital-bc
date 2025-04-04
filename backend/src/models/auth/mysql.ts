@@ -4,11 +4,11 @@ import { v4 } from "uuid";
 import { OkPacketParams } from "mysql2";
 import userDTO, { Roles } from "./user-dto";
 import CredentialsDTO from "./credential-dto";
-import generateRandomPassword from "../../utils/passwordGenerator";
 import { hashPassword } from "../../utils/crypto";
 import config from "config";
 import { sendResetEmail, sendWelcomeEmail } from "../../utils/emailService";
 import crypto from "crypto";
+import generateRandomPassword from "../../utils/passwordGenerator";
 class Auth implements Model {
 
     // public async getAll(): Promise<DTO[]> {

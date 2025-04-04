@@ -1,15 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import createHttpError, { Forbidden, Unauthorized } from "http-errors";
 import { ReasonPhrases } from "http-status-codes";
-import userDTO, { Roles } from "../models/auth/user-dto";
-
-declare global {
-    namespace Express {
-        export interface Request {
-            user: userDTO
-        }
-    }
-}
+import { Roles } from "../models/auth/user-dto";
 
 export default function enforceAdmin(req: Request, res: Response, next: NextFunction) {
     if (!req.user) return next(createHttpError(Unauthorized(ReasonPhrases.UNAUTHORIZED)));

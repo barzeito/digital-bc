@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodes, ReasonPhrases, OK } from "http-status-codes";
 import createHttpError, { BadRequest, NotFound, Unauthorized } from "http-errors";
 import getModel from "../../models/auth/factory";
+import { generateJWT } from "../../utils/crypto";
+import config from 'config';
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -10,7 +12,8 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
             return next(createHttpError(BadRequest('User with this email is already exist')));
         }
         const user = await getModel().signUp(req.body);
-        res.status(StatusCodes.CREATED).json(user)
+        const jwt = generateJWT(user, config.get('app.jwt.secret'), config.get('app.jwt.expires'))
+        res.status(StatusCodes.CREATED).json({ user, jwt })
     } catch (err) {
         return next(createHttpError(Unauthorized(ReasonPhrases.UNAUTHORIZED)));
     }
@@ -23,7 +26,8 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
         if (user.isTemporaryPassword) {
             return next(createHttpError(Unauthorized('Temporary password detected. Please change your password.')));
         }
-        res.json(user)
+        const jwt = generateJWT(user, config.get('app.jwt.secret'), config.get('app.jwt.expires'))
+        res.json(jwt)
     } catch (err) {
         return next(createHttpError(Unauthorized(ReasonPhrases.UNAUTHORIZED)));
     }
@@ -46,14 +50,9 @@ export const patchPassword = async (req: Request, res: Response, next: NextFunct
 export const forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email } = req.body;
-
-        // Check if user exists
         const user = await getModel().getByEmail(email);
         if (!user) return next(createHttpError(NotFound("User with this email not found")));
-
-        // Generate reset token and send email
         await getModel().forgotPassword(user);
-
         res.status(StatusCodes.OK).json({ message: "Password reset email sent successfully" });
     } catch (err) {
         next(err);

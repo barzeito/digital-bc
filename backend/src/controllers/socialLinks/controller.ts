@@ -32,7 +32,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export const deleteCard = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteSocial = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const isDeleted = await getModel().deleteSocial(req.params.id)
         if (!isDeleted) return next(createHttpError(NotFound(`SocialLink with id ${req.params.id} is not found!`)));

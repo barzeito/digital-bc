@@ -6,10 +6,12 @@ import { notFound } from "./middlewares/not-found";
 import { errorHandler } from "./middlewares/error-handler";
 import cors from 'cors';
 import stripTags from "./middlewares/strip-tags";
+import authentication from "./middlewares/authentication";
 
 const server = express();
 server.use(cors());
 server.use(express.json());
+server.use(authentication);
 server.use(stripTags);
 
 server.use('/api', authRouter)

@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import getModel from "../../models/businessCards/factory";
+import getAuthModel from "../../models/auth/factory";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
-import config from 'config';
-import createHttpError, { NotFound, Unauthorized } from "http-errors";
+import createHttpError, { BadRequest, NotFound, Unauthorized } from "http-errors";
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -25,8 +25,17 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 
 export const add = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const existingCard = await getModel().getOne(req.body.company);
+        if (existingCard) {
+            throw new Error('Company name already exists.');
+        }
+        const existingUser = await getAuthModel().getByEmail(req.body.email)
+        if (existingUser) {
+            return next(createHttpError(BadRequest('User with this email is already exist')));
+        }
         const card = await getModel().add(req.body);
-        res.status(StatusCodes.CREATED).json(card)
+        const user = await getAuthModel().signUp(req.body);
+        res.status(StatusCodes.CREATED).json({ card, user })
     } catch (err) {
         next(err)
     }
