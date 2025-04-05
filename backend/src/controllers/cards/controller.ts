@@ -68,8 +68,8 @@ export const patch = async (req: Request, res: Response, next: NextFunction) => 
         const id = req.params.id;
         const existingCard = await getModel().getOne(id);
         const updatedCard = { ...existingCard, ...req.body };
-        await getModel().update(updatedCard);
-        res.status(StatusCodes.OK).json(updatedCard)
+        const card = await getModel().update(updatedCard);
+        res.status(StatusCodes.OK).json(card)
     } catch (err) {
         next(err)
     }

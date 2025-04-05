@@ -18,7 +18,7 @@ class BusinessCards implements Model {
                     created_at,
                     updated_at
             FROM    business_cards  
-            ORDER BY created_at ASC
+            ORDER BY company ASC
         `,));
         return cards;
     }
@@ -43,10 +43,6 @@ class BusinessCards implements Model {
     public async add(card: DTO): Promise<DTO> {
         const { company, description, email, phone, website, address, created_at, updated_at } = card;
         const id = v4();
-        // const existingCard = await this.getOne(company);
-        // if (existingCard) {
-        //     throw new Error('Company name already exists.');
-        // }
         const addCard: OkPacketParams = await query(`
             INSERT INTO business_cards(id, company, description, email, phone, website, address, created_at, updated_at)
             VALUES(?, ?, ?, ?, ?, ?, ?, ? ,?)
@@ -66,15 +62,15 @@ class BusinessCards implements Model {
         const { id, company, description, email, phone, website, address } = card;
         const updated_at = new Date().toISOString().slice(0, 19).replace("T", " ");
         await query(`
-                UPDATE business_cards
-                SET    company = ?,
+                UPDATE  business_cards
+                SET     company = ?,
                         description = ?,
                         email = ?,
                         phone = ?,
                         website = ?,
                         address = ?,
                         updated_at = ?
-                WHERE  id = ?
+                WHERE   id = ?
             `, [company, description, email, phone, website, address, updated_at, id]);
         return this.getOne(id);
     }

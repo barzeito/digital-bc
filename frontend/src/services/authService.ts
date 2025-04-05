@@ -6,7 +6,6 @@ import { AuthAction, AuthActionType, authStore } from "../redux/authState";
 class AuthService {
     public async signIn(signIn: signInModel): Promise<string> {
         const response = await axios.post<{ jwt: string }>(appConfig.signInUrl, signIn);
-        console.log("JWT Response:", response.data);
         const token = response.data.jwt;
         const action: AuthAction = {
             type: AuthActionType.signIn,
@@ -25,5 +24,5 @@ class AuthService {
     }
 }
 
-const authService = new AuthService;
+const authService = new AuthService();
 export default authService;

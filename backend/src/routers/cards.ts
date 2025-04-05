@@ -12,5 +12,5 @@ router.get('/', getAll);
 router.get('/:company', getOne);
 router.post('/', enforceAdmin, validate(addCardValidator), add);
 router.delete('/:id', enforceAdmin, deleteCard);
-router.patch('/:id', enforceAuth, validate(patchCardValidator), patch);
+router.patch('/:id', enforceAuth, patch);
 export default router;

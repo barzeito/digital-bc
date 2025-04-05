@@ -5,6 +5,16 @@ body,
     padding: 0;
     height: 100%;
     text-align: center;
+    background-color: var(--Background-color);
+}
+
+:root {
+    --Primary-Color: #F8F9FD;
+    --Secondary-Color: #23C55E;
+    --Tertiary-Color: #171D29;
+    --Background-color: #FCFCFC;
+    --Black-Text-Color: #2C2D33;
+    --White-Text-Color: #F4F5F6;
 }
 
 @-webkit-keyframes notyf-fadeinup {
