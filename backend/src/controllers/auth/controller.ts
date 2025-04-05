@@ -27,7 +27,7 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
             return next(createHttpError(Unauthorized('Temporary password detected. Please change your password.')));
         }
         const jwt = generateJWT(user, config.get('app.jwt.secret'), config.get('app.jwt.expires'))
-        res.json(jwt)
+        res.json({ jwt })
     } catch (err) {
         return next(createHttpError(Unauthorized(ReasonPhrases.UNAUTHORIZED)));
     }
