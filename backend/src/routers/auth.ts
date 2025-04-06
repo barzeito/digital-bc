@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/signup', validate(signUpValidator), signUp);
 router.post('/signin', validate(signInValidator), signIn);
-router.patch('/new-password/:id', validate(updatePasswordValidator), patchPassword);
+router.patch('/change-password/:id', validate(updatePasswordValidator), patchPassword);
 router.post('/forgot-Password/:id', validate(forgotPasswordValidator), forgotPassword);
 router.get('/role/:id', isAdmin);
 

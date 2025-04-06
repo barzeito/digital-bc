@@ -2,6 +2,7 @@ class AppConfig {
     public apiBaseUrl = 'http://localhost:8080';
     public cardsUrl = `${this.apiBaseUrl}/api/cards`;
     public signInUrl = `${this.apiBaseUrl}/api/signin`;
+    public changePasswordUrl = `${this.apiBaseUrl}/api/change-password`;
     public isAdminUrl = `${this.apiBaseUrl}/api/role`;
     public successNotificationDuration = 2000;
     public errorNotificationDuration = 6000;

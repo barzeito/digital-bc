@@ -3,8 +3,11 @@ import { createStore } from "redux";
 
 export class AuthState {
     public token: string = '';
+    public user: any = null;
     public constructor() {
         this.token = localStorage.getItem('dbcToken') || '';
+        const userStr = localStorage.getItem('dbcUser');
+        this.user = userStr ? JSON.parse(userStr) : null;
     }
 }
 
@@ -24,8 +27,9 @@ const isTokenExpired = (token: string): boolean => {
 export type AuthActionPayload = string | null;
 export interface AuthAction {
     type: AuthActionType,
-    payload: AuthActionPayload
+    payload: string | null | { token: string, user: any }
 }
+
 
 export function authReducer(currentState = new AuthState(), action: AuthAction): AuthState {
     const newState = { ...currentState }
@@ -33,13 +37,19 @@ export function authReducer(currentState = new AuthState(), action: AuthAction):
     switch (action.type) {
         // case AuthActionType.signUp:
         case AuthActionType.signIn:
-            newState.token = action.payload as string;
-            localStorage.setItem('dbcToken', newState.token);
+            if (typeof action.payload === 'object' && action.payload !== null) {
+                newState.token = action.payload.token;
+                newState.user = action.payload.user;
+                localStorage.setItem('dbcToken', newState.token);
+                localStorage.setItem('dbcUser', JSON.stringify(newState.user));
+            }
             break;
         case AuthActionType.logOut:
         case AuthActionType.tokenExpired:
             newState.token = '';
+            newState.user = null;
             localStorage.removeItem('dbcToken');
+            localStorage.removeItem('dbcUser');
     }
     return newState;
 }

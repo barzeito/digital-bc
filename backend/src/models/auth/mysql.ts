@@ -120,11 +120,11 @@ class Auth implements Model {
 
     public async isAdmin(userId: string): Promise<boolean> {
         const user = (await query(`
-            SELECT  roleId,
+            SELECT  roleId
             FROM    users  
             WHERE   userId = ?
-            `, [userId]));
-        return user;
+            `, [userId]))[0];
+        return user?.roleId === 2;
     }
 }
 

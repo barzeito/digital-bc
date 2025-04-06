@@ -1,4 +1,4 @@
-import AuthMenu from "../../authMenu/AuthMenu";
+import AuthMenu from "../../auth/authMenu/AuthMenu";
 import "./Header.css";
 
 function Header(): JSX.Element {

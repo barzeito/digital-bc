@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./AuthMenu.css";
 import { NavLink } from "react-router-dom";
-import { authStore } from "../../redux/authState";
 import { jwtDecode } from "jwt-decode";
-import authService from "../../services/authService";
-import notify from "../../services/Notify";
+import { authStore } from "../../../redux/authState";
+import authService from "../../../services/authService";
+import notify from "../../../services/Notify";
 
 function AuthMenu(): JSX.Element {
 

@@ -23,11 +23,17 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
     try {
         const user = await getModel().signIn(req.body);
         if (!user) return next(createHttpError(Unauthorized(`Couldn't find username or password`)));
-        if (user.isTemporaryPassword) {
-            return next(createHttpError(Unauthorized('Temporary password detected. Please change your password.')));
-        }
         const jwt = generateJWT(user, config.get('app.jwt.secret'), config.get('app.jwt.expires'))
-        res.json({ jwt })
+        const response = {
+            jwt,
+            user,
+            isTemporaryPassword: user.isTemporaryPassword
+        };
+        if (user.isTemporaryPassword) {
+            response['message'] = 'Temporary password detected. Please change your password.';
+        }
+
+        res.json(response);
     } catch (err) {
         return next(createHttpError(Unauthorized(ReasonPhrases.UNAUTHORIZED)));
     }
@@ -64,6 +70,7 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
         const user = await getModel().isAdmin(req.params.id);
         res.json(user);
     } catch (err) {
+        console.error('Error checking admin status:', err);
         next(err)
     }
 }

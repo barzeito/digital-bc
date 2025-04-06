@@ -24,7 +24,7 @@ function CardDisplay(): JSX.Element {
                 })
                 .catch(error => notify.error(error))
         }
-    }, [company])
+    }, [company,navigate])
 
     return (
         <div className="CardDisplay">
