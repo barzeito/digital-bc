@@ -3,11 +3,10 @@ import signInModel from "../../models/signInModel";
 import authService from "../../services/authService";
 import notify from "../../services/Notify";
 import "./SignIn.css";
-import { useEffect } from "react";
-import { authStore } from "../../redux/authState";
 import { useForm } from "react-hook-form";
 
 function SignIn(): JSX.Element {
+
     const { register, handleSubmit, formState } = useForm<signInModel>();
     const navigate = useNavigate();
 
@@ -15,18 +14,12 @@ function SignIn(): JSX.Element {
         try {
             await authService.signIn(signInModel);
             notify.success('logged in')
-            navigate('/home');
+            navigate('/')
         } catch (error) {
             notify.error(error);
         }
     }
 
-    useEffect(() => {
-        const token = authStore.getState().token;
-        if (token) {
-            navigate('/home');
-        }
-    })
 
     return (
         <div className="SignIn">

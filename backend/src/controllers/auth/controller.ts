@@ -57,4 +57,13 @@ export const forgotPassword = async (req: Request, res: Response, next: NextFunc
     } catch (err) {
         next(err);
     }
-};
+}
+
+export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await getModel().isAdmin(req.params.id);
+        res.json(user);
+    } catch (err) {
+        next(err)
+    }
+}

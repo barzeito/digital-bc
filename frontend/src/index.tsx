@@ -17,6 +17,7 @@ root.render(
         <Helmet>
             <meta charSet="utf-8" />
             <title>Digital Business Card</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
         </Helmet>
         <Layout />
     </BrowserRouter >

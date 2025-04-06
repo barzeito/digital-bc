@@ -22,6 +22,16 @@ class AuthService {
         }
         authStore.dispatch(action);
     }
+    
+    public async isAdmin(id: string): Promise<boolean> {
+        try {
+            const response = await axios.get(appConfig.isAdminUrl + `/${id}`);
+            const isAdmin = response.data === true;
+            return isAdmin;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 const authService = new AuthService();

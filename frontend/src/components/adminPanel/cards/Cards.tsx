@@ -1,15 +1,35 @@
+import { useState } from "react";
+import "./Cards.css";
+import cardsService from "../../../services/cardsService";
+import notify from "../../../services/Notify";
 import CardModel from "../../../models/cardModel";
 import formatDate from "../../../utils/formateDate";
-import "./Cards.css";
+import { NavLink } from "react-router-dom";
+import AdminMenu from "../AdminMenu/AdminMenu";
 
 interface cardsProps {
     card: CardModel;
 }
-
 function Cards(props: cardsProps): JSX.Element {
+
+    const cardId = props.card.id;
+    const [showDelete, setShowDelete] = useState(false);
+
+    async function deleteCard(): Promise<void> {
+        try {
+            if (cardId) {
+                await cardsService.deleteCard(cardId);
+                notify.success('Card deleted successfully');
+            }
+        } catch (error) {
+            notify.error(error);
+        }
+        setShowDelete(false);
+    }
 
     return (
         <div className="Cards">
+            <AdminMenu />
             <div className="card-header">
                 <div className="header-info">
                     <h2 className="company-name">{props.card.company}</h2>
@@ -31,10 +51,22 @@ function Cards(props: cardsProps): JSX.Element {
             </div>
 
             <div className="card-footer">
-                <button className="view-btn">View</button>
+                <NavLink to={`/cards/${props.card.company}`} className="view-btn">View</NavLink>
                 <button className="edit-btn">Edit</button>
-                <button className="delete-btn">Delete</button>
+                <button className="delete-btn" onClick={() => setShowDelete(true)}>Delete</button>
             </div>
+            {showDelete && (
+                <div className="DeleteContainer">
+                    <div className="Delete-PopUp">
+                        <span>Delete Card</span>
+                        <p>Are you sure you want to delete this card?</p>
+                        <div className="confirm-btn">
+                            <button onClick={deleteCard}>Delete</button>
+                            <button onClick={() => setShowDelete(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

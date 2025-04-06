@@ -1,3 +1,45 @@
 .AdminMenu {
-	
+    background-color: var(--Tertiary-Color);
+    color: var(--White-Text-Color);
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.UserHello {
+    margin-right: 20px;
+}
+
+.User {
+    display: flex;
+    flex-direction: row;
+}
+
+.NavCard {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: var(--White-Text-Color);
+    margin-right: 20px;
+}
+
+.NavCard:hover {
+    background-color: var(--Black-Text-Color);
+    border-radius: 10px;
+}
+
+.NavIcon {
+    margin-right: 10px;
+}
+
+.NavText {
+    font-size: 16px;
 }

@@ -24,9 +24,18 @@ class CardsService {
         if (!card) {
             await this.getAll();
             cards = CardsStore.getState().card;
-            card = cards.find(c => c.id == id);
+            card = cards.find(c => c.id === id);
         }
         return card;
+    }
+
+    public async deleteCard(id: string): Promise<void> {
+        await axios.delete(appConfig.cardsUrl + `/${id}`);
+        const action: CardsAction = {
+            type: CardsActionType.deleteCard,
+            payload: id
+        }
+        CardsStore.dispatch(action);
     }
 
     public async getByName(name: string): Promise<CardModel | undefined> {

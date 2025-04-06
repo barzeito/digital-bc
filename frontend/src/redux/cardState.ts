@@ -1,4 +1,3 @@
-import { jwtDecode } from "jwt-decode";
 import { createStore } from "redux";
 import CardModel from "../models/cardModel";
 

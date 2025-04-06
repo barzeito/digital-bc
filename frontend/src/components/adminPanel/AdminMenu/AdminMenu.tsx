@@ -46,8 +46,22 @@ function AdminMenu(): JSX.Element {
             </div>
             {user && (
                 <div className="User">
-                    <NavLink to="/"><div>Home</div></NavLink>
-                    <NavLink to="/home" onClick={() => logOut()}><div>Logout</div></NavLink>
+                    <NavLink to="/panel/admin" className="NavCard">
+                        <div className="NavIcon"><i className="fas fa-home"></i></div>
+                        <div className="NavText">Home</div>
+                    </NavLink>
+                    <NavLink to="/panel/admin/cards" className="NavCard">
+                        <div className="NavIcon"><i className="fas fa-address-card"></i></div>
+                        <div className="NavText">Cards</div>
+                    </NavLink>
+                    <NavLink to="/panel/admin/users" className="NavCard">
+                        <div className="NavIcon"><i className="fas fa-users"></i></div>
+                        <div className="NavText">Users</div>
+                    </NavLink>
+                    <NavLink to="/home" onClick={() => logOut()} className="NavCard">
+                        <div className="NavIcon"><i className="fas fa-sign-out-alt"></i></div>
+                        <div className="NavText">Logout</div>
+                    </NavLink>
                 </div>
             )}
         </div>
