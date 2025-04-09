@@ -6,6 +6,7 @@ import notify from "../../../services/Notify";
 import { CardsStore } from "../../../redux/cardState";
 import Cards from "../cards/Cards";
 import { useNavigate } from "react-router-dom";
+import AdminMenu from "../AdminMenu/AdminMenu";
 
 function CardList(): JSX.Element {
 
@@ -13,10 +14,6 @@ function CardList(): JSX.Element {
     const navigate = useNavigate();
 
     useEffect(() => {
-
-        if (!localStorage.getItem('dbcToken' || undefined || null)) {
-            navigate('/');
-        }
         cardsService.getAll()
             .then(cardsFromServer => setCards(cardsFromServer))
             .catch(error => notify.error(error));
@@ -29,7 +26,10 @@ function CardList(): JSX.Element {
 
     return (
         <div className="CardList">
-            {cards.map(c => <Cards key={c.id} card={c} />)}
+            <AdminMenu />
+            <div className="DisplayCards">
+                {cards.map(c => <Cards key={c.id} card={c} />)}
+            </div>
         </div>
     );
 }

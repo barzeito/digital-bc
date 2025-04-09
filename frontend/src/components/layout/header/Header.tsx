@@ -1,10 +1,8 @@
-import AuthMenu from "../../auth/authMenu/AuthMenu";
-import "./Header.css";
+import './Header.css';
 
 function Header(): JSX.Element {
     return (
-        <div className="Header">
-            <AuthMenu />
+        <div className='Header'>
         </div>
     );
 }

@@ -11,9 +11,10 @@
     left: 0;
     width: 100%;
     z-index: 1;
+    font-size: 20px;
 }
 
-.UserHello {
+.UserAdmin {
     margin-right: 20px;
 }
 
@@ -28,7 +29,8 @@
     padding: 10px;
     text-decoration: none;
     color: var(--White-Text-Color);
-    margin-right: 20px;
+    margin-left: 20px;
+    gap: 2px;
 }
 
 .NavCard:hover {
@@ -37,7 +39,7 @@
 }
 
 .NavIcon {
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .NavText {

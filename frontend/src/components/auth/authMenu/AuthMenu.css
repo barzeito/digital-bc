@@ -1,3 +1,75 @@
 .AuthMenu {
-	
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: var(--Tertiary-Color);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--Secondary-Color);
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: var(--White-Text-Color);
+    transition: transform 0.2s ease;
+    display: inline-block;
+    font-size: 20px;
+}
+
+.nav a:hover {
+    color: var(--Secondary-Color);
+    transform: scale(1.2);
+}
+
+.UserActions {
+    display: flex;
+    align-items: center;
+    color: var(--White-Text-Color);
+    font-size: 18px;
+}
+
+.HelloUser {
+    margin-right: 20px;
+}
+
+.NavLogged div {
+    margin-right: 20px;
+}
+
+.NavLogin {
+    margin-left: 5px;
+}
+
+.UserLogin {
+    display: flex;
+    gap: 2px;
+}
+
+.NavLoginIcon {
+    margin-left: 5px;
+}
+
+.NavLogged .action,
+.NavLogin {
+    text-decoration: none;
+    color: var(--White-Text-Color);
+
+}
+
+.NavLogged .action:hover,
+.NavLogin:hover,
+.UserLogin:hover {
+    color: var(--Secondary-Color);
 }

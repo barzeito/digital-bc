@@ -29,40 +29,39 @@ function Cards(props: cardsProps): JSX.Element {
 
     return (
         <div className="Cards">
-            <AdminMenu />
             <div className="card-header">
                 <div className="header-info">
                     <h2 className="company-name">{props.card.company}</h2>
                     <p className="description">{props.card.description}</p>
                 </div>
                 <div className="times">
-                    <p><strong>Created:</strong> {props.card.created_at && formatDate(props.card.created_at)}</p>
-                    <p><strong>Updated:</strong> {props.card.updated_at && formatDate(props.card.updated_at)}</p>
+                    <p><strong>נוצר בתאריך:</strong> {props.card.created_at && formatDate(props.card.created_at)}</p>
+                    <p><strong>עדכון אחרון:</strong> {props.card.updated_at && formatDate(props.card.updated_at)}</p>
                 </div>
             </div>
 
             <div className="card-body">
                 <div className="card-info">
-                    <p><strong>Email:</strong> {props.card.email}</p>
-                    <p><strong>Phone:</strong> {props.card.phone}</p>
-                    <p><strong>Website:</strong> <a href={props.card.website} target="_blank" rel="noopener noreferrer">{props.card.website}</a></p>
-                    <p><strong>Address:</strong> {props.card.address}</p>
+                    <p><strong>אימייל:</strong> {props.card.email}</p>
+                    <p><strong>טלפון:</strong> {props.card.phone}</p>
+                    <p><strong>אתר:</strong> <a href={props.card.website} target="_blank" rel="noopener noreferrer">{props.card.website}</a></p>
+                    <p><strong>כתובת:</strong> {props.card.address}</p>
                 </div>
             </div>
 
             <div className="card-footer">
-                <NavLink to={`/cards/${props.card.company}`} className="view-btn">View</NavLink>
-                <button className="edit-btn">Edit</button>
-                <button className="delete-btn" onClick={() => setShowDelete(true)}>Delete</button>
+                <NavLink to={`/cards/${props.card.company}`} className="view-btn">צפייה</NavLink>
+                <button className="edit-btn">עריכה</button>
+                <button className="delete-btn" onClick={() => setShowDelete(true)}>מחיקה</button>
             </div>
             {showDelete && (
                 <div className="DeleteContainer">
                     <div className="Delete-PopUp">
-                        <span>Delete Card</span>
-                        <p>Are you sure you want to delete this card?</p>
+                        <span>מוחק את {props.card.company}</span>
+                        <p>האם אתה בטוח שברצונך למחוק את {props.card.company}?</p>
                         <div className="confirm-btn">
-                            <button onClick={deleteCard}>Delete</button>
-                            <button onClick={() => setShowDelete(false)}>Cancel</button>
+                            <button onClick={deleteCard}>מחיקה</button>
+                            <button onClick={() => setShowDelete(false)}>ביטול</button>
                         </div>
                     </div>
                 </div>

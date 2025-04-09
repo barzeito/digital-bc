@@ -41,26 +41,26 @@ function AdminMenu(): JSX.Element {
 
     return (
         <div className="AdminMenu">
-            <div className="UserHello">
-                {user && <span className="Title">Hello, {user.firstName} {user.lastName}</span>}
+            <div className="UserAdmin">
+                {user && <span className="Title">שלום, {user.firstName} {user.lastName}</span>}
             </div>
             {user && (
                 <div className="User">
                     <NavLink to="/panel/admin" className="NavCard">
                         <div className="NavIcon"><i className="fas fa-home"></i></div>
-                        <div className="NavText">Home</div>
+                        <div className="NavText">בית</div>
                     </NavLink>
                     <NavLink to="/panel/admin/cards" className="NavCard">
                         <div className="NavIcon"><i className="fas fa-address-card"></i></div>
-                        <div className="NavText">Cards</div>
+                        <div className="NavText">כרטיסים</div>
                     </NavLink>
                     <NavLink to="/panel/admin/users" className="NavCard">
                         <div className="NavIcon"><i className="fas fa-users"></i></div>
-                        <div className="NavText">Users</div>
+                        <div className="NavText">משתמשים</div>
                     </NavLink>
                     <NavLink to="/home" onClick={() => logOut()} className="NavCard">
                         <div className="NavIcon"><i className="fas fa-sign-out-alt"></i></div>
-                        <div className="NavText">Logout</div>
+                        <div className="NavText">התנתק</div>
                     </NavLink>
                 </div>
             )}
