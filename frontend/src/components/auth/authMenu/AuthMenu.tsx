@@ -15,6 +15,7 @@ function AuthMenu(): JSX.Element {
     }
 
     const [user, setUser] = useState<User>();
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
     useEffect(() => {
         const token = authStore.getState().token;
@@ -33,6 +34,19 @@ function AuthMenu(): JSX.Element {
         });
         return unsubscribe;
     }, [])
+
+    useEffect(() => {
+        async function ifAdmin() {
+            if (user) {
+                try {
+                    const userAdmin = await authService.isAdmin(user.userId);
+                    setIsAdmin(userAdmin);
+                } catch (error: any) {
+                }
+            }
+        }
+        ifAdmin();
+    }, [user]);
 
     function logOut() {
         authService.logout();
@@ -65,7 +79,9 @@ function AuthMenu(): JSX.Element {
                 </div>
                 {user && (
                     <div className="NavLogged">
-                        <NavLink to="/" className="action"><div >לוח הבקרה</div></NavLink>
+                        <NavLink className="action" to={isAdmin ? "/panel/admin" : "/panel/user"}>
+                            <div>{isAdmin ? "פאנל ניהול" : "פאנל משתמש"}</div>
+                        </NavLink>
                         <NavLink to="/home" className="action" onClick={() => logOut()}><div>התנתק</div></NavLink>
                     </div>
                 )}

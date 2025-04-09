@@ -15,13 +15,13 @@ function Routing(): JSX.Element {
             <Route path="/home" element={<Navigate to="/" />} />
 
             <Route path="/login" element={<SignIn />} />
-            <Route path="/change-password/:id" element={<ChangePassword />} />
+            <Route path="settings/change-password/:id" element={<ChangePassword />} />
 
             <Route path="/cards/:company" element={<CardDisplay />} />
 
             <Route path="/panel/admin" element={<AdminRoute element={<AdminDash />} />} />
             <Route path="/panel/admin/cards" element={<AdminRoute element={<CardList />} />} />
-            
+
             <Route path="/" element={<Home />} />
             <Route path="*" element={<Page404 />} />
 
