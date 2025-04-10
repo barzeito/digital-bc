@@ -20,7 +20,7 @@ class CardsService {
 
     public async getOne(id: string): Promise<CardModel | undefined> {
         let cards = CardsStore.getState().card;
-        let card = cards.find(c => c.id);
+        let card = cards.find(c => c.id === id);
         if (!card) {
             await this.getAll();
             cards = CardsStore.getState().card;
@@ -47,6 +47,22 @@ class CardsService {
             card = cards.find(c => c.company === name);
         }
         return card;
+    }
+
+    public async editCard(card: CardModel): Promise<CardModel> {
+        // const config = {
+        //     headers: {
+        //         'Content-Type': 'multipart/form-data'
+        //     }
+        // };//TODO: enable when will add logo+banner photos
+        const response = await axios.patch<CardModel>(appConfig.cardsUrl + `/${card.id}`, card);
+        const updatedCard = response.data;
+        const action: CardsAction = {
+            type: CardsActionType.updateCard,
+            payload: updatedCard
+        };
+        CardsStore.dispatch(action);
+        return updatedCard;
     }
 }
 

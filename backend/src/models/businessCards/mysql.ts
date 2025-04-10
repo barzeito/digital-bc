@@ -40,6 +40,23 @@ class BusinessCards implements Model {
         return card;
     }
 
+    public async getOneById(id: string): Promise<DTO> {
+        const card = (await query(`
+            SELECT  id,
+                    company,
+                    description,
+                    email,
+                    phone,
+                    website,
+                    address,
+                    created_at,
+                    updated_at
+            FROM    business_cards  
+            WHERE   id = ?
+        `, [id]))[0];
+        return card;
+    }
+
     public async add(card: DTO): Promise<DTO> {
         const { company, description, email, phone, website, address, created_at, updated_at } = card;
         const id = v4();
@@ -47,7 +64,7 @@ class BusinessCards implements Model {
             INSERT INTO business_cards(id, company, description, email, phone, website, address, created_at, updated_at)
             VALUES(?, ?, ?, ?, ?, ?, ?, ? ,?)
         `, [id, company, description, email, phone, website, address, created_at, updated_at]);
-        return this.getOne(id);
+        return this.getOneById(id);
     }
 
     public async deleteCard(id: string): Promise<boolean> {
@@ -72,7 +89,9 @@ class BusinessCards implements Model {
                         updated_at = ?
                 WHERE   id = ?
             `, [company, description, email, phone, website, address, updated_at, id]);
-        return this.getOne(id);
+        const updatedCard = await this.getOneById(id);
+        console.log("Updated card:", updatedCard); // לוג
+        return this.getOneById(id);
     }
 }
 

@@ -8,7 +8,7 @@ export const addCardValidator = Joi.object<DTO & userDTO>({
     email: Joi.string().email().required(),
     phone: Joi.string().pattern(/^\d+$/).min(10).max(15).required(),
     website: Joi.string().uri().optional(),
-    address: Joi.string().min(2).optional(),
+    address: Joi.string().min(4).optional(),
     firstName: Joi.string().min(2).max(20).required().messages({
         'string.empty': 'First Name is required',
         'any.required': 'First Name is required',

@@ -51,7 +51,7 @@ function Cards(props: cardsProps): JSX.Element {
 
             <div className="card-footer">
                 <NavLink to={`/cards/${props.card.company}`} className="view-btn">צפייה</NavLink>
-                <button className="edit-btn">עריכה</button>
+                <NavLink to={`/panel/admin/edit/${props.card.id}`} className="edit-btn">עריכה</NavLink>
                 <button className="delete-btn" onClick={() => setShowDelete(true)}>מחיקה</button>
             </div>
             {showDelete && (

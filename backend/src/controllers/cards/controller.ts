@@ -23,6 +23,16 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
+export const getOneById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const card = await getModel().getOneById(req.params.id);
+        if (!card) return next();
+        res.json(card)
+    } catch (err) {
+        next(err)
+    }
+}
+
 export const add = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const existingCard = await getModel().getOne(req.body.company);
@@ -56,6 +66,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
         const id = req.params.id;
         const updatedCard = { id, ...req.body }
         const card = await getModel().update(updatedCard);
+        console.log(card)
         res.json(card);
     } catch (err) {
         next(err)
@@ -66,7 +77,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 export const patch = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = req.params.id;
-        const existingCard = await getModel().getOne(id);
+        const existingCard = await getModel().getOneById(id);
         const updatedCard = { ...existingCard, ...req.body };
         const card = await getModel().update(updatedCard);
         res.status(StatusCodes.OK).json(card)

@@ -1,0 +1,72 @@
+.EditCard {
+    direction: rtl;
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: var(--Primary-Color);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    direction: rtl;
+}
+
+.EditCard form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.EditCard label {
+    font-weight: 600;
+    color: var(--Black-Text-Color);
+    margin-bottom: 4px;
+}
+
+.EditCard input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+    text-align: center;
+}
+
+.EditCard input:focus {
+    outline: none;
+    border-color: var(--Secondary-Color);
+    box-shadow: 0 0 0 2px rgba(0, 128, 96, 0.1);
+}
+
+.EditCard span {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.submit-btn,
+.cancel-btn {
+    background-color: var(--Secondary-Color);
+    color: var(--White-Text-Color);
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: center;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+}
+
+.edit-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.submit-btn:hover,
+.cancel-btn:hover {
+    background-color: #0fa860;
+}

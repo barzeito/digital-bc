@@ -7,6 +7,7 @@ import CardList from "../../adminPanel/cardList/CardList";
 import ChangePassword from "../../auth/changePassword/ChangePassword";
 import AdminDash from "../../adminPanel/adminDash/AdminDash";
 import AdminRoute from "./ProtectedAdminRout";
+import EditCard from "../../adminPanel/editCard/EditCard";
 function Routing(): JSX.Element {
 
     return (
@@ -21,6 +22,7 @@ function Routing(): JSX.Element {
 
             <Route path="/panel/admin" element={<AdminRoute element={<AdminDash />} />} />
             <Route path="/panel/admin/cards" element={<AdminRoute element={<CardList />} />} />
+            <Route path="/panel/admin/edit/:id" element={<AdminRoute element={<EditCard />} />} />
 
             <Route path="/" element={<Home />} />
             <Route path="*" element={<Page404 />} />

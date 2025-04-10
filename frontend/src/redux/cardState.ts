@@ -36,7 +36,7 @@ export function CardReducer(currentState = new CardsState(), action: CardsAction
             break;
         case CardsActionType.updateCard:
             const cardToUpdate = action.payload as CardModel;
-            const indexToUpdate = newState.card.findIndex(card => card.id === cardId);
+            const indexToUpdate = newState.card.findIndex(card => card.id === cardToUpdate.id);
             if (indexToUpdate !== -1) newState.card[indexToUpdate] = cardToUpdate;
             break;
     }
