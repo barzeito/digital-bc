@@ -24,8 +24,6 @@ function CardList(): JSX.Element {
         return unsubscribe;
     }, [navigate]);
 
-    console.log(cards)
-
     return (
         <div className="CardList">
             <AdminMenu />

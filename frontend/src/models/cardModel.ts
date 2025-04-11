@@ -10,5 +10,6 @@ export default class CardModel {
     address?: string;
     created_at?: string;
     updated_at?: string;
+    ownedBy?: string;
     user?: UserModel;
 }

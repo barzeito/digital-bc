@@ -15,22 +15,30 @@ function AddCard(): JSX.Element {
 
     async function submitNewCard(card: CardModel) {
         try {
+            let userId: string | undefined;
+
             if (showUserFields) {
                 const user = getValues("user");
                 const signUpModel = new SignUpModel();
                 signUpModel.firstName = user?.firstName;
                 signUpModel.lastName = user?.lastName;
                 signUpModel.email = user?.email;
-    
-                await authService.signUp(signUpModel);
+
+                const newUser = await authService.signUp(signUpModel);
+                userId = newUser.userId;
             }
-    
+
+            if (userId) {
+                card.ownedBy = userId;
+            }else{
+                card.ownedBy = undefined;
+            }
             delete card.user;
-    
+
             await cardsService.addCard(card);
-    
+
             notify.success('New card added successfully');
-    
+
             setValue('company', '');
             setValue('description', '');
             setValue('address', '');
@@ -38,14 +46,14 @@ function AddCard(): JSX.Element {
             setValue('phone', '');
             setValue('website', '');
             setValue('user', undefined);
-    
+
             navigate("/panel/admin/cards");
-    
+
         } catch (error) {
             notify.error(error);
         }
     }
-    
+
 
     return (
         <div className="AddCard">

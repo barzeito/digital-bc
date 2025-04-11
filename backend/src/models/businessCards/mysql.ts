@@ -16,7 +16,8 @@ class BusinessCards implements Model {
                     website,
                     address,
                     created_at,
-                    updated_at
+                    updated_at,
+                    OwnedBy
             FROM    business_cards  
             ORDER BY company ASC
         `,));
@@ -33,7 +34,8 @@ class BusinessCards implements Model {
                     website,
                     address,
                     created_at,
-                    updated_at
+                    updated_at,
+                    ownedBy
             FROM    business_cards  
             WHERE   company = ?
         `, [company]))[0];
@@ -50,7 +52,8 @@ class BusinessCards implements Model {
                     website,
                     address,
                     created_at,
-                    updated_at
+                    updated_at,
+                    ownedBy
             FROM    business_cards  
             WHERE   id = ?
         `, [id]))[0];
@@ -58,12 +61,12 @@ class BusinessCards implements Model {
     }
 
     public async add(card: DTO): Promise<DTO> {
-        const { company, description, email, phone, website, address, created_at, updated_at } = card;
+        const { company, description, email, phone, website, address, created_at, updated_at, ownedBy } = card;
         const id = v4();
         const addCard: OkPacketParams = await query(`
-            INSERT INTO business_cards(id, company, description, email, phone, website, address, created_at, updated_at)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ? ,?)
-        `, [id, company, description, email, phone, website, address, created_at, updated_at]);
+            INSERT INTO business_cards(id, company, description, email, phone, website, address, created_at, updated_at, ownedBy)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ? ,?,?)
+        `, [id, company, description, email, phone, website, address, created_at, updated_at, ownedBy || null]);
         return this.getOneById(id);
     }
 
@@ -76,7 +79,7 @@ class BusinessCards implements Model {
     }
 
     public async update(card: DTO): Promise<DTO> {
-        const { id, company, description, email, phone, website, address } = card;
+        const { id, company, description, email, phone, website, address, ownedBy } = card;
         const updated_at = new Date().toISOString().slice(0, 19).replace("T", " ");
         await query(`
                 UPDATE  business_cards
@@ -86,11 +89,10 @@ class BusinessCards implements Model {
                         phone = ?,
                         website = ?,
                         address = ?,
-                        updated_at = ?
+                        updated_at = ?,
+                        ownedBy = ?
                 WHERE   id = ?
-            `, [company, description, email, phone, website, address, updated_at, id]);
-        const updatedCard = await this.getOneById(id);
-        console.log("Updated card:", updatedCard); // לוג
+            `, [company, description, email, phone, website, address, updated_at, ownedBy || null, id]);
         return this.getOneById(id);
     }
 }

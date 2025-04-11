@@ -46,6 +46,7 @@ function Cards(props: cardsProps): JSX.Element {
                     <p><strong>טלפון:</strong> {props.card.phone}</p>
                     <p><strong>אתר:</strong> <a href={props.card.website} target="_blank" rel="noopener noreferrer">{props.card.website}</a></p>
                     <p><strong>כתובת:</strong> {props.card.address}</p>
+                    <p><strong>בעלים:</strong> {props.card.ownedBy}</p>
                 </div>
             </div>
 

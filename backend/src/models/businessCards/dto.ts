@@ -8,4 +8,5 @@ export default interface DTO {
     address: string;
     created_at: string;
     updated_at: string;
+    ownedBy: string;
 }

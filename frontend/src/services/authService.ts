@@ -7,16 +7,17 @@ import SignUpModel from "../models/signUpModel";
 
 class AuthService {
 
-    public async signUp(signup: SignUpModel): Promise<string> {
-        const response = await axios.post<{ jwt: string }>(appConfig.signUpUrl, signup);
+    public async signUp(signup: SignUpModel): Promise<SignUpModel> {
+        const response = await axios.post<{ jwt: string, user: SignUpModel }>(appConfig.signUpUrl, signup);
         const token = response.data.jwt;
+        const user = response.data.user;
         const action: AuthAction = {
             type: AuthActionType.signUp,
             payload: token
         }
         authStore.dispatch(action);
 
-        return token;
+        return user;
     }
 
     public async signIn(signIn: signInModel): Promise<string> {

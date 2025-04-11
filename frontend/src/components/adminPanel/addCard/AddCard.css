@@ -1,4 +1,3 @@
-/* AddCard.css */
 .AddCard {
     width: 100%;
     max-width: 1200px;
@@ -19,7 +18,6 @@
     gap: 15px;
 }
 
-/* Basic input styling */
 .AddCard input[type="text"] {
     padding: 10px;
     border: 1px solid #ddd;
@@ -28,7 +26,6 @@
     width: 100%;
 }
 
-/* Error message styling */
 .AddCard .error {
     color: #ff4040;
     font-size: 12px;
@@ -36,7 +33,6 @@
     display: block;
 }
 
-/* Three inputs in a row layout */
 .add-row {
     display: flex;
     flex-wrap: wrap;
@@ -51,7 +47,6 @@
     flex-direction: column;
 }
 
-/* Checkbox styling */
 .checkbox-group {
     display: flex;
     align-items: center;
@@ -64,14 +59,12 @@
     height: 16px;
 }
 
-/* User fields section */
 .user-fields {
     border-top: 1px solid #eee;
     padding-top: 20px;
     margin-top: 10px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .add-group {
         flex: 1 1 100%;
