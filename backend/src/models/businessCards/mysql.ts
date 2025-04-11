@@ -8,17 +8,20 @@ class BusinessCards implements Model {
 
     public async getAll(): Promise<DTO[]> {
         const cards = (await query(`
-            SELECT  id,
-                    company,
-                    description,
-                    email,
-                    phone,
-                    website,
-                    address,
-                    created_at,
-                    updated_at,
-                    OwnedBy
-            FROM    business_cards  
+            SELECT  bc.id,
+                    bc.company,
+                    bc.description,
+                    bc.email,
+                    bc.phone,
+                    bc.website,
+                    bc.address,
+                    bc.created_at,
+                    bc.updated_at,
+                    bc.ownedBy,
+                    u.firstName,
+                    u.lastName
+            FROM    business_cards bc
+            LEFT JOIN users u ON bc.ownedBy = u.userId  
             ORDER BY company ASC
         `,));
         return cards;

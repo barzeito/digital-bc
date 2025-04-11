@@ -5,9 +5,9 @@ import CardModel from "../models/cardModel";
 
 class CardsService {
     public async getAll(): Promise<CardModel[]> {
-        const response = await axios.get<{cards: CardModel[]}>(appConfig.cardsUrl);
+        const response = await axios.get<{ cards: CardModel[] }>(appConfig.cardsUrl);
         const cards = response.data.cards || response.data;
-        
+
         const action: CardsAction = {
             type: CardsActionType.setCard,
             payload: cards

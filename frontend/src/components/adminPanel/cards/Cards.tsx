@@ -5,7 +5,6 @@ import notify from "../../../services/Notify";
 import CardModel from "../../../models/cardModel";
 import formatDate from "../../../utils/formateDate";
 import { NavLink } from "react-router-dom";
-import AdminMenu from "../AdminMenu/AdminMenu";
 
 interface cardsProps {
     card: CardModel;
@@ -46,7 +45,11 @@ function Cards(props: cardsProps): JSX.Element {
                     <p><strong>טלפון:</strong> {props.card.phone}</p>
                     <p><strong>אתר:</strong> <a href={props.card.website} target="_blank" rel="noopener noreferrer">{props.card.website}</a></p>
                     <p><strong>כתובת:</strong> {props.card.address}</p>
-                    <p><strong>בעלים:</strong> {props.card.ownedBy}</p>
+                    <p><strong>בעלים: </strong>
+                        {props.card.firstName
+                            ? `${props.card.firstName} ${props.card.lastName}`
+                            : "לא משויך"}
+                    </p>
                 </div>
             </div>
 
