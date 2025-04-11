@@ -1,0 +1,79 @@
+/* AddCard.css */
+.AddCard {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    direction: rtl;
+}
+
+.AddCard h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.AddCard form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Basic input styling */
+.AddCard input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Error message styling */
+.AddCard .error {
+    color: #ff4040;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Three inputs in a row layout */
+.add-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.add-group {
+    flex: 1 1 calc(33.333% - 20px);
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Checkbox styling */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+/* User fields section */
+.user-fields {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    margin-top: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .add-group {
+        flex: 1 1 100%;
+    }
+}

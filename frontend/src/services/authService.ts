@@ -3,8 +3,22 @@ import signInModel from "../models/signInModel";
 import appConfig from "../utils/AppConfig";
 import { AuthAction, AuthActionType, authStore } from "../redux/authState";
 import { jwtDecode } from "jwt-decode";
+import SignUpModel from "../models/signUpModel";
 
 class AuthService {
+
+    public async signUp(signup: SignUpModel): Promise<string> {
+        const response = await axios.post<{ jwt: string }>(appConfig.signUpUrl, signup);
+        const token = response.data.jwt;
+        const action: AuthAction = {
+            type: AuthActionType.signUp,
+            payload: token
+        }
+        authStore.dispatch(action);
+
+        return token;
+    }
+
     public async signIn(signIn: signInModel): Promise<string> {
         const response = await axios.post<{ jwt: string, user?: any }>(appConfig.signInUrl, signIn);
         const token = response.data.jwt;

@@ -2,7 +2,7 @@ import { createStore } from "redux";
 import CardModel from "../models/cardModel";
 
 export class CardsState {
-    public card: CardModel[] = [];
+    public cards: CardModel[] = [];
 }
 
 export enum CardsActionType {
@@ -23,21 +23,21 @@ export function CardReducer(currentState = new CardsState(), action: CardsAction
 
     switch (action.type) {
         case CardsActionType.setCard:
-            newState.card = action.payload as CardModel[];
+            newState.cards = action.payload as CardModel[];
             break;
         case CardsActionType.addCard:
             const singleCard = action.payload as CardModel;
-            newState.card.push(singleCard);
+            newState.cards.push(singleCard);
             break;
         case CardsActionType.deleteCard:
             const cardId = action.payload as string;
-            const indexToDelete = newState.card.findIndex(card => card.id === cardId);
-            if (indexToDelete !== -1) newState.card.splice(indexToDelete, 1);
+            const indexToDelete = newState.cards.findIndex(card => card.id === cardId);
+            if (indexToDelete !== -1) newState.cards.splice(indexToDelete, 1);
             break;
         case CardsActionType.updateCard:
             const cardToUpdate = action.payload as CardModel;
-            const indexToUpdate = newState.card.findIndex(card => card.id === cardToUpdate.id);
-            if (indexToUpdate !== -1) newState.card[indexToUpdate] = cardToUpdate;
+            const indexToUpdate = newState.cards.findIndex(card => card.id === cardToUpdate.id);
+            if (indexToUpdate !== -1) newState.cards[indexToUpdate] = cardToUpdate;
             break;
     }
     return newState;

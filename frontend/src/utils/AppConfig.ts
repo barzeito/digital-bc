@@ -1,6 +1,7 @@
 class AppConfig {
     public apiBaseUrl = 'http://localhost:8080';
     public cardsUrl = `${this.apiBaseUrl}/api/cards`;
+    public signUpUrl = `${this.apiBaseUrl}/api/signup`;
     public signInUrl = `${this.apiBaseUrl}/api/signin`;
     public changePasswordUrl = `${this.apiBaseUrl}/api/change-password`;
     public isAdminUrl = `${this.apiBaseUrl}/api/role`;

@@ -1,4 +1,6 @@
-class CardModel {
+import UserModel from './userModel';
+
+export default class CardModel {
     id?: string;
     company?: string;
     description?: string;
@@ -8,6 +10,5 @@ class CardModel {
     address?: string;
     created_at?: string;
     updated_at?: string;
+    user?: UserModel;
 }
-
-export default CardModel;

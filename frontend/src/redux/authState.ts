@@ -35,7 +35,7 @@ export function authReducer(currentState = new AuthState(), action: AuthAction):
     const newState = { ...currentState }
 
     switch (action.type) {
-        // case AuthActionType.signUp:
+        case AuthActionType.signUp:
         case AuthActionType.signIn:
             if (typeof action.payload === 'object' && action.payload !== null) {
                 newState.token = action.payload.token;

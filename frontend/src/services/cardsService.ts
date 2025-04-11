@@ -5,28 +5,37 @@ import CardModel from "../models/cardModel";
 
 class CardsService {
     public async getAll(): Promise<CardModel[]> {
-        let cards = CardsStore.getState().card;
-        if (cards.length === 0) {
-            const response = await axios.get<CardModel[]>(appConfig.cardsUrl);
-            cards = response.data;
-            const action: CardsAction = {
-                type: CardsActionType.setCard,
-                payload: cards
-            }
-            CardsStore.dispatch(action);
+        const response = await axios.get<{cards: CardModel[]}>(appConfig.cardsUrl);
+        const cards = response.data.cards || response.data;
+        
+        const action: CardsAction = {
+            type: CardsActionType.setCard,
+            payload: cards
         }
+        CardsStore.dispatch(action);
         return cards;
     }
 
     public async getOne(id: string): Promise<CardModel | undefined> {
-        let cards = CardsStore.getState().card;
+        let cards = CardsStore.getState().cards;
         let card = cards.find(c => c.id === id);
         if (!card) {
             await this.getAll();
-            cards = CardsStore.getState().card;
+            cards = CardsStore.getState().cards;
             card = cards.find(c => c.id === id);
         }
         return card;
+    }
+
+    public async addCard(card: CardModel): Promise<CardModel> {
+        const response = await axios.post<CardModel>(appConfig.cardsUrl, card);
+        const newCard = response.data;
+        const action: CardsAction = {
+            type: CardsActionType.addCard,
+            payload: newCard
+        }
+        CardsStore.dispatch(action);
+        return newCard
     }
 
     public async deleteCard(id: string): Promise<void> {
@@ -39,11 +48,11 @@ class CardsService {
     }
 
     public async getByName(name: string): Promise<CardModel | undefined> {
-        let cards = CardsStore.getState().card;
+        let cards = CardsStore.getState().cards;
         let card = cards.find(c => c.company === name);
         if (!card) {
             await this.getAll();
-            cards = CardsStore.getState().card;
+            cards = CardsStore.getState().cards;
             card = cards.find(c => c.company === name);
         }
         return card;

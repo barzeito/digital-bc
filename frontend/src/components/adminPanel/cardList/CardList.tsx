@@ -5,7 +5,7 @@ import cardsService from "../../../services/cardsService";
 import notify from "../../../services/Notify";
 import { CardsStore } from "../../../redux/cardState";
 import Cards from "../cards/Cards";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AdminMenu from "../AdminMenu/AdminMenu";
 
 function CardList(): JSX.Element {
@@ -19,14 +19,22 @@ function CardList(): JSX.Element {
             .catch(error => notify.error(error));
 
         const unsubscribe = CardsStore.subscribe(() => {
-            setCards([...CardsStore.getState().card])
+            setCards([...CardsStore.getState().cards])
         })
         return unsubscribe;
     }, [navigate]);
 
+    console.log(cards)
+
     return (
         <div className="CardList">
             <AdminMenu />
+            <div className="cards-options">
+                <NavLink to="/panel/admin/cards/add-card" className="NewCard">
+                    <div className="NavIcon"><i className="fa-solid fa-plus"></i></div>
+                    <div className="NavText">יצירת כרטיס</div>
+                </NavLink>
+            </div>
             <div className="DisplayCards">
                 {cards.map(c => <Cards key={c.id} card={c} />)}
             </div>

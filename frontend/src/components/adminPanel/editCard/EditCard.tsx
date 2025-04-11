@@ -5,6 +5,7 @@ import cardsService from "../../../services/cardsService";
 import { useForm } from "react-hook-form";
 import CardModel from "../../../models/cardModel";
 import notify from "../../../services/Notify";
+import AdminMenu from "../AdminMenu/AdminMenu";
 
 function EditCard(): JSX.Element {
 
@@ -41,6 +42,7 @@ function EditCard(): JSX.Element {
     }
     return (
         <div className="EditCard">
+            <AdminMenu />
             <h2>עריכת כרטיס</h2>
             <form onSubmit={handleSubmit(submitCardUpdate)}>
                 <label>שם החברה:</label>
@@ -50,7 +52,7 @@ function EditCard(): JSX.Element {
                         value: true,
                         message: 'שדה חובה!'
                     }
-                })} /><span>{formState.errors.company?.message}</span>
+                })} /><span className="error">{formState.errors.company?.message}</span>
 
                 <label>תיאור החברה:</label>
                 <input type="text" {...register('description', {
@@ -59,7 +61,7 @@ function EditCard(): JSX.Element {
                         value: true,
                         message: 'שדה חובה!'
                     }
-                })} /><span>{formState.errors.description?.message}</span>
+                })} /><span className="error">{formState.errors.description?.message}</span>
 
                 <label>אימייל:</label>
                 <input type="text" {...register('email', {
@@ -71,7 +73,7 @@ function EditCard(): JSX.Element {
                         value: true,
                         message: 'שדה חובה!'
                     }
-                })} /><span>{formState.errors.email?.message}</span>
+                })} /><span className="error">{formState.errors.email?.message}</span>
 
                 <label>כתובת:</label>
                 <input type="text" {...register('address', {
@@ -80,7 +82,7 @@ function EditCard(): JSX.Element {
                         value: true,
                         message: 'שדה חובה!'
                     }
-                })} /><span>{formState.errors.address?.message}</span>
+                })} /><span className="error">{formState.errors.address?.message}</span>
 
                 <label>מספר טלפון:</label>
                 <input type="text" {...register('phone', {
@@ -92,7 +94,7 @@ function EditCard(): JSX.Element {
                         value: true,
                         message: 'שדה חובה!'
                     }
-                })} /><span>{formState.errors.phone?.message}</span>
+                })} /><span className="error">{formState.errors.phone?.message}</span>
 
                 <label>אתר אינטרנט:</label>
                 <input type="text" {...register('website', {
@@ -104,9 +106,9 @@ function EditCard(): JSX.Element {
                         value: true,
                         message: 'שדה חובה!'
                     }
-                })} /><span>{formState.errors.website?.message}</span>
+                })} /><span className="error">{formState.errors.website?.message}</span>
 
-                <div className="edit-buttons">
+                <div className="buttons">
                     <button className="submit-btn">שמירה</button>
                     <NavLink to="/panel/admin/cards" className="cancel-btn">ביטול</NavLink>
                 </div>

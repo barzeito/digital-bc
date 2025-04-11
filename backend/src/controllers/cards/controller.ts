@@ -44,8 +44,8 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
             return next(createHttpError(BadRequest('User with this email is already exist')));
         }
         const card = await getModel().add(req.body);
-        const user = await getAuthModel().signUp(req.body);
-        res.status(StatusCodes.CREATED).json({ card, user })
+        // const user = await getAuthModel().signUp(req.body);
+        res.status(StatusCodes.CREATED).json({ card })
     } catch (err) {
         next(err)
     }
