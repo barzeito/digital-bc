@@ -10,16 +10,6 @@ export const addCardValidator = Joi.object<DTO>({
     website: Joi.string().pattern(/^((https?:\/\/)?(www\.)?[\w\-]+\.[a-z]{2,})(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i).optional(),
     address: Joi.string().min(4).optional(),
     ownedBy: Joi.string().optional(),
-    // firstName: Joi.string().min(2).max(20).required().messages({
-    //     'string.empty': 'First Name is required',
-    //     'any.required': 'First Name is required',
-    //     'string.min': 'First Name must be at least {#limit} characters long',
-    // }),
-    // lastName: Joi.string().min(2).max(20).required().messages({
-    //     'string.empty': 'Last Name is required',
-    //     'any.required': 'Last Name is required',
-    //     'string.min': 'Last Name must be at least {#limit} characters long',
-    // })
 });
 
 export const patchCardValidator = Joi.object<DTO>({

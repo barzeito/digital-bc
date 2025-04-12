@@ -1,0 +1,30 @@
+.NoCardsMessage {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Assistant', sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.NoCardsMessage p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.NoCardsMessage p:first-child {
+    font-weight: bold;
+}
+
+.NoCardsMessage a {
+    color: #155724;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.NoCardsMessage a:hover {
+    color: #0c3d6b;
+}

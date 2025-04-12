@@ -1,80 +1,100 @@
 .EditCard {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
     direction: rtl;
-    max-width: 600px;
-    margin: 40px auto;
-    background-color: var(--Primary-Color);
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    direction: rtl;
+}
+
+.EditCard h2 {
+    text-align: center;
+    margin-top: 50px;
+    color: #333;
 }
 
 .EditCard form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    margin: 50px auto;
+    gap: 15px;
 }
 
-.EditCard label {
-    font-weight: 600;
-    color: var(--Black-Text-Color);
-    margin-bottom: 4px;
-}
-
-.EditCard input {
+.EditCard input[type="text"] {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    transition: border-color 0.2s ease;
-    text-align: center;
-}
-
-.EditCard input:focus {
-    outline: none;
-    border-color: var(--Secondary-Color);
-    box-shadow: 0 0 0 2px rgba(0, 128, 96, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
 }
 
 .EditCard .error {
-    color: #e74c3c;
-    font-size: 0.85rem;
-    margin-top: -10px;
-    margin-bottom: 10px;
+    color: #ff4040;
+    font-size: 12px;
+    margin-top: 4px;
     display: block;
 }
 
-.submit-btn,
-.cancel-btn {
-    background-color: var(--Secondary-Color);
-    color: var(--White-Text-Color);
-    padding: 12px 20px;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    align-self: center;
-    transition: background-color 0.2s ease;
-    text-decoration: none;
+.edit-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.edit-group {
+    flex: 1 1 calc(33.333% - 20px);
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.user-fields {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .edit-group {
+        flex: 1 1 100%;
+    }
 }
 
 .buttons {
     display: flex;
-    justify-content: center;
-    gap: 25px;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-.submit-btn:hover {
-    background-color: #0fa860;
+.submit-btn,
+.cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #4CAF50;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
 }
 
 .cancel-btn {
     background-color: #f44336;
-}
-
-.cancel-btn:hover {
-    background-color: #d32f2f;
-
 }

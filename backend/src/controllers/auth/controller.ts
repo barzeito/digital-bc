@@ -5,6 +5,16 @@ import getModel from "../../models/auth/factory";
 import { generateJWT } from "../../utils/crypto";
 import config from 'config';
 
+
+export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const users = await getModel().getAll()
+        res.json(users)
+    } catch (err) {
+        next(err)
+    }
+}
+
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const existingUser = await getModel().getByEmail(req.body.email)

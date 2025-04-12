@@ -39,12 +39,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
         if (existingCard) {
             throw new Error('Company name already exists.');
         }
-        const existingUser = await getAuthModel().getByEmail(req.body.email)
-        if (existingUser) {
-            return next(createHttpError(BadRequest('User with this email is already exist')));
-        }
         const card = await getModel().add(req.body);
-        // const user = await getAuthModel().signUp(req.body);
         res.status(StatusCodes.CREATED).json({ card })
     } catch (err) {
         next(err)
@@ -83,5 +78,21 @@ export const patch = async (req: Request, res: Response, next: NextFunction) => 
         res.status(StatusCodes.OK).json(card)
     } catch (err) {
         next(err)
+    }
+}
+
+export const getUserCards = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.params.userId;
+        if (!userId) {
+            return res.status(400).json({ message: 'User ID is required' });
+        }
+        const cards = await getModel().getUserCards(userId);
+        if (!cards) {
+            return res.status(404).json({ message: 'No cards found for this user' });
+        }
+        res.json(cards);
+    } catch (err) {
+        next(err);
     }
 }

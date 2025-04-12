@@ -1,0 +1,49 @@
+.UserMenu {
+    background-color: var(--Tertiary-Color);
+    color: var(--White-Text-Color);
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    font-size: 20px;
+}
+
+.UserTitle {
+    margin-right: 20px;
+}
+
+.User {
+    display: flex;
+    flex-direction: row;
+}
+
+.NavCard {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: var(--White-Text-Color);
+    margin-left: 20px;
+    gap: 6px;
+}
+
+.NavCard:hover {
+    background-color: var(--Black-Text-Color);
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.NavIcon {
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.NavText {
+    font-size: 16px;
+}

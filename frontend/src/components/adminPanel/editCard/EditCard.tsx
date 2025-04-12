@@ -45,68 +45,90 @@ function EditCard(): JSX.Element {
             <AdminMenu />
             <h2>עריכת כרטיס</h2>
             <form onSubmit={handleSubmit(submitCardUpdate)}>
-                <label>שם החברה:</label>
-                <input type="text" {...register('company', {
-                    minLength: { value: 4, message: 'שם החברה חייב להיות מינימום 4 תווים.' },
-                    required: {
-                        value: true,
-                        message: 'שדה חובה!'
-                    }
-                })} /><span className="error">{formState.errors.company?.message}</span>
+                <div className="edit-row">
+                    <div className="edit-group">
+                        <label>שם החברה:</label>
+                        <input type="text" {...register('company', {
+                            minLength: { value: 4, message: 'שם החברה חייב להיות מינימום 4 תווים.' },
+                            required: {
+                                value: true,
+                                message: 'שדה חובה!'
+                            }
+                        })} />
+                        <span className="error">{formState.errors.company?.message}</span>
+                    </div>
 
-                <label>תיאור החברה:</label>
-                <input type="text" {...register('description', {
-                    minLength: { value: 6, message: 'תיאור החברה חייב להיות מינימום 6 תווים.' },
-                    required: {
-                        value: true,
-                        message: 'שדה חובה!'
-                    }
-                })} /><span className="error">{formState.errors.description?.message}</span>
+                    <div className="edit-group">
+                        <label>תיאור החברה:</label>
+                        <input type="text" {...register('description', {
+                            minLength: { value: 6, message: 'תיאור החברה חייב להיות מינימום 6 תווים.' },
+                            required: {
+                                value: true,
+                                message: 'שדה חובה!'
+                            }
+                        })} />
+                        <span className="error">{formState.errors.description?.message}</span>
+                    </div>
 
-                <label>אימייל:</label>
-                <input type="text" {...register('email', {
-                    pattern: {
-                        value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                        message: 'אימייל אינו תקין.'
-                    },
-                    required: {
-                        value: true,
-                        message: 'שדה חובה!'
-                    }
-                })} /><span className="error">{formState.errors.email?.message}</span>
+                    <div className="edit-group">
+                        <label>אימייל:</label>
+                        <input type="text" {...register('email', {
+                            pattern: {
+                                value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                message: 'אימייל אינו תקין.'
+                            },
+                            required: {
+                                value: true,
+                                message: 'שדה חובה!'
+                            }
+                        })} />
+                        <span className="error">{formState.errors.email?.message}</span>
+                    </div>
+                </div>
 
-                <label>כתובת:</label>
-                <input type="text" {...register('address', {
-                    minLength: { value: 4, message: 'כתובת חייבת להיות מינימום 4 תווים.' },
-                    required: {
-                        value: true,
-                        message: 'שדה חובה!'
-                    }
-                })} /><span className="error">{formState.errors.address?.message}</span>
+                <div className="edit-row">
+                    <div className="edit-group">
+                        <label>כתובת:</label>
+                        <input type="text" {...register('address', {
+                            minLength: { value: 4, message: 'כתובת חייבת להיות מינימום 4 תווים.' },
+                            required: {
+                                value: true,
+                                message: 'שדה חובה!'
+                            }
+                        })} />
+                        <span className="error">{formState.errors.address?.message}</span>
+                    </div>
 
-                <label>מספר טלפון:</label>
-                <input type="text" {...register('phone', {
-                    pattern: {
-                        value: /^0\d{1,2}-?\d{7}$/,
-                        message: 'מספר טלפון אינו תקין.'
-                    },
-                    required: {
-                        value: true,
-                        message: 'שדה חובה!'
-                    }
-                })} /><span className="error">{formState.errors.phone?.message}</span>
+                    <div className="edit-group">
+                        <label>מספר טלפון:</label>
+                        <input type="text" {...register('phone', {
+                            pattern: {
+                                value: /^0\d{1,2}-?\d{7}$/,
+                                message: 'מספר טלפון אינו תקין.'
+                            },
+                            required: {
+                                value: true,
+                                message: 'שדה חובה!'
+                            }
+                        })} />
+                        <span className="error">{formState.errors.phone?.message}</span>
+                    </div>
 
-                <label>אתר אינטרנט:</label>
-                <input type="text" {...register('website', {
-                    pattern: {
-                        value: /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/,
-                        message: 'כתובת האתר אינה תקינה.'
-                    },
-                    required: {
-                        value: true,
-                        message: 'שדה חובה!'
-                    }
-                })} /><span className="error">{formState.errors.website?.message}</span>
+                    <div className="edit-group">
+                        <label>אתר אינטרנט:</label>
+                        <input type="text" {...register('website', {
+                            pattern: {
+                                value: /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/,
+                                message: 'כתובת האתר אינה תקינה.'
+                            },
+                            required: {
+                                value: true,
+                                message: 'שדה חובה!'
+                            }
+                        })} />
+                        <span className="error">{formState.errors.website?.message}</span>
+                    </div>
+                </div>
 
                 <div className="buttons">
                     <button className="submit-btn">שמירה</button>

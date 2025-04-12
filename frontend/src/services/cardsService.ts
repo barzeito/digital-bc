@@ -73,6 +73,20 @@ class CardsService {
         CardsStore.dispatch(action);
         return updatedCard;
     }
+
+    public async getUserCards(userId: string): Promise<CardModel[]> {
+        const response = await axios.get<{ cards: CardModel[] }>(appConfig.cardsUrl + `/userCards/${userId}`);
+        const cards = response.data.cards || response.data;
+
+        const action: CardsAction = {
+            type: CardsActionType.setCard,
+            payload: cards
+        }
+        CardsStore.dispatch(action);
+        return cards;
+    }
+
+
 }
 
 const cardsService = new CardsService();

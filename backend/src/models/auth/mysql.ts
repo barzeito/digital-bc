@@ -9,19 +9,22 @@ import config from "config";
 import { sendResetEmail, sendWelcomeEmail } from "../../utils/emailService";
 import crypto from "crypto";
 import generateRandomPassword from "../../utils/passwordGenerator";
+
 class Auth implements Model {
 
-    // public async getAll(): Promise<DTO[]> {
-    //     const slinks = (await query(`
-    //         SELECT  id,
-    //                 company_id,
-    //                 company,
-    //                 platform,
-    //                 url
-    //         FROM    social_links 
-    //     `,));
-    //     return slinks;
-    // }
+    public async getAll(): Promise<userDTO[]> {
+        const users = (await query(`
+            SELECT  userId,
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    roleId,
+                    isTemporaryPassword
+            FROM    users
+        `,));
+        return users;
+    }
 
     public async getOne(userId: string): Promise<userDTO> {
         const user = (await query(`

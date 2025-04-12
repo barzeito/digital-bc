@@ -1,63 +1,221 @@
-.CardDisplay {
-    width: 300px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+.Card-Main {
+    background-color: #e9ecf3;
+    color: var(--Black-Text-Color);
+    width: 80%; 
+    max-width: 1200px; 
+    margin: 0 auto; 
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.cardDisplay-header {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+/* Assistant Heebo */
+
+.cd-Header {
+    position: relative;
+    width: 80%;
+    margin: 10px auto;
 }
 
-.header-info {
+.cd-CoverImage {
+    width: 100%;
+    max-height: 300px;
+    display: block;
+    border-radius: 8px;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+}
+
+.cd-ProfileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid var(--Tertiary-Color);
+    background-color: var(--Primary-Color);
+}
+
+.cd-details {
+    margin-top: 65px;
+    font-family: 'Heebo', sans-serif;
+}
+
+.cd-CompanyName {
+    font-size: 26px;
+    font-style: bold;
+}
+
+.cd-CompanyDesc {
+    margin-top: -15px;
+    font-size: 18px;
+}
+
+.cd-social {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.social-item {
     align-items: center;
 }
 
-.company-name {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
+.social-item img {
+    width: 32px;
+    height: 32px;
 }
 
-.description {
-    font-size: 16px;
-    color: #666;
+.social-item p {
+    margin: 2px;
+    font-size: 20px;
+    font-family: 'Assistant', sans-serif;
 }
 
-.cardDisplay-body {
-    padding: 20px;
+.cd-SaveContact {
+    margin-top: 35px;
+    padding: 10px;
 }
 
-.cardDisplay-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+.cd-SaveContact .SaveContact {
+    font-size: 32px;
+    font-family: 'Assistant', sans-serif;
+    border: 1px solid var(--Tertiary-Color);
+    border-radius: 6px;
+    background-color: var(--Background-Color);
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.cardDisplay-info p {
-    margin-bottom: 0;
+.cd-SaveContact .SaveContact:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
-.cardDisplay-info p:nth-child(3) {
-    grid-column: 1 / -1;
+.cd-SaveContact .SaveContact:active {
+    transform: scale(0.98);
+
 }
 
-.cardDisplay-info strong {
-    font-weight: bold;
-    color: #333;
+@media (max-width: 1200px) {
+    .cd-Header {
+        width: 90%;
+    }
+
+    .cd-ProfileImage {
+        width: 130px;
+        height: 130px;
+        bottom: -45px;
+    }
+
+    .cd-CompanyName {
+        font-size: 22px;
+    }
+
+    .cd-CompanyDesc {
+        font-size: 16px;
+    }
+
+    .cd-social {
+        gap: 20px;
+    }
+
+    .social-item img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .social-item p {
+        font-size: 18px;
+    }
+
+    .cd-SaveContact .SaveContact {
+        font-size: 28px;
+        padding: 10px 15px;
+    }
 }
 
-.cardDisplay-info a {
-    text-decoration: none;
-    color: #337ab7;
+@media (max-width: 768px) {
+    .cd-Header {
+        width: 95%;
+    }
+
+    .cd-ProfileImage {
+        width: 120px;
+        height: 120px;
+        bottom: -40px;
+    }
+
+    .cd-CompanyName {
+        font-size: 20px;
+    }
+
+    .cd-CompanyDesc {
+        font-size: 14px;
+    }
+
+    .cd-social {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .social-item img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .social-item p {
+        font-size: 16px;
+        margin-top: 5px;
+    }
+
+    .cd-SaveContact .SaveContact {
+        font-size: 24px;
+        padding: 8px 12px;
+    }
 }
 
-.cardDisplay-info a:hover {
-    color: #23527c;
+@media (max-width: 480px) {
+    .cd-Header {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .cd-ProfileImage {
+        width: 100px;
+        height: 100px;
+        bottom: -35px;
+    }
+
+    .cd-CompanyName {
+        font-size: 18px;
+    }
+
+    .cd-CompanyDesc {
+        font-size: 12px;
+    }
+
+    .cd-social {
+        gap: 10px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .social-item img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .social-item p {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .cd-SaveContact .SaveContact {
+        font-size: 22px;
+        padding: 6px 10px;
+    }
 }

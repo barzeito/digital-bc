@@ -4,6 +4,7 @@ import userDTO from './user-dto';
 import CredentialsDTO from './credential-dto';
 
 export default interface Model {
+    getAll(): Promise<DTO[]>;
     getOne(userId: string): Promise<userDTO>;
     signUp(user: userDTO): Promise<userDTO>;
     signIn(credentials: CredentialsDTO): Promise<userDTO>;

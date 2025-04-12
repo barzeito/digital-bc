@@ -1,0 +1,235 @@
+.UserCards {
+    background-color: var(--Primary-Color);
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+    margin: 20px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border: 0.2px solid var(--Tertiary-Color);
+}
+
+.uc-header,
+.uc-body {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.uc-header-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.uc-header-info .uc-company-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--Black-Text-Color);
+    margin: 0;
+}
+
+.uc-header-info .uc-description {
+    color: var(--Black-Text-Color);
+    font-size: 0.95rem;
+}
+
+.uc-times {
+    flex: 1;
+    font-size: 0.85rem;
+    color: var(--Black-Text-Color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.uc-times p {
+    margin: 5px 0;
+}
+
+.uc--body {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.uc-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.uc-info p {
+    margin-bottom: 0;
+}
+
+.uc-btn {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.edit-btn,
+.delete-btn,
+.view-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: var(--Secondary-Color);
+    color: var(--White-Text-Color);
+    text-decoration: none;
+}
+
+/* Delete Pop-Up Styles */
+.DeleteContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.04);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.Delete-PopUp {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.Delete-PopUp span {
+    font-size: 24px;
+}
+
+.Delete-PopUp p {
+    font-size: 18px;
+}
+
+.confirm-btn {
+    display: flex;
+    justify-content: space-around;
+}
+
+.confirm-btn button {
+    background-color: var(--Secondary-Color);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.confirm-btn button:hover {
+    background-color: #0fc050;
+}
+
+@media screen and (max-width: 1024px) {
+    .Cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-header,
+    .card-body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .times {
+        margin-top: 10px;
+        font-size: 0.9rem;
+    }
+
+    .card-info {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .card-footer {
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+        justify-content: center;
+    }
+
+    .edit-btn,
+    .delete-btn,
+    .view-btn {
+        flex: 0 0 auto;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .Cards {
+        padding: 14px;
+        align-items: center;
+    }
+
+    .company-name {
+        font-size: 1.2rem;
+    }
+
+    .description {
+        font-size: 0.9rem;
+    }
+
+    .card-info p,
+    .times p {
+        font-size: 0.88rem;
+        word-break: break-word;
+    }
+
+    .card-footer {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .edit-btn,
+    .delete-btn,
+    .view-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        width: auto;
+    }
+
+    .confirm-btn {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .confirm-btn button {
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    .Delete-PopUp {
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+    }
+}

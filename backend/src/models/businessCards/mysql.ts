@@ -98,6 +98,23 @@ class BusinessCards implements Model {
             `, [company, description, email, phone, website, address, updated_at, ownedBy || null, id]);
         return this.getOneById(id);
     }
+
+    public async getUserCards(id: string): Promise<DTO> {
+        const cards = (await query(`
+            SELECT  id,
+                    company,
+                    description,
+                    email,
+                    phone,
+                    website,
+                    address,
+                    created_at,
+                    updated_at
+            FROM    business_cards  
+            WHERE   ownedBy = ?
+        `, [id]));
+        return cards;
+    }
 }
 
 const business_cards = new BusinessCards();

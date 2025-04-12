@@ -79,7 +79,7 @@ function AuthMenu(): JSX.Element {
                 </div>
                 {user && (
                     <div className="NavLogged">
-                        <NavLink className="action" to={isAdmin ? "/panel/admin" : "/panel/user"}>
+                        <NavLink className="action" to={isAdmin ? "/panel/admin" : `/panel/user/${user.userId}`}>
                             <div>{isAdmin ? "פאנל ניהול" : "פאנל משתמש"}</div>
                         </NavLink>
                         <NavLink to="/home" className="action" onClick={() => logOut()}><div>התנתק</div></NavLink>

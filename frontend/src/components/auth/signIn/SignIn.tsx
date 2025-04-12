@@ -25,7 +25,7 @@ function SignIn(): JSX.Element {
             notify.success('logged in')
             const user = authStore.getState().user;
             if (user && user.isTemporaryPassword) {
-                navigate(`settings/change-password/${user.userId}`);
+                navigate(`/settings/change-password/${user.userId}`);
             } else {
                 navigate('/')
             }

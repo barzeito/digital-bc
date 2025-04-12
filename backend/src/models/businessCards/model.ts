@@ -8,4 +8,5 @@ export default interface Model {
     add(card: DTO): Promise<DTO>;
     deleteCard(id: string): Promise<boolean>;
     update(card: DTO): Promise<DTO>;
+    getUserCards(id: string): Promise<DTO>;
 }
