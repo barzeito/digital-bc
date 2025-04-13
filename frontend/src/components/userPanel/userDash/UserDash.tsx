@@ -50,7 +50,6 @@ function UserDash(): JSX.Element {
 
         cardsService.getUserCards(userId)
             .then(cardsFromServer => {
-                console.log("Cards from server:", cardsFromServer); // ← כאן
                 setUserCards(cardsFromServer);
             })
             .catch(error => notify.error(error));

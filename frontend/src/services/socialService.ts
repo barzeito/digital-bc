@@ -57,7 +57,6 @@ class SocialService {
     }
 
     public async editSocial(social: SocialModel): Promise<SocialModel> {
-        console.log("Body sent to backend:", JSON.stringify(social, null, 2));
         const response = await axios.patch<SocialModel>(appConfig.socialUrl + `/${social.company_id}`, social);
         const updatedCard = response.data;
         const action: SocialAction = {

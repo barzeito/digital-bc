@@ -83,7 +83,9 @@
 
 .edit-btn,
 .delete-btn,
-.view-btn {
+.view-btn,
+.assign-btn,
+.assign-cancel {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
@@ -94,8 +96,13 @@
     text-decoration: none;
 }
 
+.assign-btn {
+    margin-right: 10px;
+}
+
 /* Delete Pop-Up Styles */
-.DeleteContainer {
+.DeleteContainer,
+.AssignPopup {
     position: fixed;
     top: 0;
     left: 0;
@@ -108,18 +115,21 @@
     z-index: 2;
 }
 
-.Delete-PopUp {
+.Delete-PopUp,
+.Assign-PopUp {
     background-color: white;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.Delete-PopUp span {
+.Delete-PopUp span,
+.Assign-PopUp span {
     font-size: 24px;
 }
 
-.Delete-PopUp p {
+.Delete-PopUp p,
+.Assign-PopUp p {
     font-size: 18px;
 }
 
@@ -128,7 +138,8 @@
     justify-content: space-around;
 }
 
-.confirm-btn button {
+.confirm-btn button,
+.assign-cancel button {
     background-color: var(--Secondary-Color);
     color: #fff;
     padding: 10px 20px;
@@ -140,6 +151,15 @@
 
 .confirm-btn button:hover {
     background-color: #0fc050;
+}
+
+.AssignPopup ul {
+    list-style: none;
+}
+
+.assign-cancel {
+    margin-top: 25px;
+    background-color: #f44336;
 }
 
 @media screen and (max-width: 1024px) {

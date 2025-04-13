@@ -123,10 +123,6 @@ function CardDisplay(): JSX.Element {
                         <span>{card?.about}</span>
                     </div>
                     <div className="cardDisplay-info">
-                        <p><strong>Email:</strong> {card?.email}</p>
-                        <p><strong>Phone:</strong> {card?.phone}</p>
-                        <p><strong>Website:</strong> <a href={card?.website} target="_blank" rel="noopener noreferrer">{card?.website}</a></p>
-                        <p><strong>Address:</strong> {card?.address}</p>
                     </div>
                 </div>
             </div>

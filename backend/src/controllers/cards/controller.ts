@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import getModel from "../../models/businessCards/factory";
-import getAuthModel from "../../models/auth/factory";
+import getSocialModel from "../../models/socialLinks/factory";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
 import createHttpError, { BadRequest, NotFound, Unauthorized } from "http-errors";
 
@@ -96,3 +96,23 @@ export const getUserCards = async (req: Request, res: Response, next: NextFuncti
         next(err);
     }
 }
+
+export const assignCardOwner = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const cardId = req.params.id;
+        const userId = req.body.ownedBy;
+        if (!userId) {
+            return res.status(400).json({ message: 'User ID is required' });
+        }
+
+        const existingCard = await getModel().getOneById(cardId);
+        if (!existingCard) {
+            throw new Error("Card not found");
+        }
+
+        const updatedCard = await getModel().assignCardOwner(cardId, userId);
+        res.status(StatusCodes.OK).json(updatedCard);
+    } catch (err) {
+        next(err);
+    }
+};

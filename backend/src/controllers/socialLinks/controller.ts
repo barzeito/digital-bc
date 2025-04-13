@@ -21,6 +21,19 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
+export const create = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const existingSocial = await getModel().getOne(req.body.company_id);
+        if (existingSocial) {
+            throw new Error('Company social already exists.');
+        }
+        const social = await getModel().create(req.body)
+        res.status(StatusCodes.CREATED).json({ social })
+    } catch (err) {
+        next(err)
+    }
+}
+
 export const update = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = req.params.id;

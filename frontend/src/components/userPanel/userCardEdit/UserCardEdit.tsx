@@ -9,13 +9,19 @@ import { authStore } from "../../../redux/authState";
 import { jwtDecode } from "jwt-decode";
 import { NavLink } from "react-router-dom";
 import UserMenu from "../userMenu/UserMenu";
+import SocialModel from "../../../models/socialModel";
+import socialService from "../../../services/socialService";
 
 function UserCardEdit(): JSX.Element {
     const params = useParams();
     const cardId = String(params.id);
     const uId = String(params.userId);
+    const socialCompanyId = String(params.id)
     const navigate = useNavigate();
     const [isOwner, setIsOwner] = useState<boolean | null>(null);
+    const [selectedSocial, setSelectedSocial] = useState<string>("");
+    const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
+    const [userId, setUserId] = useState<string | null>(null);
 
     const { handleSubmit, setValue, register, formState } = useForm<CardModel>();
 
@@ -26,6 +32,7 @@ function UserCardEdit(): JSX.Element {
             const decoded = jwtDecode<{ user: { userId: string } }>(token);
             const currentUserId = decoded.user.userId;
             setIsOwner(currentUserId === uId);
+            setUserId(currentUserId)
         } else {
             setIsOwner(false);
         }
@@ -47,7 +54,7 @@ function UserCardEdit(): JSX.Element {
         cardsService.getOne(cardId)
             .then(cardFromServer => {
                 setValue('company', cardFromServer?.company);
-                setValue('name', cardFromServer?.about);
+                setValue('name', cardFromServer?.name);
                 setValue('description', cardFromServer?.description);
                 setValue('about', cardFromServer?.about);
                 setValue('email', cardFromServer?.email);
@@ -62,16 +69,31 @@ function UserCardEdit(): JSX.Element {
 
     if (!isOwner) return <Navigate to="/*" />;
 
+    const handleSocialLinkChange = (platform: string, value: string) => {
+        setSocialLinks(prevLinks => ({
+            ...prevLinks,
+            [platform]: value,
+        }));
+    };
 
     async function submitCardUpdate(card: CardModel) {
         try {
             card.id = cardId;
             await cardsService.editCard(card);
-            notify.success('הכרטיס עודכן בהצלחה');
-            console.log(`עדכון הכרטיס ${card.id}`);
-            navigate(`/panel/user/${uId}`);
+
+            const social = new SocialModel();
+            social.company_id = socialCompanyId;
+
+            if (selectedSocial && socialLinks[selectedSocial]) {
+                social[selectedSocial as keyof SocialModel] = socialLinks[selectedSocial];
+            }
+
+            await socialService.editSocial(social);
+            navigate(`/panel/user/${userId}`)
+            notify.success('Card and Social Links Updated Successfully');
         } catch (error) {
-            console.log(error);
+            console.error(error);
+            notify.error('Failed to update card and social links');
         }
     }
 
@@ -158,11 +180,44 @@ function UserCardEdit(): JSX.Element {
                         <span className="error">{formState.errors.website?.message}</span>
                     </div>
                 </div>
-
-
+                <div className="edit-row">
+                    <div className="edit-group">
+                        <div className="social-media">
+                            <label>רשת חברתית: </label>
+                            <select
+                                className="edit-social"
+                                value={selectedSocial}
+                                onChange={(e) => setSelectedSocial(e.target.value)}
+                            >
+                                <option value="" defaultValue={""}>בחר רשת חברתית</option>
+                                <option value="facebook">פייסבוק</option>
+                                <option value="instagram">אינסטגרם</option>
+                                <option value="linkedin">לינקדאין</option>
+                                <option value="twitter">טוויטר</option>
+                                <option value="whatsapp">וואטסאפ</option>
+                                <option value="email">אימייל</option>
+                                <option value="map">נווט</option>
+                                <option value="phone">טלפון</option>
+                                <option value="tiktok">טיקטוק</option>
+                            </select>
+                        </div>
+                        {selectedSocial && (
+                            <div className="edit-group">
+                                <label>קישור ל-{selectedSocial}:</label>
+                                <input
+                                    type="text"
+                                    value={socialLinks[selectedSocial] || ""}
+                                    onChange={(e) =>
+                                        handleSocialLinkChange(selectedSocial, e.target.value)
+                                    }
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
                 <div className="buttons">
                     <button className="submit-btn">שמירה</button>
-                    <NavLink to="/panel/admin/cards" className="cancel-btn">ביטול</NavLink>
+                    <NavLink to={`/panel/user/${userId}`} className="cancel-btn">ביטול</NavLink>
                 </div>
             </form>
         </div>

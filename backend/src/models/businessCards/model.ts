@@ -6,6 +6,7 @@ export default interface Model {
     getOne(id: string): Promise<DTO>;
     getOneById(id: string): Promise<DTO>;
     add(card: DTO): Promise<DTO>;
+    assignCardOwner(cardId: string, userId: string): Promise<DTO>;
     deleteCard(id: string): Promise<boolean>;
     update(card: DTO): Promise<DTO>;
     getUserCards(id: string): Promise<DTO>;

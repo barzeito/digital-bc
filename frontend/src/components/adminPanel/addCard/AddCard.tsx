@@ -95,7 +95,6 @@ function AddCard(): JSX.Element {
                         <label>קצת על עצמי:</label>
                         <textarea {...register('about', {
                             minLength: { value: 2, message: 'תיאור החברה חייב להיות מינימום 2 תווים.' },
-                            required: { value: true, message: 'שדה חובה!' }
                         })} />
                         <span className="error">{formState.errors.description?.message}</span>
                     </div>
@@ -134,8 +133,7 @@ function AddCard(): JSX.Element {
                             pattern: {
                                 value: /^((https?:\/\/)?(www\.)?[\w\-]+\.[a-z]{2,})(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i,
                                 message: 'כתובת האתר אינה תקינה.'
-                            },
-                            required: { value: true, message: 'שדה חובה!' }
+                            }
                         })} />
                         <span className="error">{formState.errors.website?.message}</span>
                     </div>

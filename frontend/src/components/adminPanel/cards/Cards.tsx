@@ -5,6 +5,8 @@ import notify from "../../../services/Notify";
 import CardModel from "../../../models/cardModel";
 import formatDate from "../../../utils/formateDate";
 import { NavLink } from "react-router-dom";
+import userModel from "../../../models/userModel";
+import authService from "../../../services/authService";
 
 interface cardsProps {
     card: CardModel;
@@ -13,6 +15,8 @@ function Cards(props: cardsProps): JSX.Element {
 
     const cardId = props.card.id;
     const [showDelete, setShowDelete] = useState(false);
+    const [showAssignPopup, setShowAssignPopup] = useState(false);
+    const [users, setUsers] = useState<userModel[]>([]);
 
     async function deleteCard(): Promise<void> {
         try {
@@ -25,6 +29,39 @@ function Cards(props: cardsProps): JSX.Element {
         }
         setShowDelete(false);
     }
+
+    async function fetchUsers() {
+        try {
+            const allUsers = await authService.getAllUsers();
+            setUsers(allUsers);
+            setShowAssignPopup(true);
+        } catch (error) {
+            notify.error("לא ניתן לטעון משתמשים");
+        }
+    }
+    async function assignOwner(userId?: string) {
+        if (!userId) {
+            notify.error("User ID לא נמצא");
+            return;
+        }
+
+        if (!cardId) {
+            notify.error("Card ID לא נמצא");
+            return;
+        }
+
+        try {
+            await cardsService.assignUserToCard(cardId, userId);
+            notify.success("הכרטיס שויך בהצלחה");
+            setShowAssignPopup(false);
+            window.location.reload();
+        } catch (error) {
+            notify.error("אירעה שגיאה בשיוך משתמש");
+        }
+    }
+
+
+
 
     return (
         <div className="Cards">
@@ -48,7 +85,11 @@ function Cards(props: cardsProps): JSX.Element {
                     <p><strong>בעלים: </strong>
                         {props.card.firstName
                             ? `${props.card.firstName} ${props.card.lastName}`
-                            : "לא משויך"}
+                            : <>
+                                לא משויך
+                            </>
+                        }
+                        <button className="assign-btn" onClick={fetchUsers}>שיוך</button>
                     </p>
                 </div>
             </div>
@@ -58,6 +99,26 @@ function Cards(props: cardsProps): JSX.Element {
                 <NavLink to={`/panel/admin/edit/${props.card.id}`} className="edit-btn">עריכה</NavLink>
                 <button className="delete-btn" onClick={() => setShowDelete(true)}>מחיקה</button>
             </div>
+            {showAssignPopup && (
+                <div className="AssignPopup">
+                    <div className="Assign-PopUp">
+                        <span>שייך בעלים ל {props.card.company}</span>
+                        <ul>
+                            {users.map(user => (
+                                <li key={user.userId}>
+                                    {user.firstName} {user.lastName}
+                                    {user.userId && (
+                                        <button className="assign-btn" onClick={() => assignOwner(user.userId)}>שייך</button>
+                                    )}
+                                </li>
+                            ))}
+                            <button className="assign-cancel" onClick={() => setShowAssignPopup(false)}>ביטול</button>
+
+                        </ul>
+                    </div>
+                </div>
+            )}
+
             {showDelete && (
                 <div className="DeleteContainer">
                     <div className="Delete-PopUp">

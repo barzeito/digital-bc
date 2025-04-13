@@ -74,6 +74,17 @@ class CardsService {
         return updatedCard;
     }
 
+    public async assignUserToCard(cardId: string, userId: string): Promise<CardModel> {
+        const response = await axios.patch<CardModel>(`${appConfig.cardsUrl}/assign-owner/${cardId}`, { ownedBy: userId });
+        const updatedCard = response.data;
+        const action: CardsAction = {
+            type: CardsActionType.updateCard,
+            payload: updatedCard
+        };
+        CardsStore.dispatch(action);
+        return updatedCard;
+    }
+
     public async getUserCards(userId: string): Promise<CardModel[]> {
         const response = await axios.get<{ cards: CardModel[] }>(appConfig.cardsUrl + `/userCards/${userId}`);
         const cards = response.data.cards || response.data;

@@ -14,7 +14,6 @@ function EditCard(): JSX.Element {
     const params = useParams();
     const cardId = String(params.id);
     const socialCompanyId = String(params.id);
-    const socialId = String(params.id);
     const navigate = useNavigate();
 
     const { handleSubmit, setValue, register, formState } = useForm<CardModel>();
@@ -43,7 +42,7 @@ function EditCard(): JSX.Element {
         }));
     };
 
-    async function submitCardAndSocialUpdate(card: CardModel) {
+    async function submitCardUpdate(card: CardModel) {
         try {
             card.id = cardId;
             await cardsService.editCard(card);
@@ -70,7 +69,7 @@ function EditCard(): JSX.Element {
         <div className="EditCard">
             <AdminMenu />
             <h2>עריכת כרטיס</h2>
-            <form onSubmit={handleSubmit(submitCardAndSocialUpdate)}>
+            <form onSubmit={handleSubmit(submitCardUpdate)}>
                 <div className="edit-row">
                     <div className="edit-group">
                         <label>שם החברה:</label>

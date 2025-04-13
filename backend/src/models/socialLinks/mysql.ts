@@ -25,6 +25,16 @@ class SocialLinks implements Model {
         return slinks;
     }
 
+    public async create(social: DTO): Promise<DTO> {
+        const { company_id, company, facebook, instagram, linkedin, twitter, whatsapp, email, map, phone, tiktok } = social;
+        const id = v4();
+        await query(`
+            INSERT INTO social_links (id, company_id, facebook, instagram, linkedin, twitter, whatsapp, email, map, phone, tiktok)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, [id, company_id, company, facebook, instagram, linkedin, twitter, whatsapp, email, map, phone, tiktok]);
+        return this.getOne(company_id);
+    }
+
     public async getOne(company_id: string): Promise<DTO> {
         const slink = (await query(`
             SELECT  id,
