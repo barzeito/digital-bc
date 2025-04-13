@@ -24,6 +24,7 @@
     border-radius: 4px;
     font-size: 14px;
     width: 100%;
+    gap: 10px;
 }
 
 .AddCard .error {

@@ -30,7 +30,7 @@ function AddCard(): JSX.Element {
 
             if (userId) {
                 card.ownedBy = userId;
-            }else{
+            } else {
                 card.ownedBy = undefined;
             }
             delete card.user;
@@ -40,7 +40,9 @@ function AddCard(): JSX.Element {
             notify.success('New card added successfully');
 
             setValue('company', '');
+            setValue('name', '')
             setValue('description', '');
+            setValue('about', '');
             setValue('address', '');
             setValue('email', '');
             setValue('phone', '');
@@ -64,7 +66,16 @@ function AddCard(): JSX.Element {
                     <div className="add-group">
                         <label>שם החברה:</label>
                         <input type="text" {...register('company', {
-                            minLength: { value: 4, message: 'שם החברה חייב להיות מינימום 4 תווים.' },
+                            minLength: { value: 2, message: 'שם החברה חייב להיות מינימום 2 תווים.' },
+                            required: { value: true, message: 'שדה חובה!' }
+                        })} />
+                        <span className="error">{formState.errors.company?.message}</span>
+                    </div>
+
+                    <div className="add-group">
+                        <label>שם:</label>
+                        <input type="text" {...register('name', {
+                            minLength: { value: 2, message: 'שם החברה חייב להיות מינימום 2 תווים.' },
                             required: { value: true, message: 'שדה חובה!' }
                         })} />
                         <span className="error">{formState.errors.company?.message}</span>
@@ -73,12 +84,23 @@ function AddCard(): JSX.Element {
                     <div className="add-group">
                         <label>תיאור החברה:</label>
                         <input type="text" {...register('description', {
-                            minLength: { value: 6, message: 'תיאור החברה חייב להיות מינימום 6 תווים.' },
+                            minLength: { value: 2, message: 'תיאור החברה חייב להיות מינימום 2 תווים.' },
                             required: { value: true, message: 'שדה חובה!' }
                         })} />
                         <span className="error">{formState.errors.description?.message}</span>
                     </div>
-
+                </div>
+                <div className="add-row">
+                    <div className="add-group">
+                        <label>קצת על עצמי:</label>
+                        <textarea {...register('about', {
+                            minLength: { value: 2, message: 'תיאור החברה חייב להיות מינימום 2 תווים.' },
+                            required: { value: true, message: 'שדה חובה!' }
+                        })} />
+                        <span className="error">{formState.errors.description?.message}</span>
+                    </div>
+                </div>
+                <div className="add-row">
                     <div className="add-group">
                         <label>אימייל:</label>
                         <input type="text" {...register('email', {
@@ -87,9 +109,7 @@ function AddCard(): JSX.Element {
                         })} />
                         <span className="error">{formState.errors.email?.message}</span>
                     </div>
-                </div>
 
-                <div className="add-row">
                     <div className="add-group">
                         <label>כתובת:</label>
                         <input type="text" {...register('address', {

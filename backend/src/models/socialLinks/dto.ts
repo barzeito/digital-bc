@@ -2,6 +2,13 @@ export default interface DTO {
     id: string;
     company_id: string;
     company: string;
-    platform: string;
-    url: string;
+    facebook?: string;
+    instagram?: string;
+    linkedin?: string;
+    twitter?: string;
+    whatsapp?: string;
+    email?: string;
+    map?: string;
+    phone?: string;
+    tiktok?: string;
 }

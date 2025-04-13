@@ -49,7 +49,10 @@ function UserDash(): JSX.Element {
         if (!userId) return;
 
         cardsService.getUserCards(userId)
-            .then(cardsFromServer => setUserCards(cardsFromServer))
+            .then(cardsFromServer => {
+                console.log("Cards from server:", cardsFromServer); // ← כאן
+                setUserCards(cardsFromServer);
+            })
             .catch(error => notify.error(error));
 
         const unsubscribe = CardsStore.subscribe(() => {
@@ -70,7 +73,7 @@ function UserDash(): JSX.Element {
                 {userCards.length === 0 && (
                     <div className="NoCardsMessage">
                         <p>לא נמצאו כרטיסים המשויכים למשתמש שלך.</p>
-                        <p>במידה ואתה סבור שמדובר בטעות, אנא צור קשר עם צוות התמיכה.</p>
+                        <p>במידה ומדובר בטעות, אנא צור קשר עם צוות התמיכה.</p>
                     </div>
                 )}
                 {userCards.map(uc => <UserCards key={uc.id} card={uc} />)}

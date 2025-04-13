@@ -9,6 +9,7 @@ interface userCardsProps {
 
 function UserCards(props: userCardsProps): JSX.Element {
 
+    console.log("Card Owned By: " + props.card.ownedBy);
 
     return (
         <div className="UserCards">
@@ -34,7 +35,7 @@ function UserCards(props: userCardsProps): JSX.Element {
 
             <div className="uc-btn">
                 <NavLink to={`/cards/${props.card.company}`} className="view-btn">צפייה</NavLink>
-                <NavLink to={`/panel/user/edit-card/${props.card.id}`} className="edit-btn">עריכה</NavLink>
+                <NavLink to={`/panel/user/edit-card/${props.card.ownedBy}/${props.card.id}`} className="edit-btn">עריכה</NavLink>
             </div>
         </div>
     );

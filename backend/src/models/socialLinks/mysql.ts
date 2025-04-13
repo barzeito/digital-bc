@@ -11,53 +11,58 @@ class SocialLinks implements Model {
             SELECT  id,
                     company_id,
                     company,
-                    platform,
-                    url
+                    facebook,
+                    instagram,
+                    linkedin,
+                    twitter,
+                    whatsapp,
+                    email,
+                    map,
+                    phone,
+                    tiktok
             FROM    social_links 
         `,));
         return slinks;
     }
 
-    public async getOne(id: string): Promise<DTO> {
+    public async getOne(company_id: string): Promise<DTO> {
         const slink = (await query(`
             SELECT  id,
                     company_id,
                     company,
-                    platform,
-                    url
+                    facebook,
+                    instagram,
+                    linkedin,
+                    twitter,
+                    whatsapp,
+                    email,
+                    map,
+                    phone,
+                    tiktok
             FROM    social_links  
-            WHERE   id = ?
-        `, [id]))[0];
+            WHERE   company_id = ?
+        `, [company_id]))[0];
         return slink;
     }
 
-    public async add(slink: DTO): Promise<DTO> {
-        const { id, company_id, company, platform, url } = slink;
-        const addLink: OkPacketParams = await query(`
-            INSERT INTO social_links(id, company_id, company, platform, url)
-            VALUES(?, ?, ?, ?, ?)
-        `, [id, company_id, company, platform, url]);
-        return this.getOne(id);
-    }
-
-    public async deleteSocial(id: string): Promise<boolean> {
-        const result: OkPacketParams = await query(`
-            DELETE FROM social_links
-            WHERE       id = ?
-        `, [id]);
-        return Boolean(result.affectedRows);
-    }
-
     public async update(slink: DTO): Promise<DTO> {
-        const { id, company, platform, url } = slink;
+        const { company_id, company, facebook, instagram, linkedin, twitter, whatsapp, email, map, phone, tiktok } = slink;
         await query(`
-                UPDATE social_links
-                SET    company = ?,
-                        platform = ?,
-                        url = ?
-                WHERE  id = ?
-            `, [company, platform, url, id]);
-        return this.getOne(id);
+        UPDATE social_links
+        SET    company = ?,
+               facebook = ?,
+               instagram = ?,
+               linkedin = ?,
+               twitter = ?,
+               whatsapp = ?,
+               email = ?,
+               map = ?,
+               phone = ?,
+               tiktok = ?
+        WHERE  company_id = ?
+    `, [company, facebook, instagram, linkedin, twitter, whatsapp, email, map, phone, tiktok, company_id]);
+
+        return this.getOne(company_id);
     }
 }
 

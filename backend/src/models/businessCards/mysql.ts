@@ -10,7 +10,9 @@ class BusinessCards implements Model {
         const cards = (await query(`
             SELECT  bc.id,
                     bc.company,
+                    bc.name,
                     bc.description,
+                    bc.about,
                     bc.email,
                     bc.phone,
                     bc.website,
@@ -31,7 +33,9 @@ class BusinessCards implements Model {
         const card = (await query(`
             SELECT  id,
                     company,
+                    name,
                     description,
+                    about,
                     email,
                     phone,
                     website,
@@ -49,7 +53,9 @@ class BusinessCards implements Model {
         const card = (await query(`
             SELECT  id,
                     company,
+                    name,
                     description,
+                    about,
                     email,
                     phone,
                     website,
@@ -64,12 +70,12 @@ class BusinessCards implements Model {
     }
 
     public async add(card: DTO): Promise<DTO> {
-        const { company, description, email, phone, website, address, created_at, updated_at, ownedBy } = card;
+        const { company, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy } = card;
         const id = v4();
         const addCard: OkPacketParams = await query(`
-            INSERT INTO business_cards(id, company, description, email, phone, website, address, created_at, updated_at, ownedBy)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ? ,?,?)
-        `, [id, company, description, email, phone, website, address, created_at, updated_at, ownedBy || null]);
+            INSERT INTO business_cards(id, company,name, description,about, email, phone, website, address, created_at, updated_at, ownedBy)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?)
+        `, [id, company, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy || null]);
         return this.getOneById(id);
     }
 
@@ -82,12 +88,14 @@ class BusinessCards implements Model {
     }
 
     public async update(card: DTO): Promise<DTO> {
-        const { id, company, description, email, phone, website, address, ownedBy } = card;
+        const { id, company, name, description, about, email, phone, website, address, ownedBy } = card;
         const updated_at = new Date().toISOString().slice(0, 19).replace("T", " ");
         await query(`
                 UPDATE  business_cards
                 SET     company = ?,
+                        name = ?,
                         description = ?,
+                        about = ?,
                         email = ?,
                         phone = ?,
                         website = ?,
@@ -95,7 +103,7 @@ class BusinessCards implements Model {
                         updated_at = ?,
                         ownedBy = ?
                 WHERE   id = ?
-            `, [company, description, email, phone, website, address, updated_at, ownedBy || null, id]);
+            `, [company, name, description, about, email, phone, website, address, updated_at, ownedBy || null, id]);
         return this.getOneById(id);
     }
 
@@ -103,13 +111,16 @@ class BusinessCards implements Model {
         const cards = (await query(`
             SELECT  id,
                     company,
+                    name,
                     description,
+                    about,
                     email,
                     phone,
                     website,
                     address,
                     created_at,
-                    updated_at
+                    updated_at,
+                    ownedBy
             FROM    business_cards  
             WHERE   ownedBy = ?
         `, [id]));

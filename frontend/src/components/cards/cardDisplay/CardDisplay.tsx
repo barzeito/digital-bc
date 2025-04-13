@@ -15,29 +15,70 @@ import email from "../../../assets/socialMedia/mail.png";
 import map from "../../../assets/socialMedia/map.png";
 import phone from "../../../assets/socialMedia/telephone.png";
 import tikTok from "../../../assets/socialMedia/tik-tok.png";
-
-
-
+import socialService from "../../../services/socialService";
+import SocialModel from "../../../models/socialModel";
 
 function CardDisplay(): JSX.Element {
 
     const { company } = useParams();
     const navigate = useNavigate();
     const [card, setCard] = useState<CardModel>();
+    const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
+
+    const socialIcons: { [key: string]: string } = {
+        facebook: facebookIcon,
+        instagram: instagramIcon,
+        linkedin: linkedinIcon,
+        twitter: twitterIcon,
+        whatsapp: whatsApp,
+        email: email,
+        map: map,
+        phone: phone,
+        tiktok: tikTok
+    };
+
+    const socialLabels: { [key: string]: string } = {
+        facebook: "פייסבוק",
+        instagram: "אינסטגרם",
+        linkedin: "לינקדאין",
+        twitter: "טוויטר",
+        whatsapp: "וואטסאפ",
+        email: "אימייל",
+        map: "נווט",
+        phone: "טלפון",
+        tiktok: "טיקטוק"
+    };
 
     useEffect(() => {
         if (company) {
             cardsService.getByName(company)
-                .then(cardFromServer => {
+                .then(async cardFromServer => {
                     if (cardFromServer) {
-                        setCard(cardFromServer)
+                        setCard(cardFromServer);
+                        const allSocials: SocialModel[] = await socialService.getAll();
+                        const filtered = allSocials.filter(s => s.company_id === cardFromServer.id);
+                        const socialMap: { [key: string]: string } = {};
+                        filtered.forEach(s => {
+                            // עבור כל סושיאל נבדוק אם יש URL
+                            if (s.facebook) socialMap["facebook"] = s.facebook;
+                            if (s.instagram) socialMap["instagram"] = s.instagram;
+                            if (s.linkedin) socialMap["linkedin"] = s.linkedin;
+                            if (s.twitter) socialMap["twitter"] = s.twitter;
+                            if (s.whatsapp) socialMap["whatsapp"] = s.whatsapp;
+                            if (s.email) socialMap["email"] = s.email;
+                            if (s.map) socialMap["map"] = s.map;
+                            if (s.phone) socialMap["phone"] = s.phone;
+                            if (s.tiktok) socialMap["tiktok"] = s.tiktok;
+                        });
+                        setSocialLinks(socialMap);
                     } else {
-                        navigate("/")
+                        navigate("/");
                     }
                 })
-                .catch(error => notify.error(error))
+                .catch(error => notify.error(error));
         }
-    }, [company, navigate])
+    }, [company, navigate]);
+
 
     return (
         <div className="CardDisplay">
@@ -52,45 +93,34 @@ function CardDisplay(): JSX.Element {
                 </div>
                 <div className="cd-body">
                     <div className="cd-social">
-                        <div className="social-item">
-                            <img src={facebookIcon} alt="Facebook" />
-                            <p>פייסבוק</p>
-                        </div>
-                        <div className="social-item">
-                            <img src={instagramIcon} alt="Instagram" />
-                            <p>אינסטגרם</p>
-                        </div>
-                        <div className="social-item">
-                            <img src={linkedinIcon} alt="LinkedIn" />
-                            <p>לינקדאין</p>
-                        </div>
-                        <div className="social-item">
-                            <img src={twitterIcon} alt="Twitter" />
-                            <p>טוויטר</p>
-                        </div>
-                        <div className="social-item">
-                            <img src={whatsApp} alt="WhatsApp" />
-                            <p>וואטסאפ</p>
-                        </div>
-                        <div className="social-item">
-                            <img src={email} alt="Email" />
-                            <p>אימייל</p>
-                        </div>
-                        <div className="social-item">
-                            <img src={map} alt="Map" />
-                            <p>נווט</p>
-                        </div>
-                        <div className="social-item">
-                            <img src={phone} alt="Phone" />
-                            <p>טלפון</p>
-                        </div>
-                        <div className="social-item">
-                            <img src={tikTok} alt="TikTok" />
-                            <p>טיק טוק</p>
+                        <div className="cd-item">
+                            {Object.keys(socialIcons).map((platform) => {
+                                if (!socialLinks[platform]) return null;
+                                const href = socialLinks[platform].startsWith("http")
+                                    ? socialLinks[platform]
+                                    : "https://" + socialLinks[platform];
+
+                                return (
+                                    <a
+                                        key={platform}
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="social-item"
+                                    >
+                                        <img src={socialIcons[platform]} alt={platform} />
+                                        <p>{socialLabels[platform]}</p>
+                                    </a>
+                                );
+                            })}
                         </div>
                     </div>
                     <div className="cd-SaveContact">
                         <button className="SaveContact">שמירת איש קשר <i className="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div className="cd-About">
+                        <p>קצת עליי</p>
+                        <span>{card?.about}</span>
                     </div>
                     <div className="cardDisplay-info">
                         <p><strong>Email:</strong> {card?.email}</p>
