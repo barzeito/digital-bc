@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 02, 2025 at 06:13 AM
+-- Generation Time: Apr 14, 2025 at 06:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -32,25 +32,24 @@ USE `digital_bc`;
 CREATE TABLE `business_cards` (
   `id` varchar(36) NOT NULL,
   `company` varchar(50) NOT NULL,
+  `name` varchar(25) NOT NULL,
   `description` varchar(50) NOT NULL,
+  `about` text NOT NULL,
   `email` varchar(50) NOT NULL,
   `phone` varchar(25) NOT NULL,
   `website` varchar(50) NOT NULL,
   `address` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ownedBy` char(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `business_cards`
 --
 
-INSERT INTO `business_cards` (`id`, `company`, `description`, `email`, `phone`, `website`, `address`, `created_at`, `updated_at`) VALUES
-('06171a54-e80c-4e46-ba8b-2bdbc5851dbc', 'test5', 'this is test2', 'test@gmail.com', '0524567890', 'https://test.com', '123 Silicon Valley, CA', '2025-04-02 01:13:22', '2025-04-02 01:13:22'),
-('5d519d9d-1423-4eea-b18a-c0eb74c3400d', 't232', 'thdasd', 'test@gmail.com', '0524567890', 'https://www.facebook.com', '123 Silicon Valley, CA', '2025-04-02 01:45:32', '2025-04-02 01:45:32'),
-('727cc853-753b-4ec5-a7ca-908549b4b85f', 't2322', 'thdasd', 'test@gmail.com', '0524567890', 'https://www.facebook.com', '123 Silicon Valley, CA', '2025-04-02 01:14:40', '2025-04-02 01:14:40'),
-('741d6a44-a98d-4576-958d-4aa76fd2e773', 'test2', 'this is test2', 'test12@gmail.com', '+1234567890', 'https://test.com', '123 Silicon Valley, CA', '2025-04-01 03:19:26', '2025-04-01 10:19:26'),
-('74e121ec-0e96-11f0-80c6-feb49e4b3f7a', 'Test', 'this is a test', 'test@gmail.com', '052-3456789', 'www.test.com', 'this,is,a,test', '2025-04-01 01:13:01', '2025-04-03 01:11:20');
+INSERT INTO `business_cards` (`id`, `company`, `name`, `description`, `about`, `email`, `phone`, `website`, `address`, `created_at`, `updated_at`, `ownedBy`) VALUES
+('7ee3ae9e-31bd-4f1c-b403-940b587282dd', 'Digital Business Cards', 'Bar', 'כרטיסי ביקור דיגיטלים', '✨ כרטיסי ביקור דיגיטליים – הדרך החדשה להתחבר בעולם העסקי! ✨\n\nבימינו, כרטיס ביקור דיגיטלי הוא הרבה יותר מסתם פרטי יצירת קשר – הוא הדרך שלך להציג את עצמך בצורה מודרנית, נוחה ומרשימה! 🚀\n\n🔹 אינטראקטיבי וחדשני – כל פרטי העסק שלך במקום אחד, עם עיצובים מתקדמים שיבדל אותך מכל המתחרים. 🔹 עדכון מיידי – כל שינוי שתעשה בכרטיס הביקור יתעדכן בצורה אוטומטית, בלי לדאוג לכרטיסים פיזיים. 🔹 חוויית משתמש ידידותית – כרטיסי הביקור הדיגיטליים שלנו נגישים, קלים לשיתוף, וללא מגבלות על כמות המידע. 🔹 שיתוף קל ונוח – שיתוף הכרטיס דרך קישור, קוד QR או דרך רשתות חברתיות. 📲\n\n✅ כרטיס ביקור דיגיטלי לא רק שתורם למראה המקצועי שלך, אלא גם חוסך זמן ומשאבים. פשוט, נוח, ומרשים!\n\nמהחברה שלך ועד לכל לקוח פוטנציאלי – כרטיס ביקור דיגיטלי הוא הכלי המושלם לכל תחום! 💼\n\nהצטרף למהפכת הדיגיטל והתחל לשתף את כרטיס הביקור שלך בצורה חכמה ויעילה!\n\n📩 צרו קשר עכשיו וגלו איך אנחנו יכולים לשדרג את הפרופיל העסקי שלכם! 🌟', 'barzeitony@gmail.com', '052-3456789', 'www.soon.com', 'כתובת תיהיה בקרוב', '2025-04-13 23:47:48', '2025-04-14 06:47:48', '200e5ccd-1e80-4fee-b48a-b5118e0508cf');
 
 -- --------------------------------------------------------
 
@@ -78,20 +77,26 @@ INSERT INTO `roles` (`roleId`, `roleName`) VALUES
 --
 
 CREATE TABLE `social_links` (
-  `id` int(11) NOT NULL,
+  `id` char(36) NOT NULL,
   `company_id` varchar(36) NOT NULL,
   `company` varchar(50) NOT NULL,
-  `platform` varchar(50) NOT NULL,
-  `url` varchar(255) NOT NULL
+  `facebook` varchar(255) DEFAULT NULL,
+  `instagram` varchar(255) DEFAULT NULL,
+  `linkedin` varchar(255) DEFAULT NULL,
+  `twitter` varchar(255) DEFAULT NULL,
+  `whatsapp` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `map` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `tiktok` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `social_links`
 --
 
-INSERT INTO `social_links` (`id`, `company_id`, `company`, `platform`, `url`) VALUES
-(1, '74e121ec-0e96-11f0-80c6-feb49e4b3f7a', 'Test', 'ins', 'teasfsad.co.il'),
-(2, '74e121ec-0e96-11f0-80c6-feb49e4b3f7a', 'Test', 'Facebook', 'www.facebook.com');
+INSERT INTO `social_links` (`id`, `company_id`, `company`, `facebook`, `instagram`, `linkedin`, `twitter`, `whatsapp`, `email`, `map`, `phone`, `tiktok`) VALUES
+('801dcf63-61cf-4263-b853-c12f25aa1982', '7ee3ae9e-31bd-4f1c-b403-940b587282dd', 'dfsdf', 'www.facebook.com', 'www.instagram.com', 'www.jhjhj.com', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -105,16 +110,20 @@ CREATE TABLE `users` (
   `lastName` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `roleId` int(11) NOT NULL
+  `roleId` int(11) NOT NULL,
+  `isTemporaryPassword` tinyint(1) DEFAULT 1,
+  `resetPasswordToken` varchar(255) DEFAULT NULL,
+  `resetPasswordExpires` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userId`, `firstName`, `lastName`, `email`, `password`, `roleId`) VALUES
-('20dd97e0-38a9-4f4d-88eb-79cac02d463c', 'user', 'test', 'test@gmail.com', '123456', 1),
-('fc71adaf-2e06-4cde-9817-b625c60074ca', 'Bar', 'Zeitony', 'barzeitony@gmail.com', '123456', 2);
+INSERT INTO `users` (`userId`, `firstName`, `lastName`, `email`, `password`, `roleId`, `isTemporaryPassword`, `resetPasswordToken`, `resetPasswordExpires`) VALUES
+('200e5ccd-1e80-4fee-b48a-b5118e0508cf', 'Bar', 'Zeitony', 'bar199234@gmail.com', '301200949421c4b6aac8cf1b8f3b2b48', 1, 0, NULL, NULL),
+('4bce0221-bf20-46d5-9cde-2942fd3fd144', 'משתמש חדש', 'משתמש חדש', 'bar199z51@gmail.com', '301200949421c4b6aac8cf1b8f3b2b48', 1, 0, NULL, NULL),
+('62a98347-ffe4-4069-8128-55e9e08fc392', 'בר', 'זיתוני', 'barzeitony@gmail.com', '301200949421c4b6aac8cf1b8f3b2b48', 2, 0, 'a4c9c4c9f894962c292bf06fc37cdba9310d8948946b3ab6526a91dfb6b03875', '2025-04-03 17:58:51');
 
 --
 -- Indexes for dumped tables
@@ -124,7 +133,8 @@ INSERT INTO `users` (`userId`, `firstName`, `lastName`, `email`, `password`, `ro
 -- Indexes for table `business_cards`
 --
 ALTER TABLE `business_cards`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ownedBy` (`ownedBy`);
 
 --
 -- Indexes for table `roles`
@@ -147,18 +157,14 @@ ALTER TABLE `users`
   ADD KEY `roleId` (`roleId`);
 
 --
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `social_links`
---
-ALTER TABLE `social_links`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `business_cards`
+--
+ALTER TABLE `business_cards`
+  ADD CONSTRAINT `business_cards_ibfk_1` FOREIGN KEY (`ownedBy`) REFERENCES `users` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `social_links`
