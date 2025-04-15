@@ -19,7 +19,7 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
     try {
         const existingUser = await getModel().getByEmail(req.body.email)
         if (existingUser) {
-            return next(createHttpError(BadRequest('User with this email is already exist')));
+            return next(res.status(400).json({ message: 'Email already in use', code: 'EMAIL_EXISTS' }));
         }
         const user = await getModel().signUp(req.body);
         const jwt = generateJWT(user, config.get('app.jwt.secret'), config.get('app.jwt.expires'))

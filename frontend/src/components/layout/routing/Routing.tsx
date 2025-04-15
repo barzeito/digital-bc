@@ -11,6 +11,7 @@ import EditCard from "../../adminPanel/editCard/EditCard";
 import AddCard from "../../adminPanel/addCard/AddCard";
 import UserDash from "../../userPanel/userDash/UserDash";
 import UserCardEdit from "../../userPanel/userCardEdit/UserCardEdit";
+import UserList from "../../adminPanel/userList/UserList";
 function Routing(): JSX.Element {
 
     return (
@@ -30,6 +31,8 @@ function Routing(): JSX.Element {
             <Route path="/panel/admin/cards" element={<AdminRoute element={<CardList />} />} />
             <Route path="/panel/admin/cards/add-card" element={<AdminRoute element={<AddCard />} />} />
             <Route path="/panel/admin/edit/:id" element={<AdminRoute element={<EditCard />} />} />
+            <Route path="/panel/admin/users" element={<AdminRoute element={<UserList />} />} />
+
 
             <Route path="/" element={<Home />} />
             <Route path="*" element={<Page404 />} />

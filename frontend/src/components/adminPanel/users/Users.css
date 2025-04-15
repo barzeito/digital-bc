@@ -1,0 +1,135 @@
+.Users {
+    background-color: var(--Primary-Color);
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+    margin: 20px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 0.2px solid var(--Tertiary-Color);
+    width: 60%;
+}
+
+.users-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.header-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-info .user-firstName {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--Black-Text-Color);
+    margin: 0;
+}
+
+.header-info .user-lastName {
+    color: var(--Black-Text-Color);
+    font-size: 0.95rem;
+    margin: 4px 0;
+}
+
+.users-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.users-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    color: var(--Black-Text-Color);
+    margin: auto;
+}
+
+.users-info p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.users-footer {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: var(--Secondary-Color);
+    color: var(--White-Text-Color);
+    text-decoration: none;
+}
+
+.delete-btn {
+    background-color: #f44336;
+}
+
+@media screen and (max-width: 1024px) {
+    .Users {
+        align-items: center;
+    }
+
+    .users-header,
+    .users-body,
+    .users-footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-info {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .edit-btn,
+    .delete-btn {
+        width: 100%;
+        font-size: 0.85rem;
+        padding: 8px 12px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .Users {
+        padding: 14px;
+    }
+
+    .user-firstName {
+        font-size: 1.2rem;
+    }
+
+    .user-lastName {
+        font-size: 0.9rem;
+    }
+
+    .card-info p {
+        font-size: 0.88rem;
+        word-break: break-word;
+    }
+
+    .users-footer {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .edit-btn,
+    .delete-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+}

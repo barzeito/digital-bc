@@ -37,7 +37,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const existingCard = await getModel().getOne(req.body.company);
         if (existingCard) {
-            throw new Error('Company name already exists.');
+            return next(res.status(400).json({ message: 'Company name already exists.', code: 'COMPANY_EXISTS' }));
         }
         const card = await getModel().add(req.body);
         res.status(StatusCodes.CREATED).json({ card })

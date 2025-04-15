@@ -51,8 +51,19 @@ function AddCard(): JSX.Element {
 
             navigate("/panel/admin/cards");
 
-        } catch (error) {
-            notify.error('!אירעה שגיאה בעת יצירת הכרטיס,אנא נסה שוב');
+        } catch (error: any) {
+            const message = error?.response?.data?.message;
+            const code = error?.response?.data?.code;
+
+            if (code === 'EMAIL_EXISTS') {
+                notify.error("אימייל זה כבר בשימוש. נסה אימייל אחר.");
+            }
+            else if (code === 'COMPANY_EXISTS') {
+                notify.error("החברה הזו כבר קיימת במערכת.");
+            }
+            else {
+                notify.error("אירעה שגיאה. נסה שוב.");
+            }
         }
     }
 
@@ -64,7 +75,7 @@ function AddCard(): JSX.Element {
             <form onSubmit={handleSubmit(submitNewCard)}>
                 <div className="add-row">
                     <div className="add-group">
-                        <label>שם החברה:</label>
+                        <label>שם החברה באנגלית (ישמש ככתובת הכרטיס):</label>
                         <input type="text" {...register('company', {
                             minLength: { value: 2, message: 'שם החברה חייב להיות מינימום 2 תווים.' },
                             required: { value: true, message: 'שדה חובה!' }
@@ -148,7 +159,7 @@ function AddCard(): JSX.Element {
                     <div className="user-fields">
                         <div className="add-row">
                             <div className="add-group">
-                                <label>שם משתמש:</label>
+                                <label>שם פרטי:</label>
                                 <input type="text" {...register('user.firstName', {
                                     required: { value: true, message: 'שדה חובה!' }
                                 })} />
