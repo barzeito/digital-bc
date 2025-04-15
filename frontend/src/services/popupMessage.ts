@@ -9,7 +9,7 @@ class Notify {
         document.body.appendChild(this.container);
     }
 
-    public show(message: string, type: NotificationType = 'info', duration: number = 10000) {
+    public show(message: string, type: NotificationType = 'info', duration: number = 3000) {
         const notification = document.createElement("div");
         notification.className = `notify notify-${type}`;
         notification.innerHTML = `

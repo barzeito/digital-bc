@@ -1,8 +1,18 @@
-.DisplayCards {
-    padding-top: 60px;
+.cards-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
 }
 
-.cards-options {
-    padding-top: 70px;
-    color: red;
+.newCard-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    padding: 10px;
+    background-color: var(--Secondary-Color);
+    text-decoration: none;
+    color: var(--White-Text-Color);
+    border-radius: 6px;
 }

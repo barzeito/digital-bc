@@ -9,7 +9,7 @@ import notify from "../../../services/popupMessage"
 
 function SignIn(): JSX.Element {
 
-    const { register, handleSubmit } = useForm<signInModel>();
+    const { register, handleSubmit, formState } = useForm<signInModel>();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,11 +40,24 @@ function SignIn(): JSX.Element {
             <form onSubmit={handleSubmit(submitSignInData)}>
                 <label>
                     אימייל לקוח:
-                    <input type="email" {...register('email')} />
+                    <input type="email" {...register('email',
+                        {
+                            required: {
+                                value: true,
+                                message: "שדה חובה!"
+                            },
+                        })} /><span>{formState.errors.email?.message}</span>
                 </label>
                 <label>
                     סיסמאת לקוח:
-                    <input type="password" {...register('password')} />
+                    <input type="password" {...register('password',
+                        {
+                            required: {
+                                value: true,
+                                message: "שדה חובה!"
+                            },
+                        })} /><span>{formState.errors.password?.message}</span>
+
                 </label>
                 <button type="submit">התחבר</button>
             </form>

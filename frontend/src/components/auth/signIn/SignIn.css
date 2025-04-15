@@ -62,3 +62,10 @@
 .SignIn button:hover {
   background-color: #24a152;
 }
+
+.SignIn span {
+  color: #ff4040;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}

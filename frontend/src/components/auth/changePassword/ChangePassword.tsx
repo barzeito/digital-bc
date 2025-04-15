@@ -50,19 +50,19 @@ function ChangePassword(): JSX.Element {
             <div className="changePassword-body">
                 <form onSubmit={handleSubmit(submitChangePassword)}>
                     <div className="form-group">
-                        <label>New Password:</label>
-                        <input type="password" {...register('password', { required: 'This field is required' })} className="form-control" />
+                        <label>הזן סיסמא חדשה:</label>
+                        <input type="password" {...register('password', { required: "שדה חובה!" })} className="form-control" />
                         <div className="error-message">{errors.password?.message}</div>
                     </div>
                     <div className="form-group">
-                        <label>Confirm New Password:</label>
+                        <label>אימות סיסמא חדשה:</label>
                         <input type="password" {...register('confirmPassword', {
-                            required: 'This field is required',
-                            validate: (value) => value === watch('password') || 'Passwords do not match'
+                            required: "שדה חובה!",
+                            validate: (value) => value === watch('password') || "הסיסמאות אינן זהות!"
                         })} className="form-control" />
                         <div className="error-message">{errors.confirmPassword?.message}</div>
                     </div>
-                    <button type="submit" className="changePassword-btn btn-primary">Change Password</button>
+                    <button type="submit" className="changePassword-btn btn-primary">החלף סיסמא</button>
                 </form>
             </div>
         </div>
