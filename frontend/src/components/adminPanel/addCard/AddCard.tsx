@@ -3,13 +3,13 @@ import CardModel from "../../../models/cardModel";
 import "./AddCard.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import cardsService from "../../../services/cardsService";
-import notify from "../../../services/Notify";
+import notify from "../../../services/popupMessage"
 import AdminMenu from "../AdminMenu/AdminMenu";
 import SignUpModel from "../../../models/signUpModel";
 import authService from "../../../services/authService";
 
 function AddCard(): JSX.Element {
-    const { register, handleSubmit, setValue, formState, control, getValues, watch } = useForm<CardModel>();
+    const { register, handleSubmit, setValue, formState, getValues, watch } = useForm<CardModel>();
     const navigate = useNavigate();
     const showUserFields = watch("user");
 
@@ -37,7 +37,7 @@ function AddCard(): JSX.Element {
 
             await cardsService.addCard(card);
 
-            notify.success('New card added successfully');
+            notify.success('!הכרטיס נוצר בהצלחה');
 
             setValue('company', '');
             setValue('name', '')
@@ -52,7 +52,7 @@ function AddCard(): JSX.Element {
             navigate("/panel/admin/cards");
 
         } catch (error) {
-            notify.error(error);
+            notify.error('!אירעה שגיאה בעת יצירת הכרטיס,אנא נסה שוב');
         }
     }
 
@@ -131,7 +131,7 @@ function AddCard(): JSX.Element {
                         <label>אתר אינטרנט:</label>
                         <input type="text" {...register('website', {
                             pattern: {
-                                value: /^((https?:\/\/)?(www\.)?[\w\-]+\.[a-z]{2,})(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i,
+                                value: /^((https?:\/\/)?(www\.)?[\w-]+\.[a-z]{2,})(\/[\w._~:/?#[\]@!$&'()*+,;=-]*)?$/i,
                                 message: 'כתובת האתר אינה תקינה.'
                             }
                         })} />

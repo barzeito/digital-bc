@@ -9,8 +9,6 @@ interface userCardsProps {
 
 function UserCards(props: userCardsProps): JSX.Element {
 
-    console.log("Card Owned By: " + props.card.ownedBy);
-
     return (
         <div className="UserCards">
             <div className="uc-header">

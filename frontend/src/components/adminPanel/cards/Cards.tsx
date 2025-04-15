@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Cards.css";
 import cardsService from "../../../services/cardsService";
-import notify from "../../../services/Notify";
+import notify from "../../../services/popupMessage"
 import CardModel from "../../../models/cardModel";
 import formatDate from "../../../utils/formateDate";
 import { NavLink } from "react-router-dom";
@@ -22,10 +22,10 @@ function Cards(props: cardsProps): JSX.Element {
         try {
             if (cardId) {
                 await cardsService.deleteCard(cardId);
-                notify.success('Card deleted successfully');
+                notify.success('!הכרטיס נמחק בהצלחה');
             }
         } catch (error) {
-            notify.error(error);
+            notify.error('.אירעה שגיאה בעת מחיקת הכרטיס, אנא נסה שוב');
         }
         setShowDelete(false);
     }
@@ -52,11 +52,11 @@ function Cards(props: cardsProps): JSX.Element {
 
         try {
             await cardsService.assignUserToCard(cardId, userId);
-            notify.success("הכרטיס שויך בהצלחה");
+            notify.success("!הכרטיס שויך בהצלחה");
             setShowAssignPopup(false);
             window.location.reload();
         } catch (error) {
-            notify.error("אירעה שגיאה בשיוך משתמש");
+            notify.error("!אירעה שגיאה בשיוך משתמש");
         }
     }
 
@@ -126,7 +126,7 @@ function Cards(props: cardsProps): JSX.Element {
                         <p>האם אתה בטוח שברצונך למחוק את {props.card.company}?</p>
                         <div className="confirm-btn">
                             <button onClick={deleteCard}>מחיקה</button>
-                            <button onClick={() => setShowDelete(false)}>ביטול</button>
+                            <button className="cancel-btn" onClick={() => setShowDelete(false)}>ביטול</button>
                         </div>
                     </div>
                 </div>

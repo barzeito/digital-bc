@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CardModel from "../../../models/cardModel";
 import "./CardDisplay.css";
 import cardsService from "../../../services/cardsService";
-import notify from "../../../services/Notify";
+import notify from "../../../services/popupMessage"
 import { useNavigate, useParams } from "react-router-dom";
 import banner from "../../../assets/images/banner.jpeg"
 import profile from "../../../assets/images/profile.jpeg"
@@ -59,7 +59,6 @@ function CardDisplay(): JSX.Element {
                         const filtered = allSocials.filter(s => s.company_id === cardFromServer.id);
                         const socialMap: { [key: string]: string } = {};
                         filtered.forEach(s => {
-                            // עבור כל סושיאל נבדוק אם יש URL
                             if (s.facebook) socialMap["facebook"] = s.facebook;
                             if (s.instagram) socialMap["instagram"] = s.instagram;
                             if (s.linkedin) socialMap["linkedin"] = s.linkedin;
@@ -84,8 +83,8 @@ function CardDisplay(): JSX.Element {
         <div className="CardDisplay">
             <div className="Card-Main">
                 <div className="cd-Header">
-                    <img className="cd-CoverImage" src={banner} alt="Banner Image" />
-                    <img className="cd-ProfileImage" src={profile} alt="Profile Image" />
+                    <img className="cd-CoverImage" src={banner} alt="Banner" />
+                    <img className="cd-ProfileImage" src={profile} alt="Profile" />
                 </div>
                 <div className="cd-details">
                     <h2 className="cd-CompanyName">{card?.company}</h2>

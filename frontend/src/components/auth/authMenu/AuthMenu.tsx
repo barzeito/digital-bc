@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { authStore } from "../../../redux/authState";
 import authService from "../../../services/authService";
-import notify from "../../../services/Notify";
+import notify from "../../../services/popupMessage"
 
 function AuthMenu(): JSX.Element {
 
@@ -50,7 +50,7 @@ function AuthMenu(): JSX.Element {
 
     function logOut() {
         authService.logout();
-        notify.success('logged out successfully');
+        notify.success('!התנתקת מהמערכת בהצלחה');
     }
 
     return (

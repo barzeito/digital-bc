@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import cardsService from "../../../services/cardsService";
 import { useForm } from "react-hook-form";
 import CardModel from "../../../models/cardModel";
-import notify from "../../../services/Notify";
+import notify from "../../../services/popupMessage"
 import AdminMenu from "../AdminMenu/AdminMenu";
 import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
@@ -57,10 +57,10 @@ function EditCard(): JSX.Element {
             console.log("Final social to send:", social);
             await socialService.editSocial(social);
             navigate("/panel/admin/cards")
-            notify.success('Card and Social Links Updated Successfully');
+            notify.success('!כרטיס עודכן בהצלחה');
         } catch (error) {
             console.error(error);
-            notify.error('Failed to update card and social links');
+            notify.error('.אירעה שגיאה בעת עדכון הכרטיס, אנא נסה שוב');
         }
     }
 
@@ -140,7 +140,7 @@ function EditCard(): JSX.Element {
                         <label>אתר אינטרנט:</label>
                         <input type="text" {...register('website', {
                             pattern: {
-                                value: /^((https?:\/\/)?(www\.)?[\w\-]+\.[a-z]{2,})(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i,
+                                value: /^((https?:\/\/)?(www\.)?[\w-]+\.[a-z]{2,})(\/[\w._~:/?#[\]@!$&'()*+,;=-]*)?$/i,
                                 message: 'כתובת האתר אינה תקינה.'
                             },
                             required: { value: true, message: 'שדה חובה!' }

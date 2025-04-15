@@ -1,5 +1,3 @@
-import CardModel from "./cardModel";
-
 class SocialModel {
     id?: string;
     company_id?: string;

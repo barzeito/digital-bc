@@ -3,7 +3,7 @@ import "./AdminMenu.css";
 import { authStore } from "../../../redux/authState";
 import { jwtDecode } from "jwt-decode";
 import authService from "../../../services/authService";
-import notify from "../../../services/Notify";
+import notify from "../../../services/popupMessage"
 import { NavLink } from "react-router-dom";
 
 function AdminMenu(): JSX.Element {
@@ -36,7 +36,7 @@ function AdminMenu(): JSX.Element {
 
     function logOut() {
         authService.logout();
-        notify.success('logged out successfully');
+        notify.success('!התנתקת בהצלחה מהמערכת');
     }
 
     return (

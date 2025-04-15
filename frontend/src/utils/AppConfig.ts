@@ -7,8 +7,6 @@ class AppConfig {
     public signInUrl = `${this.apiBaseUrl}/api/signin`;
     public changePasswordUrl = `${this.apiBaseUrl}/api/change-password`;
     public isAdminUrl = `${this.apiBaseUrl}/api/role`;
-    public successNotificationDuration = 2000;
-    public errorNotificationDuration = 6000;
 }
 
 const appConfig = new AppConfig();

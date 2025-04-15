@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./CardList.css";
 import CardModel from "../../../models/cardModel";
 import cardsService from "../../../services/cardsService";
-import notify from "../../../services/Notify";
+import notify from "../../../services/popupMessage"
 import { CardsStore } from "../../../redux/cardState";
 import Cards from "../cards/Cards";
 import { NavLink, useNavigate } from "react-router-dom";

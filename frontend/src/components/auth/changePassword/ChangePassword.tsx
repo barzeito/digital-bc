@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import "./ChangePassword.css";
-import notify from "../../../services/Notify";
+import notify from "../../../services/popupMessage"
 import authService from "../../../services/authService";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
@@ -34,10 +34,10 @@ function ChangePassword(): JSX.Element {
                 return;
             }
             await authService.changePassword(id, data.password);
-            notify.success("Password changed successfully");
+            notify.success("!סיסמתך שונתה בהצלחה");
             navigate("/");
         } catch (err) {
-            notify.error("Failed to change password");
+            notify.error("!אירעה שגיאה בעת שינוי הסיסמא, אנא נסה שוב");
         }
     }
 

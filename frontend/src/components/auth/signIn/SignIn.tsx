@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import signInModel from "../../../models/signInModel";
 import authService from "../../../services/authService";
-import notify from "../../../services/Notify";
 import "./SignIn.css";
 import { useForm } from "react-hook-form";
 import { authStore } from "../../../redux/authState";
 import { useEffect } from "react";
+import notify from "../../../services/popupMessage"
 
 function SignIn(): JSX.Element {
 
@@ -22,7 +22,7 @@ function SignIn(): JSX.Element {
     async function submitSignInData(signInModel: signInModel): Promise<void> {
         try {
             await authService.signIn(signInModel);
-            notify.success('logged in')
+            notify.success(".התחברת בהצלחה למערכת");
             const user = authStore.getState().user;
             if (user && user.isTemporaryPassword) {
                 navigate(`/settings/change-password/${user.userId}`);
@@ -30,7 +30,7 @@ function SignIn(): JSX.Element {
                 navigate('/')
             }
         } catch (error) {
-            notify.error(error);
+            notify.error("!שם משתמש או סיסמא אינם קיימים במערכת");
         }
     }
 

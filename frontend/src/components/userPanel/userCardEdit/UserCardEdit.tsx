@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import CardModel from "../../../models/cardModel";
 import { useEffect, useState } from "react";
 import cardsService from "../../../services/cardsService";
-import notify from "../../../services/Notify";
+import notify from "../../../services/popupMessage"
 import { authStore } from "../../../redux/authState";
 import { jwtDecode } from "jwt-decode";
 import { NavLink } from "react-router-dom";
@@ -172,7 +172,7 @@ function UserCardEdit(): JSX.Element {
                         <label>אתר אינטרנט:</label>
                         <input type="text" {...register('website', {
                             pattern: {
-                                value: /^((https?:\/\/)?(www\.)?[\w\-]+\.[a-z]{2,})(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i,
+                                value: /^((https?:\/\/)?(www\.)?[\w-]+\.[a-z]{2,})(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i,
                                 message: 'כתובת האתר אינה תקינה.'
                             },
                             required: { value: true, message: 'שדה חובה!' }
