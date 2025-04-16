@@ -37,7 +37,14 @@ class SocialService {
     }
 
     public async addSocial(card: SocialModel): Promise<SocialModel> {
-        const response = await axios.post<SocialModel>(appConfig.socialUrl, card);
+        const response = await axios.post<SocialModel>(appConfig.socialUrl, card, {
+            validateStatus: function (status) {
+                return status >= 200 && status < 500;
+            }
+        });
+        if (response.status === 400) {
+            throw response.data;
+        }
         const newCard = response.data;
         const action: SocialAction = {
             type: SocialActionType.addSocial,
@@ -57,7 +64,14 @@ class SocialService {
     }
 
     public async editSocial(social: SocialModel): Promise<SocialModel> {
-        const response = await axios.patch<SocialModel>(appConfig.socialUrl + `/${social.company_id}`, social);
+        const response = await axios.patch<SocialModel>(appConfig.socialUrl + `/${social.company_id}`, social, {
+            validateStatus: function (status) {
+                return status >= 200 && status < 500;
+            }
+        });
+        if (response.status === 400) {
+            throw response.data;
+        }
         const updatedCard = response.data;
         const action: SocialAction = {
             type: SocialActionType.updateSocial,

@@ -28,15 +28,26 @@ class AuthService {
     }
 
     public async signIn(signIn: signInModel): Promise<string> {
-        const response = await axios.post<{ jwt: string, user?: any }>(appConfig.signInUrl, signIn);
-        const token = response.data.jwt;
-        const user = response.data.user;
-        const action: AuthAction = {
-            type: AuthActionType.signIn,
-            payload: { token, user }
+        try {
+            const response = await axios.post<{ jwt: string, user?: any }>(appConfig.signInUrl, signIn, {
+                validateStatus: function (status) {
+                    return status >= 200 && status < 500; 
+                }
+            });
+            if (response.status === 400) {
+                throw response.data;
+            }
+            const token = response.data.jwt;
+            const user = response.data.user;
+            const action: AuthAction = {
+                type: AuthActionType.signIn,
+                payload: { token, user }
+            }
+            authStore.dispatch(action);
+            return authStore.getState().token;
+        } catch (error) {
+            throw error;
         }
-        authStore.dispatch(action);
-        return authStore.getState().token;
     }
 
     public logout() {

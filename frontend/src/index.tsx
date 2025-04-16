@@ -5,6 +5,7 @@ import Layout from './components/layout/layout/Layout';
 import { BrowserRouter } from 'react-router-dom';
 import interceptors from './utils/interceptors';
 import { Helmet } from 'react-helmet';
+import TokenWatcher from './utils/tokerWatcher';
 
 interceptors.create();
 
@@ -14,6 +15,8 @@ const root = ReactDOM.createRoot(
 root.render(
     <div dir='rtl'>
         <BrowserRouter>
+            <TokenWatcher />
+
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>Digital Business Card</title>

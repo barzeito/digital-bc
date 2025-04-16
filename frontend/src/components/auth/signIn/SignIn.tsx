@@ -30,7 +30,13 @@ function SignIn(): JSX.Element {
                 navigate('/')
             }
         } catch (error) {
-            notify.error("!שם משתמש או סיסמא אינם קיימים במערכת");
+            if (error instanceof Error) {
+                notify.error("!שם משתמש או סיסמא אינם קיימים במערכת");
+            } else {
+                notify.error("שגיאה לא צפויה");
+            }
+            // Prevent the error from being thrown in the console
+            console.error = () => { };
         }
     }
 

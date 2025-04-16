@@ -28,7 +28,14 @@ class CardsService {
     }
 
     public async addCard(card: CardModel): Promise<CardModel> {
-        const response = await axios.post<CardModel>(appConfig.cardsUrl, card);
+        const response = await axios.post<CardModel>(appConfig.cardsUrl, card, {
+            validateStatus: function (status) {
+                return status >= 200 && status < 500; 
+            }
+        });
+        if (response.status === 400) {
+            throw response.data;
+        }
         const newCard = response.data;
         const action: CardsAction = {
             type: CardsActionType.addCard,
@@ -64,7 +71,14 @@ class CardsService {
         //         'Content-Type': 'multipart/form-data'
         //     }
         // };//TODO: enable when will add logo+banner photos
-        const response = await axios.patch<CardModel>(appConfig.cardsUrl + `/${card.id}`, card);
+        const response = await axios.patch<CardModel>(appConfig.cardsUrl + `/${card.id}`, card, {
+            validateStatus: function (status) {
+                return status >= 200 && status < 500; 
+            }
+        });
+        if (response.status === 400) {
+            throw response.data;
+        }
         const updatedCard = response.data;
         const action: CardsAction = {
             type: CardsActionType.updateCard,
@@ -75,7 +89,14 @@ class CardsService {
     }
 
     public async assignUserToCard(cardId: string, userId: string): Promise<CardModel> {
-        const response = await axios.patch<CardModel>(`${appConfig.cardsUrl}/assign-owner/${cardId}`, { ownedBy: userId });
+        const response = await axios.patch<CardModel>(`${appConfig.cardsUrl}/assign-owner/${cardId}`, { ownedBy: userId }, {
+            validateStatus: function (status) {
+                return status >= 200 && status < 500; 
+            }
+        });
+        if (response.status === 400) {
+            throw response.data;
+        }
         const updatedCard = response.data;
         const action: CardsAction = {
             type: CardsActionType.updateCard,

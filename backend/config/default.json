@@ -8,6 +8,12 @@
         "jwt": {
             "expires": "24h",
             "secret": "dbc-secret"
+        },
+        "email_service": {
+            "email": "bar199234@gmail.com",
+            "app_password": "pjrr vlbw njzj irms",
+            "domain": "localhost:3000",
+            "service": "gmail"
         }
     },
     "mysql": {
