@@ -1,0 +1,49 @@
+import React from "react";
+
+interface AddToContactsButtonProps {
+    user: {
+        firstName: string;
+        lastName: string;
+        phone?: string;
+        email?: string;
+        company?: string;
+    };
+}
+
+const AddToContactsButton: React.FC<AddToContactsButtonProps> = ({ user }) => {
+    const downloadVCard = () => {
+        const { firstName, lastName, phone, email, company } = user;
+
+        if (!firstName || !lastName) {
+            console.error("Missing essential user info!");
+            return;
+        }
+
+        const vcard = `
+            BEGIN:VCARD
+            VERSION:3.0
+            N:${lastName};${firstName};;;
+            FN:${firstName} ${lastName}
+            ORG:${company || ""}
+            TEL;TYPE=CELL:${phone || ""}
+            EMAIL:${email || ""}
+            END:VCARD`.trim();
+
+        const blob = new Blob([vcard], { type: "text/vcard" });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${firstName}_${lastName}.vcf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
+
+    return (
+        <button className="SaveContact" onClick={downloadVCard}>שמירת איש קשר <i className="fa-solid fa-plus"></i></button>
+    );
+};
+
+export default AddToContactsButton;

@@ -17,6 +17,8 @@ import phone from "../../../assets/socialMedia/telephone.png";
 import tikTok from "../../../assets/socialMedia/tik-tok.png";
 import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
+import AddToContactsButton from "../../../utils/addToContact";
+
 
 function CardDisplay(): JSX.Element {
 
@@ -78,7 +80,6 @@ function CardDisplay(): JSX.Element {
         }
     }, [company, navigate]);
 
-
     return (
         <div className="CardDisplay">
             <div className="Card-Main">
@@ -115,14 +116,20 @@ function CardDisplay(): JSX.Element {
                         </div>
                     </div>
                     <div className="cd-SaveContact">
-                        <button className="SaveContact">שמירת איש קשר <i className="fa-solid fa-plus"></i></button>
+                        <AddToContactsButton user={{
+                            firstName: card?.firstName || "",
+                            lastName: card?.lastName || "",
+                            phone: card?.phone || "",
+                            email: card?.email || "",
+                            company: card?.company || ""
+                        }} />
                     </div>
-                    <div className="cd-About">
-                        <p>קצת עליי</p>
-                        <span>{card?.about}</span>
-                    </div>
-                    <div className="cardDisplay-info">
-                    </div>
+                </div>
+                <div className="cd-About">
+                    <p>קצת עליי</p>
+                    <span>{card?.about}</span>
+                </div>
+                <div className="cardDisplay-info">
                 </div>
             </div>
         </div>
