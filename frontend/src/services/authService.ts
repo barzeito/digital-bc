@@ -11,6 +11,12 @@ class AuthService {
     public async getAllUsers(): Promise<userModel[]> {
         const response = await axios.get<userModel[]>(appConfig.usersUrl);
         const users = response.data;
+
+        const action: AuthAction = {
+            type: AuthActionType.setUsers,
+            payload: users
+        }
+        authStore.dispatch(action)
         return users;
     }
 

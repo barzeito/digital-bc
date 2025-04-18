@@ -16,7 +16,6 @@ function EditUser(): JSX.Element {
 
     useEffect(() => {
         if (userId) {
-            console.log("User id is: " + userId)
             const userIs = authService.getOne(userId)
                 .then(userFromServer => {
                     if (userFromServer) {

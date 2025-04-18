@@ -17,7 +17,8 @@ export enum AuthActionType {
     signIn = 'signIn',
     logOut = 'logOut',
     tokenExpired = 'tokenExpired',
-    deleteUser = 'deleteUser'
+    deleteUser = 'deleteUser',
+    setUsers = 'setUsers'
 }
 
 const isTokenExpired = (token: string): boolean => {
@@ -39,10 +40,10 @@ const scheduleLogout = (token: string) => {
     }
 };
 
-export type AuthActionPayload = string | null;
+export type AuthActionPayload = userModel[] | string | null;
 export interface AuthAction {
     type: AuthActionType,
-    payload: string | null | { token: string, user: any }
+    payload: AuthActionPayload | { token: string, user: any }
 }
 
 
@@ -50,11 +51,15 @@ export function authReducer(currentState = new AuthState(), action: AuthAction):
     const newState = { ...currentState }
 
     switch (action.type) {
+        case AuthActionType.setUsers:
+            newState.userData = action.payload as userModel[];
+            break;
         case AuthActionType.signUp:
         case AuthActionType.signIn:
             if (typeof action.payload === 'object' && action.payload !== null) {
-                newState.token = action.payload.token;
-                newState.user = action.payload.user;
+                const { token, user } = action.payload as { token: string, user: any };
+                newState.token = token;
+                newState.user = user;
                 localStorage.setItem('dbcToken', newState.token);
                 scheduleLogout(newState.token);
             }
