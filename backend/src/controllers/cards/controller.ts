@@ -1,13 +1,26 @@
 import { NextFunction, Request, Response } from "express";
 import getModel from "../../models/businessCards/factory";
-import getSocialModel from "../../models/socialLinks/factory";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
 import createHttpError, { BadRequest, NotFound, Unauthorized } from "http-errors";
+import config from 'config';
+import DTO from "../../models/businessCards/dto";
+
+
+function convertCardToImageUrl(card: DTO) {
+    const cardWithImageUrl = {
+        ...card,
+        coverImageUrl: `${config.get<string>('app.protocol')}://${config.get<string>('app.host')}:${config.get<number>('app.port')}/images/${card.coverImage}`,
+        profileImageUrl: `${config.get<string>('app.protocol')}://${config.get<string>('app.host')}:${config.get<number>('app.port')}/images/${card.profileImage}`
+    }
+    delete cardWithImageUrl.coverImage;
+    delete cardWithImageUrl.profileImage;
+    return cardWithImageUrl;
+}
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const cards = await getModel().getAll();
-        res.json(cards)
+        res.json(cards.map(convertCardToImageUrl))
     } catch (err) {
         next(err)
     }
@@ -40,7 +53,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
             return next(res.status(400).json({ message: 'Company name already exists.', code: 'COMPANY_EXISTS' }));
         }
         const card = await getModel().add(req.body);
-        res.status(StatusCodes.CREATED).json({ card })
+        res.status(StatusCodes.CREATED).json(convertCardToImageUrl(card))
     } catch (err) {
         next(err)
     }
@@ -62,7 +75,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
         const updatedCard = { id, ...req.body }
         const card = await getModel().update(updatedCard);
         console.log(card)
-        res.json(card);
+        res.json(convertCardToImageUrl(card));
     } catch (err) {
         next(err)
     }
@@ -75,7 +88,7 @@ export const patch = async (req: Request, res: Response, next: NextFunction) => 
         const existingCard = await getModel().getOneById(id);
         const updatedCard = { ...existingCard, ...req.body };
         const card = await getModel().update(updatedCard);
-        res.status(StatusCodes.OK).json(card)
+        res.status(StatusCodes.OK).json(convertCardToImageUrl(card))
     } catch (err) {
         next(err)
     }

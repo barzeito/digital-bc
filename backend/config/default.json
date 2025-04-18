@@ -9,6 +9,9 @@
             "expires": "24h",
             "secret": "dbc-secret"
         },
+        "images": {
+            "path": "./SavedImages"
+        },
         "email_service": {
             "email": "bar199234@gmail.com",
             "app_password": "pjrr vlbw njzj irms",

@@ -4,7 +4,7 @@ import "./CardDisplay.css";
 import cardsService from "../../../services/cardsService";
 import notify from "../../../services/popupMessage"
 import { useNavigate, useParams } from "react-router-dom";
-import banner from "../../../assets/images/banner.jpeg"
+import noImage from "../../../assets/images/image-not-found.jpeg"
 import profile from "../../../assets/images/profile.jpeg"
 import facebookIcon from "../../../assets/socialMedia/facebook.png";
 import instagramIcon from "../../../assets/socialMedia/instagram.png";
@@ -57,6 +57,7 @@ function CardDisplay(): JSX.Element {
                 .then(async cardFromServer => {
                     if (cardFromServer) {
                         setCard(cardFromServer);
+                        console.log('Fetched card:', cardFromServer);
                         const allSocials: SocialModel[] = await socialService.getAll();
                         const filtered = allSocials.filter(s => s.company_id === cardFromServer.id);
                         const socialMap: { [key: string]: string } = {};
@@ -84,7 +85,13 @@ function CardDisplay(): JSX.Element {
         <div className="CardDisplay">
             <div className="Card-Main">
                 <div className="cd-Header">
-                    <img className="cd-CoverImage" src={banner} alt="Banner" />
+                    <img className="cd-CoverImage" src={card?.coverImageUrl ? card.coverImageUrl : noImage}
+                        alt="Cover"
+                        onError={(e) => {
+                            const image = e.target as HTMLImageElement;
+                            image.src = noImage;
+                        }}
+                    />
                     <img className="cd-ProfileImage" src={profile} alt="Profile" />
                 </div>
                 <div className="cd-details">

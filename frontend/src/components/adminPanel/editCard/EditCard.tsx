@@ -2,12 +2,13 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import "./EditCard.css";
 import { useEffect, useState } from "react";
 import cardsService from "../../../services/cardsService";
-import { useForm } from "react-hook-form";
+import { Control, useForm, useWatch } from "react-hook-form";
 import CardModel from "../../../models/cardModel";
 import notify from "../../../services/popupMessage"
 import AdminMenu from "../AdminMenu/AdminMenu";
 import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
+import ImageWatched from "../../../utils/imageWatch"
 
 function EditCard(): JSX.Element {
 
@@ -16,14 +17,18 @@ function EditCard(): JSX.Element {
     const socialCompanyId = String(params.id);
     const navigate = useNavigate();
 
-    const { handleSubmit, setValue, register, formState } = useForm<CardModel>();
+    const [src, setSrc] = useState<string>('');
+    const { handleSubmit, setValue, register, formState, control } = useForm<CardModel>();
     const [selectedSocial, setSelectedSocial] = useState<string>("");
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
+
 
     useEffect(() => {
         cardsService.getOne(cardId)
             .then(cardFromServer => {
                 setValue('company', cardFromServer?.company);
+                setSrc(cardFromServer?.coverImageUrl || '');
+                setSrc(cardFromServer?.profileImageUrl || '');
                 setValue('name', cardFromServer?.name);
                 setValue('description', cardFromServer?.description);
                 setValue('about', cardFromServer?.about);
@@ -44,6 +49,7 @@ function EditCard(): JSX.Element {
 
     async function submitCardUpdate(card: CardModel) {
         try {
+            card.coverImageFile = (card.coverImageFile as unknown as FileList)[0];
             card.id = cardId;
             await cardsService.editCard(card);
 
@@ -141,6 +147,22 @@ function EditCard(): JSX.Element {
                                 || 'כתובת האתר אינה תקינה.'
                         })} />
                         <span className="error">{formState.errors.website?.message}</span>
+                    </div>
+                </div>
+                <div className="edit-row">
+                    <div className="edit-group">
+                        <label>:תמונת קאבר</label>
+                        <input type="file" accept="image/*" {...register('coverImageFile', {
+                        })} /><span>{formState.errors.coverImageFile?.message}</span>
+
+                        <ImageWatched control={control} name="coverImageFile" />
+                    </div>
+                    <div className="edit-group">
+                        <label>:תמונת פרופיל</label>
+                        <input type="file" accept="image/*" {...register('profileImageFile', {
+                        })} /><span>{formState.errors.profileImageFile?.message}</span>
+
+                        <ImageWatched control={control} name="profileImageFile" />
                     </div>
                 </div>
                 <div className="edit-row">

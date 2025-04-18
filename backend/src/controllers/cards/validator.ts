@@ -11,6 +11,9 @@ export const addCardValidator = Joi.object<DTO>({
     website: Joi.string().pattern(/^((https?:\/\/)?(www\.)?[\w\-]+\.[a-z]{2,})(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i).allow("").optional(),
     address: Joi.string().min(4).optional(),
     ownedBy: Joi.string().optional(),
+    coverImageFile: Joi.object({
+        mimetype: Joi.string().valid('image/jpg', 'image/jpeg', 'image/png')
+    }).unknown(true).optional(),
 });
 
 export const patchCardValidator = Joi.object<DTO>({

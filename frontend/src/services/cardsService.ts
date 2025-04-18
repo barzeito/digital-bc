@@ -66,16 +66,12 @@ class CardsService {
     }
 
     public async editCard(card: CardModel): Promise<CardModel> {
-        // const config = {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data'
-        //     }
-        // };//TODO: enable when will add logo+banner photos
-        const response = await axios.patch<CardModel>(appConfig.cardsUrl + `/${card.id}`, card, {
-            validateStatus: function (status) {
-                return status >= 200 && status < 500;
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
             }
-        });
+        };
+        const response = await axios.patch<CardModel>(appConfig.cardsUrl + `/${card.id}`, card, config)
         if (response.status === 400) {
             throw response.data;
         }

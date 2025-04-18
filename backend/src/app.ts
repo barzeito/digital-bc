@@ -7,21 +7,24 @@ import { errorHandler } from "./middlewares/error-handler";
 import cors from 'cors';
 import stripTags from "./middlewares/strip-tags";
 import authentication from "./middlewares/authentication";
+import expressFileUpload from 'express-fileupload';
+import path from "path";
+import config from "config";
 
 const server = express();
 server.use(cors());
 server.use(express.json());
+server.use(expressFileUpload());
 server.use(authentication);
 server.use(stripTags);
 
 server.use('/api', authRouter)
 server.use('/api/cards', cardsRouter)
 server.use('/api/social', socialRouter)
+server.use('/images', express.static(path.resolve(config.get<string>('app.images.path'))))
 
-// special middleware for not found error
 server.use(notFound)
 
-// error middlewares
 server.use(errorHandler)
 
 export default server;

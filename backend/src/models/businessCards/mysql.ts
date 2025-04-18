@@ -10,6 +10,8 @@ class BusinessCards implements Model {
         const cards = (await query(`
             SELECT  bc.id,
                     bc.company,
+                    bc.coverImage,
+                    bc.profileImage,
                     bc.name,
                     bc.description,
                     bc.about,
@@ -33,6 +35,8 @@ class BusinessCards implements Model {
         const card = (await query(`
             SELECT  id,
                     company,
+                    coverImage,
+                    profileImage,
                     name,
                     description,
                     about,
@@ -53,6 +57,8 @@ class BusinessCards implements Model {
         const card = (await query(`
             SELECT  id,
                     company,
+                    coverImage,
+                    profileImage,
                     name,
                     description,
                     about,
@@ -70,13 +76,13 @@ class BusinessCards implements Model {
     }
 
     public async add(card: DTO): Promise<DTO> {
-        const { company, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy } = card;
+        const { company, coverImage, profileImage, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy } = card;
         const id = v4();
         const socialId = v4()
         const addCard: OkPacketParams = await query(`
-            INSERT INTO business_cards(id, company,name, description,about, email, phone, website, address, created_at, updated_at, ownedBy)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?)
-            `, [id, company, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy || null]);
+            INSERT INTO business_cards(id, company, coverImage, profileImage, name, description,about, email, phone, website, address, created_at, updated_at, ownedBy)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?)
+            `, [id, company, coverImage, profileImage, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy || null]);
         await query(`
                 INSERT INTO social_links(id, company_id, company, facebook, instagram, linkedin, twitter, whatsapp, email, map, phone, tiktok)
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -93,11 +99,13 @@ class BusinessCards implements Model {
     }
 
     public async update(card: DTO): Promise<DTO> {
-        const { id, company, name, description, about, email, phone, website, address, ownedBy } = card;
+        const { id, company, coverImage, profileImage, name, description, about, email, phone, website, address, ownedBy } = card;
         const updated_at = new Date().toISOString().slice(0, 19).replace("T", " ");
         await query(`
                 UPDATE  business_cards
                 SET     company = ?,
+                        coverImage = ?,
+                        profileImage = ?,
                         name = ?,
                         description = ?,
                         about = ?,
@@ -108,7 +116,7 @@ class BusinessCards implements Model {
                         updated_at = ?,
                         ownedBy = ?
                 WHERE   id = ?
-            `, [company, name, description, about, email, phone, website, address, updated_at, ownedBy || null, id]);
+            `, [company, coverImage, profileImage, name, description, about, email, phone, website, address, updated_at, ownedBy || null, id]);
         return this.getOneById(id);
     }
 
@@ -116,6 +124,8 @@ class BusinessCards implements Model {
         const cards = (await query(`
             SELECT  id,
                     company,
+                    coverImage,
+                    profileImage,
                     name,
                     description,
                     about,
@@ -138,7 +148,7 @@ class BusinessCards implements Model {
         if (!userId) {
             userId = null;
         }
-        
+
         await query(`
             UPDATE  business_cards
             SET     ownedBy = ?,

@@ -4,6 +4,8 @@ import { addCardValidator, patchCardValidator } from "../controllers/cards/valid
 import { add, assignCardOwner, deleteCard, getAll, getOne, getOneById, getUserCards, patch } from "../controllers/cards/controller";
 import enforceAdmin from "../middlewares/enforce-admin";
 import enforceAuth from "../middlewares/enforce-auth";
+import addImageToBody from "../middlewares/add-image-to-body";
+import uploadImage from "../middlewares/upload-image";
 
 const router = Router();
 
@@ -11,8 +13,8 @@ router.get('/', getAll);
 router.get('/:company', getOne);
 router.get('/:id', getOneById);
 router.get('/userCards/:userId', getUserCards);
-router.post('/', enforceAdmin, validate(addCardValidator), add);
+router.post('/', enforceAdmin, addImageToBody, validate(addCardValidator), uploadImage, add);
 router.delete('/:id', enforceAdmin, deleteCard);
-router.patch('/:id', enforceAuth, patch);
+router.patch('/:id', enforceAuth, addImageToBody, uploadImage, patch);
 router.patch('/assign-owner/:id', enforceAdmin, assignCardOwner);
 export default router;

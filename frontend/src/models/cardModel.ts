@@ -1,9 +1,12 @@
-import SocialModel from './socialModel';
 import UserModel from './userModel';
 
 export default class CardModel {
     id?: string;
     company?: string;
+    coverImageUrl?: string;
+    profileImageUrl?: string;
+    coverImageFile?: File;
+    profileImageFile?: File;
     name?: string;
     description?: string;
     about?: string;
