@@ -29,6 +29,8 @@ body,
     --Background-color: #FCFCFC;
     --Black-Text-Color: #2C2D33;
     --White-Text-Color: #F4F5F6;
+    --Submit-Button: #23C55E;
+    --Cancel-Button:#E74C3C;
 }
 
 @-webkit-keyframes notyf-fadeinup {

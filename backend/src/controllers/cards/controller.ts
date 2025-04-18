@@ -101,10 +101,6 @@ export const assignCardOwner = async (req: Request, res: Response, next: NextFun
     try {
         const cardId = req.params.id;
         const userId = req.body.ownedBy;
-        if (!userId) {
-            return res.status(400).json({ message: 'User ID is required' });
-        }
-
         const existingCard = await getModel().getOneById(cardId);
         if (!existingCard) {
             throw new Error("Card not found");

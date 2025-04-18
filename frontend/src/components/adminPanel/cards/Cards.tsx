@@ -39,6 +39,7 @@ function Cards(props: cardsProps): JSX.Element {
             notify.error("לא ניתן לטעון משתמשים");
         }
     }
+
     async function assignOwner(userId?: string) {
         if (!userId) {
             notify.error("User ID לא נמצא");
@@ -60,6 +61,19 @@ function Cards(props: cardsProps): JSX.Element {
         }
     }
 
+    async function removeOwner() {
+        if (!cardId) {
+            notify.error("Card ID לא נמצא");
+            return;
+        }
+        try {
+            await cardsService.assignUserToCard(cardId, "");
+            notify.success("!מחקת בעלים לכרטיס בהצלחה");
+            window.location.reload();
+        } catch (error) {
+            notify.error("!אירעה שיגאה בעת ביטול השיוך");
+        }
+    }
 
 
 
@@ -94,39 +108,45 @@ function Cards(props: cardsProps): JSX.Element {
                 </div>
             </div>
 
-            <div className="card-footer">
+            <div className="card-buttons">
                 <NavLink to={`/cards/${props.card.company}`} className="view-btn">צפייה</NavLink>
                 <NavLink to={`/panel/admin/edit/${props.card.id}`} className="edit-btn">עריכה</NavLink>
                 <button className="delete-btn" onClick={() => setShowDelete(true)}>מחיקה</button>
             </div>
             {showAssignPopup && (
-                <div className="AssignPopup">
-                    <div className="Assign-PopUp">
-                        <span>שייך בעלים ל {props.card.company}</span>
-                        <ul>
-                            {users.map(user => (
-                                <li key={user.userId}>
-                                    {user.firstName} {user.lastName}
-                                    {user.userId && (
-                                        <button className="assign-btn" onClick={() => assignOwner(user.userId)}>שייך</button>
-                                    )}
-                                </li>
-                            ))}
-                            <button className="assign-cancel" onClick={() => setShowAssignPopup(false)}>ביטול</button>
-
-                        </ul>
+                <div className="PopUpContainer">
+                    <div className="AssignPopup">
+                        <div className="Assign-PopUp">
+                            <span>שייך בעלים ל {props.card.company}</span>
+                            <ul>
+                                {users.map(user => (
+                                    <li key={user.userId}>
+                                        {user.firstName} {user.lastName}
+                                        {user.userId && (
+                                            <button className="assign-btn" onClick={() => assignOwner(user.userId)}>שייך</button>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                            <div className="attach">
+                                <button className="assign-delete" onClick={() => removeOwner()}>מחק שיוך</button>
+                                <button className="assign-cancel" onClick={() => setShowAssignPopup(false)}>סגירה</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}
 
             {showDelete && (
-                <div className="DeleteContainer">
-                    <div className="Delete-PopUp">
-                        <span>מוחק את {props.card.company}</span>
-                        <p>האם אתה בטוח שברצונך למחוק את {props.card.company}?</p>
-                        <div className="confirm-btn">
-                            <button onClick={deleteCard}>מחיקה</button>
-                            <button className="cancel-btn" onClick={() => setShowDelete(false)}>ביטול</button>
+                <div className="PopUpContainer">
+                    <div className="DeleteContainer">
+                        <div className="Delete-PopUp">
+                            <span>מוחק את {props.card.company}</span>
+                            <p>האם אתה בטוח שברצונך למחוק את {props.card.company}?</p>
+                            <div className="confirm-btn">
+                                <button onClick={deleteCard}>מחיקה</button>
+                                <button className="cancel-btn" onClick={() => setShowDelete(false)}>ביטול</button>
+                            </div>
                         </div>
                     </div>
                 </div>

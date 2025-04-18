@@ -30,7 +30,7 @@ class CardsService {
     public async addCard(card: CardModel): Promise<CardModel> {
         const response = await axios.post<CardModel>(appConfig.cardsUrl, card, {
             validateStatus: function (status) {
-                return status >= 200 && status < 500; 
+                return status >= 200 && status < 500;
             }
         });
         if (response.status === 400) {
@@ -73,7 +73,7 @@ class CardsService {
         // };//TODO: enable when will add logo+banner photos
         const response = await axios.patch<CardModel>(appConfig.cardsUrl + `/${card.id}`, card, {
             validateStatus: function (status) {
-                return status >= 200 && status < 500; 
+                return status >= 200 && status < 500;
             }
         });
         if (response.status === 400) {
@@ -88,10 +88,10 @@ class CardsService {
         return updatedCard;
     }
 
-    public async assignUserToCard(cardId: string, userId: string): Promise<CardModel> {
+    public async assignUserToCard(cardId: string, userId: string | null): Promise<CardModel> {
         const response = await axios.patch<CardModel>(`${appConfig.cardsUrl}/assign-owner/${cardId}`, { ownedBy: userId }, {
             validateStatus: function (status) {
-                return status >= 200 && status < 500; 
+                return status >= 200 && status < 500;
             }
         });
         if (response.status === 400) {

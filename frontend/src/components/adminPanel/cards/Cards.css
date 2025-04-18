@@ -74,10 +74,10 @@
     margin-bottom: 0;
 }
 
-.card-footer {
+.card-buttons {
     display: flex;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 5px;
     margin-top: 16px;
 }
 
@@ -91,7 +91,7 @@
     border-radius: 8px;
     font-size: 0.9rem;
     cursor: pointer;
-    background-color: var(--Secondary-Color);
+    background-color: var(--Submit-Button);
     color: var(--White-Text-Color);
     text-decoration: none;
 }
@@ -100,7 +100,6 @@
     margin-right: 10px;
 }
 
-/* Delete Pop-Up Styles */
 .DeleteContainer,
 .AssignPopup {
     position: fixed;
@@ -140,8 +139,7 @@
 
 .confirm-btn button,
 .assign-cancel button {
-    background-color: var(--Secondary-Color);
-    color: #fff;
+    color: var(--White-Text-Color);
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -157,9 +155,48 @@
     list-style: none;
 }
 
+.Assign-PopUp li {
+    padding: 3px;
+    border-bottom: 1px solid var(--Tertiary-Color);
+}
+
+.Assign-PopUp li:first-child {
+    border-top: 1px solid var(--Tertiary-Color);
+}
+
+.assign-delete,
 .assign-cancel {
-    margin-top: 25px;
-    background-color: #f44336;
+    width: 120px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin: 0 10px 0 0;
+    gap: 10px;
+}
+
+.assign-delete {
+    background-color: var(--Submit-Button);
+}
+
+.assign-cancel {
+    background-color: var(--Cancel-Button);
+    margin-top: 0; 
+}
+
+.PopUpContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(209, 209, 209, 0.554);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
 }
 
 @media screen and (max-width: 1024px) {

@@ -132,15 +132,20 @@ class BusinessCards implements Model {
         return cards;
     }
 
-    public async assignCardOwner(cardId: string, userId: string): Promise<DTO> {
+    public async assignCardOwner(cardId: string, userId: string | null): Promise<DTO> {
         const updated_at = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+        if (!userId) {
+            userId = null;
+        }
+        
         await query(`
             UPDATE  business_cards
             SET     ownedBy = ?,
                     updated_at = ?
             WHERE   id = ?
         `, [userId, updated_at, cardId]);
-        
+
         return this.getOneById(cardId);
     }
 }
