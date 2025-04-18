@@ -24,19 +24,15 @@ function SignIn(): JSX.Element {
             await authService.signIn(signInModel);
             notify.success(".התחברת בהצלחה למערכת");
             const user = authStore.getState().user;
-            if (user && user.isTemporaryPassword) {
+            if (user?.isTemporaryPassword) {
                 navigate(`/settings/change-password/${user.userId}`);
             } else {
                 navigate('/')
             }
-        } catch (error) {
-            if (error instanceof Error) {
-                notify.error("!שם משתמש או סיסמא אינם קיימים במערכת");
-            } else {
-                notify.error("שגיאה לא צפויה");
-            }
-            // Prevent the error from being thrown in the console
-            console.error = () => { };
+        } catch (error: any) {
+            const errorMessage = error?.response?.data?.message || error?.message || "שגיאה כללית";
+            notify.error(errorMessage);
+            console.warn("שגיאת התחברות:", error);
         }
     }
 

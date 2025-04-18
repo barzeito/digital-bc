@@ -9,8 +9,6 @@ export class AuthState {
     public userData: userModel[] = [];
     public constructor() {
         this.token = localStorage.getItem('dbcToken') || '';
-        const userStr = localStorage.getItem('dbcUser');
-        this.user = userStr ? JSON.parse(userStr) : null;
     }
 }
 
@@ -59,7 +57,6 @@ export function authReducer(currentState = new AuthState(), action: AuthAction):
                 newState.user = action.payload.user;
                 localStorage.setItem('dbcToken', newState.token);
                 scheduleLogout(newState.token);
-                localStorage.setItem('dbcUser', JSON.stringify(newState.user));
             }
             break;
         case AuthActionType.logOut:
@@ -67,7 +64,6 @@ export function authReducer(currentState = new AuthState(), action: AuthAction):
             newState.token = '';
             newState.user = null;
             localStorage.removeItem('dbcToken');
-            localStorage.removeItem('dbcUser');
             break;
         case AuthActionType.deleteUser:
             const userId = action.payload as string;
