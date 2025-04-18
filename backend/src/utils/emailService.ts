@@ -36,7 +36,7 @@ export const sendWelcomeEmail = async (email: string, firstName: string, passwor
             </p>
         
             <div style="text-align: center; margin: 30px 0;">
-                <a href="${config.get("app.email_service.domain")}/login" 
+                <a href="${config.get("app.email_service.domain")}" 
                    style="background-color: #007bff; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-size: 16px; display: inline-block;">
                   התחבר עכשיו
                 </a>
@@ -77,10 +77,55 @@ export const sendResetEmail = async (email: string, resetLink: string) => {
         from: '"Digital Business Cards" <dbc@gmail.com>',
         to: email,
         subject: "איפוס סיסמה",
-        html: `<p>לחץ על הקישור הבא כדי לאפס את הסיסמה שלך:</p>
-               <a href="${resetLink}">${resetLink}</a>
-               <p>הלינק יהיה בתוקף ל-15 דקות בלבד.</p>`
+        html: `
+            <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto;">
+                <h2 style="color: #333;">איפוס סיסמה</h2>
+    
+                <p style="font-size: 16px; color: #444;">
+                    קיבלנו בקשה לאיפוס הסיסמה עבור חשבונך.
+                </p>
+    
+                <p style="font-size: 16px; color: #444;">
+                    לחץ על הכפתור הבא כדי לאפס את הסיסמה שלך:
+                </p>
+    
+                <!-- Button styled as a table for better email compatibility -->
+                <table role="presentation" align="center" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 30px 0;">
+                    <tr>
+                        <td align="center">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td align="center" bgcolor="#007bff" style="border-radius: 6px;">
+                                        <a href="${resetLink}"
+                                           target="_blank"
+                                           style="border: solid 1px #007bff; border-radius: 6px; color: #FFFFFF; padding: 12px 24px; text-align: center; text-decoration: none; display: inline-block; font-family: sans-serif; font-size: 16px; font-weight: bold; line-height: 1.5em; cursor: pointer; mso-padding-alt: 0;">
+                                            איפוס סיסמה
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+    
+                <p style="font-size: 16px; color: #d9534f; margin-top: 10px;">
+                    ⚠️ הלינק יהיה בתוקף ל-15 דקות בלבד.
+                </p>
+    
+                <p style="font-size: 14px; color: #888;">
+                    אם לא ביקשת לאפס את הסיסמה, אנא התעלם מהודעה זו.
+                </p>
+    
+                <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+    
+                <p style="font-size: 14px; color: #666;">
+                    בברכה,<br>
+                    צוות <strong>Digital Business Cards</strong>
+                </p>
+            </div>
+        `
     };
+
 
     await transporter.sendMail(mailOptions);
 };

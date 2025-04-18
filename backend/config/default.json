@@ -12,7 +12,7 @@
         "email_service": {
             "email": "bar199234@gmail.com",
             "app_password": "pjrr vlbw njzj irms",
-            "domain": "localhost:3000",
+            "domain": "http://localhost:3000/login",
             "service": "gmail"
         }
     },

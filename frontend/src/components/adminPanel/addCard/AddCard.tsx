@@ -15,27 +15,29 @@ function AddCard(): JSX.Element {
 
     async function submitNewCard(card: CardModel) {
         try {
-            let userId: string | undefined;
-
+            let user: any;
             if (showUserFields) {
-                const user = getValues("user");
-                const signUpModel = new SignUpModel();
-                signUpModel.firstName = user?.firstName;
-                signUpModel.lastName = user?.lastName;
-                signUpModel.email = user?.email;
-
-                const newUser = await authService.signUp(signUpModel);
-                userId = newUser.userId;
+                user = getValues("user");
             }
 
-            if (userId) {
-                card.ownedBy = userId;
-            } else {
-                card.ownedBy = undefined;
-            }
+            card.ownedBy = undefined;
             delete card.user;
 
-            await cardsService.addCard(card);
+            const createdCard = await cardsService.addCard(card);
+
+            if (user) {
+                const signUpModel = new SignUpModel();
+                signUpModel.firstName = user.firstName;
+                signUpModel.lastName = user.lastName;
+                signUpModel.email = user.email;
+
+                const newUser = await authService.signUp(signUpModel);
+
+                if (createdCard.id && newUser.userId) {
+                    await cardsService.assignUserToCard(createdCard.id, newUser.userId);
+                }
+                notify.success('המשתמש נוצר בהצלחה!');
+            }
 
             notify.success('!הכרטיס נוצר בהצלחה');
 
@@ -52,20 +54,21 @@ function AddCard(): JSX.Element {
             navigate("/panel/admin/cards");
 
         } catch (error: any) {
-            const message = error?.response?.data?.message;
-            const code = error?.response?.data?.code;
+            console.error(error);
+            const code = error?.code || error?.response?.data?.code || error?.response?.data?.Objectcode;
+            console.log('Error code:', code);
+            console.log("card error:" + error)
 
             if (code === 'EMAIL_EXISTS') {
                 notify.error("אימייל זה כבר בשימוש. נסה אימייל אחר.");
-            }
-            else if (code === 'COMPANY_EXISTS') {
+            } else if (code === 'COMPANY_EXISTS') {
                 notify.error("החברה הזו כבר קיימת במערכת.");
-            }
-            else {
+            } else {
                 notify.error("אירעה שגיאה. נסה שוב.");
             }
         }
     }
+
 
 
     return (
@@ -104,9 +107,7 @@ function AddCard(): JSX.Element {
                 <div className="add-row">
                     <div className="add-group">
                         <label>קצת על עצמי:</label>
-                        <textarea {...register('about', {
-                            minLength: { value: 2, message: 'תיאור החברה חייב להיות מינימום 2 תווים.' },
-                        })} />
+                        <textarea {...register('about')} />
                         <span className="error">{formState.errors.description?.message}</span>
                     </div>
                 </div>
@@ -141,10 +142,9 @@ function AddCard(): JSX.Element {
                     <div className="add-group">
                         <label>אתר אינטרנט:</label>
                         <input type="text" {...register('website', {
-                            pattern: {
-                                value: /^((https?:\/\/)?(www\.)?[\w-]+\.[a-z]{2,})(\/[\w._~:/?#[\]@!$&'()*+,;=-]*)?$/i,
-                                message: 'כתובת האתר אינה תקינה.'
-                            }
+                            validate: (value) =>
+                                !value || /^((https?:\/\/)?(www\.)?[\w-]+\.[a-z]{2,})(\/[\w._~:/?#[\]@!$&'()*+,;=-]*)?$/i.test(value)
+                                || 'כתובת האתר אינה תקינה.'
                         })} />
                         <span className="error">{formState.errors.website?.message}</span>
                     </div>

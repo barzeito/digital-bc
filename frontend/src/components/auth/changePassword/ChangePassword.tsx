@@ -45,7 +45,7 @@ function ChangePassword(): JSX.Element {
     return (
         <div className="ChangePassword">
             <div className="changePassword-header">
-                <h2>Change Password</h2>
+                <h2>שינוי סיסמא</h2>
             </div>
             <div className="changePassword-body">
                 <form onSubmit={handleSubmit(submitChangePassword)}>

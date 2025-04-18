@@ -101,10 +101,7 @@ function EditCard(): JSX.Element {
                 <div className="edit-row">
                     <div className="edit-group">
                         <label>קצת על עצמי:</label>
-                        <textarea {...register('about', {
-                            minLength: { value: 2, message: 'תיאור החברה חייב להיות מינימום 2 תווים.' },
-                            required: { value: true, message: 'שדה חובה!' }
-                        })} />
+                        <textarea {...register('about')} />
                         <span className="error">{formState.errors.about?.message}</span>
                     </div>
                 </div>
@@ -139,11 +136,9 @@ function EditCard(): JSX.Element {
                     <div className="edit-group">
                         <label>אתר אינטרנט:</label>
                         <input type="text" {...register('website', {
-                            pattern: {
-                                value: /^((https?:\/\/)?(www\.)?[\w-]+\.[a-z]{2,})(\/[\w._~:/?#[\]@!$&'()*+,;=-]*)?$/i,
-                                message: 'כתובת האתר אינה תקינה.'
-                            },
-                            required: { value: true, message: 'שדה חובה!' }
+                            validate: (value) =>
+                                !value || /^((https?:\/\/)?(www\.)?[\w-]+\.[a-z]{2,})(\/[\w._~:/?#[\]@!$&'()*+,;=-]*)?$/i.test(value)
+                                || 'כתובת האתר אינה תקינה.'
                         })} />
                         <span className="error">{formState.errors.website?.message}</span>
                     </div>

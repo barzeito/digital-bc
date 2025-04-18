@@ -12,6 +12,8 @@ interceptors.create();
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
+
 root.render(
     <div dir='rtl'>
         <BrowserRouter>

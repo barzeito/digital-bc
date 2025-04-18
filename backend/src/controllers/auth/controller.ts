@@ -15,6 +15,17 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
+export const getOne = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await getModel().getOne(req.params.id)
+        if (!user) return next();
+        res.json(user)
+    } catch (err) {
+        next(err)
+    }
+}
+
+
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const existingUser = await getModel().getByEmail(req.body.email)
@@ -32,7 +43,7 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
 export const signIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await getModel().signIn(req.body);
-        if (!user) return next(createHttpError(Unauthorized(`Couldn't find username or password`)));
+        if (!user) return next(res.status(400).json({ message: "שם משתמש או סיסמה שגויים" }));
         const jwt = generateJWT(user, config.get('app.jwt.secret'), config.get('app.jwt.expires'))
         const response = {
             jwt,
@@ -42,7 +53,6 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
         if (user.isTemporaryPassword) {
             response['message'] = 'Temporary password detected. Please change your password.';
         }
-
         res.json(response);
     } catch (err) {
         return next(createHttpError(Unauthorized(ReasonPhrases.UNAUTHORIZED)));
@@ -81,6 +91,16 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
         res.json(user);
     } catch (err) {
         console.error('Error checking admin status:', err);
+        next(err)
+    }
+}
+
+export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const isDeleted = await getModel().deleteUser(req.params.id)
+        if (!isDeleted) return next(createHttpError(NotFound(`User with id ${req.params.id} is not found!`)));
+        res.sendStatus(StatusCodes.NO_CONTENT)
+    } catch (err) {
         next(err)
     }
 }

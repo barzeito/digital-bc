@@ -14,6 +14,11 @@ class AuthService {
         return users;
     }
 
+    public async getOne(id: string): Promise<userModel | undefined> {
+        const response = await axios.get<userModel>(`${appConfig.usersUrl}/${id}`);
+        return response.data;
+    }
+
     public async signUp(signup: SignUpModel): Promise<SignUpModel> {
         const response = await axios.post<{ jwt: string, user: SignUpModel }>(appConfig.signUpUrl, signup);
         const token = response.data.jwt;
@@ -29,14 +34,16 @@ class AuthService {
 
     public async signIn(signIn: signInModel): Promise<string> {
         try {
-            const response = await axios.post<{ jwt: string, user?: any }>(appConfig.signInUrl, signIn, {
+            const response = await axios.post<{ jwt: string, user?: any, message?: string }>(appConfig.signInUrl, signIn, {
                 validateStatus: function (status) {
-                    return status >= 200 && status < 500; 
+                    return status >= 200 && status < 500;
                 }
             });
+
             if (response.status === 400) {
-                throw response.data;
+                throw new Error(response.data.message || "שם משתמש או סיסמה שגויים");
             }
+
             const token = response.data.jwt;
             const user = response.data.user;
             const action: AuthAction = {
@@ -45,8 +52,10 @@ class AuthService {
             }
             authStore.dispatch(action);
             return authStore.getState().token;
-        } catch (error) {
-            throw error;
+
+        } catch (error: any) {
+            console.warn("שגיאה ב־signIn:", error?.message || error);
+            throw new Error(error?.message || "שגיאת התחברות כללית");
         }
     }
 
@@ -89,6 +98,15 @@ class AuthService {
         } catch (error) {
             throw error;
         }
+    }
+
+    public async deleteUser(id: string): Promise<void> {
+        await axios.delete(appConfig.usersUrl + `/${id}`);
+        const action: AuthAction = {
+            type: AuthActionType.deleteUser,
+            payload: id
+        }
+        authStore.dispatch(action);
     }
 }
 

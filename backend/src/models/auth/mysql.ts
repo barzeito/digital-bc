@@ -26,7 +26,7 @@ class Auth implements Model {
         return users;
     }
 
-    public async getOne(userId: string): Promise<userDTO> {
+    public async getOne(id: string): Promise<userDTO> {
         const user = (await query(`
             SELECT  userId,
                     firstName,
@@ -37,7 +37,7 @@ class Auth implements Model {
                     isTemporaryPassword
             FROM    users  
             WHERE   userId = ?
-        `, [userId]))[0];
+        `, [id]))[0];
         return user;
     }
 
@@ -128,6 +128,14 @@ class Auth implements Model {
             WHERE   userId = ?
             `, [userId]))[0];
         return user?.roleId === 2;
+    }
+
+    public async deleteUser(id: string): Promise<boolean> {
+        const result: OkPacketParams = await query(`
+            DELETE FROM users
+            WHERE       userId = ?
+        `, [id]);
+        return Boolean(result.affectedRows);
     }
 }
 

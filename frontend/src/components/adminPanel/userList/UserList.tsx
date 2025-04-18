@@ -17,7 +17,7 @@ function UserList(): JSX.Element {
             .catch(error => notify.error(error));
 
         const unsubscribe = authStore.subscribe(() => {
-            setUsers([...authStore.getState().user])
+            setUsers([...authStore.getState().userData])
         })
         return unsubscribe;
     }, []);
