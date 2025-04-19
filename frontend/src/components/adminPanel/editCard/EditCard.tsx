@@ -17,7 +17,8 @@ function EditCard(): JSX.Element {
     const socialCompanyId = String(params.id);
     const navigate = useNavigate();
 
-    const [src, setSrc] = useState<string>('');
+    const [coverSrc, setCoverSrc] = useState<string>('');
+    const [profileSrc, setProfileSrc] = useState<string>('');
     const { handleSubmit, setValue, register, formState, control } = useForm<CardModel>();
     const [selectedSocial, setSelectedSocial] = useState<string>("");
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
@@ -27,8 +28,8 @@ function EditCard(): JSX.Element {
         cardsService.getOne(cardId)
             .then(cardFromServer => {
                 setValue('company', cardFromServer?.company);
-                setSrc(cardFromServer?.coverImageUrl || '');
-                setSrc(cardFromServer?.profileImageUrl || '');
+                setCoverSrc(cardFromServer?.coverImageUrl || '');
+                setProfileSrc(cardFromServer?.profileImageUrl || '');
                 setValue('name', cardFromServer?.name);
                 setValue('description', cardFromServer?.description);
                 setValue('about', cardFromServer?.about);
@@ -49,7 +50,9 @@ function EditCard(): JSX.Element {
 
     async function submitCardUpdate(card: CardModel) {
         try {
-            card.coverImageFile = (card.coverImageFile as unknown as FileList)[0];
+            card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || undefined;
+            card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || undefined;
+
             card.id = cardId;
             await cardsService.editCard(card);
 
@@ -60,7 +63,6 @@ function EditCard(): JSX.Element {
                 social[selectedSocial as keyof SocialModel] = socialLinks[selectedSocial];
             }
 
-            console.log("Final social to send:", social);
             await socialService.editSocial(social);
             navigate("/panel/admin/cards")
             notify.success('!כרטיס עודכן בהצלחה');
@@ -150,19 +152,21 @@ function EditCard(): JSX.Element {
                     </div>
                 </div>
                 <div className="edit-row">
-                    <div className="edit-group">
-                        <label>:תמונת קאבר</label>
-                        <input type="file" accept="image/*" {...register('coverImageFile', {
-                        })} /><span>{formState.errors.coverImageFile?.message}</span>
+                    <div className="pc-images">
+                        <div className="edit-group">
+                            <label>תמונת קאבר:</label>
+                            <input type="file" accept="image/*" {...register('coverImageFile', {
+                            })} /><span>{formState.errors.coverImageFile?.message}</span>
 
-                        <ImageWatched control={control} name="coverImageFile" />
-                    </div>
-                    <div className="edit-group">
-                        <label>:תמונת פרופיל</label>
-                        <input type="file" accept="image/*" {...register('profileImageFile', {
-                        })} /><span>{formState.errors.profileImageFile?.message}</span>
+                            <ImageWatched control={control} name="coverImageFile" defaultSrc={coverSrc} setValue={setValue} />
+                        </div>
+                        <div className="edit-group">
+                            <label>תמונת פרופיל:</label>
+                            <input type="file" accept="image/*" {...register('profileImageFile', {
+                            })} /><span>{formState.errors.profileImageFile?.message}</span>
 
-                        <ImageWatched control={control} name="profileImageFile" />
+                            <ImageWatched control={control} name="profileImageFile" defaultSrc={profileSrc} />
+                        </div>
                     </div>
                 </div>
                 <div className="edit-row">

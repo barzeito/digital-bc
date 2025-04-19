@@ -13,6 +13,7 @@ import UserDash from "../../userPanel/userDash/UserDash";
 import UserCardEdit from "../../userPanel/userCardEdit/UserCardEdit";
 import UserList from "../../adminPanel/userList/UserList";
 import EditUser from "../../adminPanel/editUser/EditUser";
+import AppointmentsForm from "../../userPanel/appointmentsForm/AppointmentsForm";
 function Routing(): JSX.Element {
 
     return (
@@ -24,6 +25,8 @@ function Routing(): JSX.Element {
             <Route path="/settings/change-password/:id" element={<ChangePassword />} />
 
             <Route path="/cards/:company" element={<CardDisplay />} />
+            <Route path="/app" element={<AppointmentsForm />} />
+
 
             <Route path="/panel/user/:id" element={<UserDash />} />
             <Route path="/panel/user/edit-card/:userId/:id" element={<UserCardEdit />} />

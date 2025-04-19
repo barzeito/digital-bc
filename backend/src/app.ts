@@ -2,6 +2,7 @@ import express from "express";
 import cardsRouter from './routers/cards';
 import socialRouter from './routers/socialLinks'
 import authRouter from './routers/auth'
+import appsRouter from './routers/appointments'
 import { notFound } from "./middlewares/not-found";
 import { errorHandler } from "./middlewares/error-handler";
 import cors from 'cors';
@@ -21,6 +22,7 @@ server.use(stripTags);
 server.use('/api', authRouter)
 server.use('/api/cards', cardsRouter)
 server.use('/api/social', socialRouter)
+server.use('/api/apps', appsRouter)
 server.use('/images', express.static(path.resolve(config.get<string>('app.images.path'))))
 
 server.use(notFound)

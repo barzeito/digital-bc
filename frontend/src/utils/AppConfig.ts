@@ -5,6 +5,7 @@ class AppConfig {
     public socialUrl = `${this.apiBaseUrl}/api/social`;
     public signUpUrl = `${this.apiBaseUrl}/api/signup`;
     public signInUrl = `${this.apiBaseUrl}/api/signin`;
+    public appointmentsUrl = `${this.apiBaseUrl}/api/apps`;
     public changePasswordUrl = `${this.apiBaseUrl}/api/change-password`;
     public isAdminUrl = `${this.apiBaseUrl}/api/role`;
 }

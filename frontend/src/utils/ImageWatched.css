@@ -1,0 +1,33 @@
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.deleteImage-btn {
+    position: absolute;
+    top: 15px; 
+    right: 25px;
+    background: none;
+    border: none;
+    color: var(--Black-Text-Color); 
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.deleteImage-btn:hover {
+    opacity: 1;
+}
+
+.deleteImage-btn:hover::after {
+    content: "מחק תמונה";
+    font-size: 12px;
+    background-color: var(--Background-Color);
+    border: 1px solid var(--Tertiary-Color);
+    border-radius: 6px;
+    color: var(--Black-Text-Color); 
+    width: 80px;
+    position: absolute;
+    right: 15px;
+}

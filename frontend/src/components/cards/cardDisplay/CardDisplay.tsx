@@ -92,7 +92,13 @@ function CardDisplay(): JSX.Element {
                             image.src = noImage;
                         }}
                     />
-                    <img className="cd-ProfileImage" src={profile} alt="Profile" />
+                    <img className="cd-ProfileImage" src={card?.profileImageUrl ? card.profileImageUrl : noImage}
+                        alt="Profile"
+                        onError={(e) => {
+                            const image = e.target as HTMLImageElement;
+                            image.src = noImage;
+                        }}
+                    />
                 </div>
                 <div className="cd-details">
                     <h2 className="cd-CompanyName">{card?.company}</h2>

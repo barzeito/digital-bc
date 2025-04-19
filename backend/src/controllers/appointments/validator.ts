@@ -14,9 +14,6 @@ export const addCardValidator = Joi.object<DTO>({
     coverImageFile: Joi.object({
         mimetype: Joi.string().valid('image/jpg', 'image/jpeg', 'image/png')
     }).unknown(true).optional(),
-    profileImageFile: Joi.object({
-        mimetype: Joi.string().valid('image/jpg', 'image/jpeg', 'image/png')
-    }).unknown(true).optional(),
 });
 
 export const patchCardValidator = Joi.object<DTO>({

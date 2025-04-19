@@ -75,9 +75,27 @@ textarea {
     height: 150px;
 }
 
-.edit-social{
+.edit-social {
     width: 20%;
 }
+
+.pc-images {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    gap: 50px;
+}
+
+.pc-images img {
+    width: 200px;
+    height: 200px;
+    border: 1px solid var(--Tertiary-Color);
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
 @media (max-width: 768px) {
     .edit-group {
         flex: 1 1 100%;
