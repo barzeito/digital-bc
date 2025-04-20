@@ -5,7 +5,6 @@ import cardsService from "../../../services/cardsService";
 import notify from "../../../services/popupMessage"
 import { useNavigate, useParams } from "react-router-dom";
 import noImage from "../../../assets/images/image-not-found.jpeg"
-import profile from "../../../assets/images/profile.jpeg"
 import facebookIcon from "../../../assets/socialMedia/facebook.png";
 import instagramIcon from "../../../assets/socialMedia/instagram.png";
 import linkedinIcon from "../../../assets/socialMedia/linkedin.png";

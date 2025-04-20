@@ -11,6 +11,7 @@ import { NavLink } from "react-router-dom";
 import UserMenu from "../userMenu/UserMenu";
 import SocialModel from "../../../models/socialModel";
 import socialService from "../../../services/socialService";
+import ImageWatched from "../../../utils/imageWatch";
 
 function UserCardEdit(): JSX.Element {
     const params = useParams();
@@ -18,12 +19,13 @@ function UserCardEdit(): JSX.Element {
     const uId = String(params.userId);
     const socialCompanyId = String(params.id)
     const navigate = useNavigate();
-    const [isOwner, setIsOwner] = useState<boolean | null>(null);
     const [selectedSocial, setSelectedSocial] = useState<string>("");
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
     const [userId, setUserId] = useState<string | null>(null);
+    const [coverSrc, setCoverSrc] = useState<string>('');
+    const [profileSrc, setProfileSrc] = useState<string>('');
 
-    const { handleSubmit, setValue, register, formState } = useForm<CardModel>();
+    const { handleSubmit, setValue, register, formState, control } = useForm<CardModel>();
 
     useEffect(() => {
         const token = authStore.getState().token;
@@ -31,29 +33,29 @@ function UserCardEdit(): JSX.Element {
         if (token) {
             const decoded = jwtDecode<{ user: { userId: string } }>(token);
             const currentUserId = decoded.user.userId;
-            setIsOwner(currentUserId === uId);
-            setUserId(currentUserId)
-        } else {
-            setIsOwner(false);
+            setUserId(currentUserId);
         }
 
         const unsubscribe = authStore.subscribe(() => {
             const updatedToken = authStore.getState().token;
             if (updatedToken) {
                 const updatedUserId = jwtDecode<{ user: { userId: string } }>(updatedToken).user.userId;
-                setIsOwner(updatedUserId === uId);
+                setUserId(updatedUserId);
             } else {
-                setIsOwner(false);
+                setUserId(null);
             }
         });
 
         return unsubscribe;
     }, [uId]);
 
+
     useEffect(() => {
         cardsService.getOne(cardId)
             .then(cardFromServer => {
                 setValue('company', cardFromServer?.company);
+                setCoverSrc(cardFromServer?.coverImageUrl || '');
+                setProfileSrc(cardFromServer?.profileImageUrl || '');
                 setValue('name', cardFromServer?.name);
                 setValue('description', cardFromServer?.description);
                 setValue('about', cardFromServer?.about);
@@ -65,9 +67,6 @@ function UserCardEdit(): JSX.Element {
             .catch(error => notify.error(error));
     }, [cardId, setValue]);
 
-    if (isOwner === null) return <></>;
-
-    if (!isOwner) return <Navigate to="/*" />;
 
     const handleSocialLinkChange = (platform: string, value: string) => {
         setSocialLinks(prevLinks => ({
@@ -78,6 +77,9 @@ function UserCardEdit(): JSX.Element {
 
     async function submitCardUpdate(card: CardModel) {
         try {
+            card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || undefined;
+            card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || undefined;
+
             card.id = cardId;
             await cardsService.editCard(card);
 
@@ -173,6 +175,24 @@ function UserCardEdit(): JSX.Element {
                                 || 'כתובת האתר אינה תקינה.'
                         })} />
                         <span className="error">{formState.errors.website?.message}</span>
+                    </div>
+                </div>
+                <div className="edit-row">
+                    <div className="pc-images">
+                        <div className="edit-group">
+                            <label>תמונת קאבר:</label>
+                            <input type="file" accept="image/*" {...register('coverImageFile', {
+                            })} /><span>{formState.errors.coverImageFile?.message}</span>
+
+                            <ImageWatched control={control} name="coverImageFile" defaultSrc={coverSrc} setValue={setValue} />
+                        </div>
+                        <div className="edit-group">
+                            <label>תמונת פרופיל:</label>
+                            <input type="file" accept="image/*" {...register('profileImageFile', {
+                            })} /><span>{formState.errors.profileImageFile?.message}</span>
+
+                            <ImageWatched control={control} name="profileImageFile" defaultSrc={profileSrc} />
+                        </div>
                     </div>
                 </div>
                 <div className="edit-row">

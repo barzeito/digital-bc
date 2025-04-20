@@ -1,3 +1,51 @@
 .Page404 {
-	
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.content {
+    text-align: center;
+}
+
+.content h1 {
+    font-size: 6rem;
+    color: #dc3545;
+    margin-bottom: 0.5rem;
+}
+
+.content h2 {
+    font-size: 2rem;
+    color: var(--Black-Text-Color);
+    margin-bottom: 1.5rem;
+}
+
+.content p {
+    font-size: 1.2rem;
+    color: #a7a9ac;
+    margin-bottom: 2rem;
+}
+
+.button {
+    font-size: 1rem;
+    background-color: var(--Secondary-Color);
+    color: var(--Black-Text-Color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #0fc050;
+}
+
+.button a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.button a:hover {
+    text-decoration: underline;
 }

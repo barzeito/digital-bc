@@ -1,5 +1,4 @@
 import axios from "axios";
-import { CardsAction, CardsActionType, CardsStore } from "../redux/cardState";
 import appConfig from "../utils/AppConfig";
 import AppointmentsModel from "../models/appointmentsModel";
 
