@@ -12,42 +12,22 @@ import UserMenu from "../userMenu/UserMenu";
 import SocialModel from "../../../models/socialModel";
 import socialService from "../../../services/socialService";
 import ImageWatched from "../../../utils/imageWatch";
+import { useCurrentUser } from "../../../utils/useCurrentUser";
 
 function UserCardEdit(): JSX.Element {
     const params = useParams();
     const cardId = String(params.id);
-    const uId = String(params.userId);
+    const user = useCurrentUser();
+    const userId = user?.userId;
     const socialCompanyId = String(params.id)
     const navigate = useNavigate();
     const [selectedSocial, setSelectedSocial] = useState<string>("");
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
-    const [userId, setUserId] = useState<string | null>(null);
     const [coverSrc, setCoverSrc] = useState<string>('');
     const [profileSrc, setProfileSrc] = useState<string>('');
 
     const { handleSubmit, setValue, register, formState, control } = useForm<CardModel>();
 
-    useEffect(() => {
-        const token = authStore.getState().token;
-
-        if (token) {
-            const decoded = jwtDecode<{ user: { userId: string } }>(token);
-            const currentUserId = decoded.user.userId;
-            setUserId(currentUserId);
-        }
-
-        const unsubscribe = authStore.subscribe(() => {
-            const updatedToken = authStore.getState().token;
-            if (updatedToken) {
-                const updatedUserId = jwtDecode<{ user: { userId: string } }>(updatedToken).user.userId;
-                setUserId(updatedUserId);
-            } else {
-                setUserId(null);
-            }
-        });
-
-        return unsubscribe;
-    }, [uId]);
 
 
     useEffect(() => {
@@ -92,7 +72,7 @@ function UserCardEdit(): JSX.Element {
 
             await socialService.editSocial(social);
             navigate(`/panel/user/${userId}`)
-            notify.success('Card and Social Links Updated Successfully');
+            notify.success('!הכרטיס עודכן בהצלחה');
         } catch (error) {
             console.error(error);
             notify.error('Failed to update card and social links');

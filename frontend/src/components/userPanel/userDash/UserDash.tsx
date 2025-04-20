@@ -9,41 +9,13 @@ import cardsService from "../../../services/cardsService";
 import notify from "../../../services/popupMessage"
 import { CardsStore } from "../../../redux/cardState";
 import UserCards from "../userCards/UserCards";
+import { useCurrentUser } from "../../../utils/useCurrentUser";
 
 function UserDash(): JSX.Element {
 
-    const { id } = useParams<{ id: string }>();
-
-    const [isOwner, setIsOwner] = useState<boolean | null>(null);
-    const [userId, setUserId] = useState<string | null>(null);
+    const user = useCurrentUser();
+    const userId = user?.userId;
     const [userCards, setUserCards] = useState<CardModel[]>([]);
-
-    useEffect(() => {
-        const token = authStore.getState().token;
-
-        if (token) {
-            const decoded = jwtDecode<{ user: { userId: string } }>(token);
-            const currentUserId = decoded.user.userId;
-            setUserId(currentUserId);
-            setIsOwner(currentUserId === id);
-        } else {
-            setIsOwner(false);
-        }
-
-        const unsubscribe = authStore.subscribe(() => {
-            const updatedToken = authStore.getState().token;
-            if (updatedToken) {
-                const updatedUserId = jwtDecode<{ user: { userId: string } }>(updatedToken).user.userId;
-                setUserId(updatedUserId);
-                setIsOwner(updatedUserId === id);
-            } else {
-                setUserId(null);
-                setIsOwner(false);
-            }
-        });
-
-        return unsubscribe;
-    }, [id]);
 
     useEffect(() => {
         if (!userId) return;
@@ -60,10 +32,6 @@ function UserDash(): JSX.Element {
 
         return unsubscribe;
     }, [userId]);
-
-    if (isOwner === null) return <></>;
-
-    if (!isOwner) return <Navigate to="/*" />;
 
     return (
         <div className="UserDash">
