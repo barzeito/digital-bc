@@ -1,8 +1,7 @@
-
 export default class AppointmentsModel {
-    id?: string;
+    appId?: string;
     company_id?: string;
     company?: string;
-    days_schedule?: string;
-    slot_interval?: string;
+    days_schedule?: Record<string, { start: string; end: string }>;
+    slot_interval?: number;
 }

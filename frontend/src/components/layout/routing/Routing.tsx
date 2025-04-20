@@ -25,11 +25,11 @@ function Routing(): JSX.Element {
             <Route path="/settings/change-password/:id" element={<ChangePassword />} />
 
             <Route path="/cards/:company" element={<CardDisplay />} />
-            <Route path="/app" element={<AppointmentsForm />} />
 
 
             <Route path="/panel/user/:id" element={<UserDash />} />
             <Route path="/panel/user/edit-card/:userId/:id" element={<UserCardEdit />} />
+            <Route path="/panel/user/appointments/edit/:userId/:id" element={<AppointmentsForm />} />
 
             <Route path="/panel/admin" element={<AdminRoute element={<AdminDash />} />} />
             <Route path="/panel/admin/cards" element={<AdminRoute element={<CardList />} />} />

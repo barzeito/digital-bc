@@ -34,6 +34,7 @@ function UserCards(props: userCardsProps): JSX.Element {
             <div className="uc-btn">
                 <NavLink to={`/cards/${props.card.company}`} className="view-btn">צפייה</NavLink>
                 <NavLink to={`/panel/user/edit-card/${props.card.ownedBy}/${props.card.id}`} className="edit-btn">עריכה</NavLink>
+                <NavLink to={`/panel/user/appointments/edit/${props.card.ownedBy}/${props.card.id}`} className="edit-btn">תורים</NavLink>
             </div>
         </div>
     );

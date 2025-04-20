@@ -123,25 +123,6 @@
     font-size: 18px;
 }
 
-.confirm-btn {
-    display: flex;
-    justify-content: space-around;
-}
-
-.confirm-btn button {
-    background-color: var(--Secondary-Color);
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.confirm-btn button:hover {
-    background-color: #0fc050;
-}
-
 @media screen and (max-width: 1024px) {
     .Cards {
         flex-direction: column;

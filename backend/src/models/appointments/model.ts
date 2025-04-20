@@ -7,5 +7,5 @@ export default interface Model {
     getOneByCompanyId(id: string): Promise<DTO>;
     add(app: DTO): Promise<DTO>;
     // deleteApp(id: string): Promise<boolean>;
-    // update(app: DTO): Promise<DTO>;
+    update(app: DTO): Promise<DTO>;
 }

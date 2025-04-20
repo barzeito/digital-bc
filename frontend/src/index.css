@@ -33,6 +33,18 @@ body,
     --Cancel-Button:#E74C3C;
 }
 
+.submit-btn {
+    background-color: #4CAF50;
+}
+
+.cancel-btn {
+    background-color: #f44336;
+}
+
+.confirm-btn button:hover {
+    background-color: #0fc050;
+}
+
 @-webkit-keyframes notyf-fadeinup {
     0% {
         opacity: 0;

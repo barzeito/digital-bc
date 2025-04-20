@@ -79,27 +79,18 @@ class Appointments implements Model {
     //     return Boolean(result.affectedRows);
     // }
 
-    // public async update(card: DTO): Promise<DTO> {
-    //     const { id, company, coverImage, profileImage, name, description, about, email, phone, website, address, ownedBy } = card;
-    //     const updated_at = new Date().toISOString().slice(0, 19).replace("T", " ");
-    //     await query(`
-    //             UPDATE  business_cards
-    //             SET     company = ?,
-    //                     coverImage = ?,
-    //                     profileImage = ?,
-    //                     name = ?,
-    //                     description = ?,
-    //                     about = ?,
-    //                     email = ?,
-    //                     phone = ?,
-    //                     website = ?,
-    //                     address = ?,
-    //                     updated_at = ?,
-    //                     ownedBy = ?
-    //             WHERE   id = ?
-    //         `, [company, coverImage, profileImage, name, description, about, email, phone, website, address, updated_at, ownedBy || null, id]);
-    //     return this.getOneById(id);
-    // }
+    public async update(app: DTO): Promise<DTO> {
+        const { appId, company_id, company, days_schedule, slot_interval } = app;
+        await query(`
+                UPDATE  app_availability
+                SET     company_id = ?,
+                        company = ?,
+                        days_schedule = ?,
+                        slot_interval = ?
+                WHERE   appId = ?
+            `, [company_id, company, days_schedule, slot_interval, appId]);
+        return this.getOneByCompanyId(appId);
+    }
 }
 
 const appointments = new Appointments();
