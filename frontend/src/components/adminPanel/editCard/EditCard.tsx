@@ -204,7 +204,7 @@ function EditCard(): JSX.Element {
                         )}
                     </div>
                 </div>
-                <div className="buttons">
+                <div className="edit-buttons">
                     <button className="submit-btn">שמירה</button>
                     <NavLink to="/panel/admin/cards" className="cancel-btn">ביטול</NavLink>
                 </div>

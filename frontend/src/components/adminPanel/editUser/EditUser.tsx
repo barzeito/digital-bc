@@ -118,7 +118,7 @@ function EditUser(): JSX.Element {
                     </div>
                 </div>
 
-                <div className="buttons">
+                <div className="editUser-buttons">
                     <button className="submit-btn">שמירה</button>
                     <button type="button" className="cancel-btn" onClick={() => navigate("/panel/admin/users")}>ביטול</button>
                 </div>

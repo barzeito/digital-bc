@@ -44,9 +44,8 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
     };
     return (
         <div className="ScheduleAppointment">
-            <h3>הזמנת תור</h3>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
+            <p>הזמנת תור</p>
+            <form className="sa-form" onSubmit={handleSubmit}>
                     <label>שם</label>
                     <input
                         type="text"
@@ -55,8 +54,6 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div className="form-group">
                     <label>אימייל</label>
                     <input
                         type="email"
@@ -65,8 +62,6 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div className="form-group">
                     <label>טלפון</label>
                     <input
                         type="tel"
@@ -75,8 +70,6 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div className="form-group">
                     <label>תאריך</label>
                     <input
                         type="date"
@@ -85,8 +78,6 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div className="form-group">
                     <label>שעה</label>
                     <input
                         type="time"
@@ -95,16 +86,13 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div className="form-group">
                     <label>הערות</label>
                     <textarea
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
                     />
-                </div>
-                <button type="submit">הזמן תור</button>
+                <button type="submit" className="submit-btn">הזמן תור</button>
             </form>
         </div>
     );

@@ -30,19 +30,99 @@ body,
     --Black-Text-Color: #2C2D33;
     --White-Text-Color: #F4F5F6;
     --Submit-Button: #23C55E;
-    --Cancel-Button:#E74C3C;
+    --Cancel-Button: #E74C3C;
 }
 
 .submit-btn {
-    background-color: #4CAF50;
+    font-family: inherit;
+    display: inline-block;
+    width: 8em;
+    height: 2.6em;
+    line-height: 2.5em;
+    margin: 20px auto;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid var(--Secondary-Color);
+    transition: color 0.5s;
+    z-index: 1;
+    font-size: 17px;
+    border-radius: 6px;
+    font-weight: 500;
+    color: var(--Secondary-Color);
 }
+
+.submit-btn:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: var(--Secondary-Color);
+    height: 150px;
+    width: 200px;
+    border-radius: 50%;
+    top: 100%;
+    left: 100%;
+    transition: all 0.7s;
+}
+
+.submit-btn:hover {
+    color: var(--White-Text-Color);
+}
+
+.submit-btn:hover:before {
+    top: -30px;
+    left: -30px;
+}
+
+.submit-btn:active::before {
+    transition: var(--Secondary-Color) 0s;
+}
+
 
 .cancel-btn {
-    background-color: #f44336;
+    font-family: inherit;
+    display: inline-block;
+    width: 8em;
+    height: 2.6em;
+    line-height: 2.5em;
+    margin: 20px auto;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid var(--Cancel-Button);
+    transition: color 0.5s;
+    z-index: 1;
+    font-size: 17px;
+    border-radius: 6px;
+    font-weight: 500;
+    color: var(--Cancel-Button);
+    text-decoration: none;
 }
 
-.confirm-btn button:hover {
-    background-color: #0fc050;
+.cancel-btn:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: var(--Cancel-Button);
+    height: 150px;
+    width: 200px;
+    border-radius: 50%;
+    top: 100%;
+    left: 100%;
+    transition: all 0.7s;
+}
+
+.cancel-btn:hover {
+    color: var(--White-Text-Color);
+}
+
+.cancel-btn:hover:before {
+    top: -30px;
+    left: -30px;
+}
+
+.cancel-btn:active::before {
+    transition: var(--Cancel-Button) 0s;
 }
 
 @-webkit-keyframes notyf-fadeinup {
@@ -172,9 +252,9 @@ body,
     align-items: center;
     gap: 10px;
     pointer-events: none;
-  }
-  
-  .notify {
+}
+
+.notify {
     padding: 14px 20px;
     border-radius: 8px;
     min-width: 280px;
@@ -187,45 +267,45 @@ body,
     justify-content: space-between;
     animation: fadeInDown 0.4s ease;
     color: white;
-  }
-  
-  .notify-success {
+}
+
+.notify-success {
     background-color: #27ae60;
-  }
-  
-  .notify-error {
+}
+
+.notify-error {
     background-color: #c0392b;
-  }
-  
-  .notify-info {
+}
+
+.notify-info {
     background-color: #2f80ed;
-  }
-  
-  .notify-warning {
+}
+
+.notify-warning {
     background-color: #f39c12;
-  }
-  
-  .notify-message {
+}
+
+.notify-message {
     flex-grow: 1;
     margin-right: 10px;
-  }
-  
-  .notify-close {
+}
+
+.notify-close {
     background: transparent;
     border: none;
     color: white;
     font-size: 20px;
     cursor: pointer;
-  }
-  
-  @keyframes fadeInDown {
+}
+
+@keyframes fadeInDown {
     0% {
-      opacity: 0;
-      transform: translateY(-20%);
+        opacity: 0;
+        transform: translateY(-20%);
     }
+
     100% {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
+}

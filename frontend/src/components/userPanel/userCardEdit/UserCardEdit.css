@@ -83,7 +83,7 @@ textarea {
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    margin: 0 auto;
     gap: 20px;
 }
 

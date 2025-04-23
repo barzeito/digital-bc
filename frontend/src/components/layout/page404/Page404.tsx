@@ -9,7 +9,7 @@ function Page404(): JSX.Element {
                 <h1>404</h1>
                 <h2>Page Not Found</h2>
                 <p>Oops! The page you are looking for might have been removed or is temporarily unavailable.</p>
-                <div className="button"><NavLink to="/">Click Here to go back to Home page</NavLink></div>
+                <div className="no-button"><NavLink to="/">Click Here to go back to Home page</NavLink></div>
             </div>
         </div>
     );

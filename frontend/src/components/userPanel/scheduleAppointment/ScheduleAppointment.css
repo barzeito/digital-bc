@@ -1,3 +1,42 @@
 .ScheduleAppointment {
-	
+    font-family: 'Assistant', sans-serif;
+}
+
+.ScheduleAppointment p {
+    font-size: 35px;
+}
+
+.sa-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sa-form label {
+    font-size: 16px;
+    color: var(--Black-Text-Color);
+    margin-bottom: 5px;
+    display: block;
+}
+
+.sa-form input {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid var(--Tertiary-Color);
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.sa-form input:focus {
+    border-color: var(--Secondary-Color);
+}
+
+.sa-form textarea {
+    width: 80%;
+    margin: 0 auto;
 }

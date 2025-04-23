@@ -84,8 +84,7 @@
 .edit-btn,
 .delete-btn,
 .view-btn,
-.assign-btn,
-.assign-cancel {
+.assign-btn {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
@@ -132,29 +131,6 @@
     font-size: 18px;
 }
 
-.confirm-btn {
-    display: flex;
-    justify-content: space-around;
-}
-
-.cancel-btn {
-    background-color: var(--Cancel-Button);
-}
-
-.confirm-btn button,
-.assign-cancel button {
-    color: var(--White-Text-Color);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.confirm-btn button:hover {
-    background-color: #0fc050;
-}
-
 .AssignPopup ul {
     list-style: none;
 }
@@ -181,13 +157,10 @@
     gap: 10px;
 }
 
-.assign-delete {
-    background-color: var(--Submit-Button);
-}
-
-.assign-cancel {
-    background-color: var(--Cancel-Button);
-    margin-top: 0;
+.delete-buttons,
+.attach-buttons {
+    display: flex;
+    flex-direction: row;
 }
 
 .PopUpContainer {

@@ -79,6 +79,10 @@
     background-color: #f44336;
 }
 
+.users-buttons{
+    display: flex;
+    margin: 0 auto;
+}
 @media screen and (max-width: 1024px) {
     .Users {
         align-items: center;

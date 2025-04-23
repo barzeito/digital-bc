@@ -62,8 +62,8 @@ function Users(props: usersProps): JSX.Element {
                         <div className="Delete-PopUp">
                             <span>מוחק את {props.user.firstName} {props.user.lastName}</span>
                             <p>האם אתה בטוח שברצונך למחוק את {props.user.firstName} {props.user.lastName}?</p>
-                            <div className="confirm-btn">
-                                <button onClick={deleteUser}>מחיקה</button>
+                            <div className="users-buttons">
+                                <button onClick={deleteUser} className="submit-btn">מחיקה</button>
                                 <button className="cancel-btn" onClick={() => setShowDelete(false)}>ביטול</button>
                             </div>
                         </div>

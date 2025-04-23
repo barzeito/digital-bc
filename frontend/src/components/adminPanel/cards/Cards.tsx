@@ -128,9 +128,9 @@ function Cards(props: cardsProps): JSX.Element {
                                     </li>
                                 ))}
                             </ul>
-                            <div className="attach">
-                                <button className="assign-delete" onClick={() => removeOwner()}>מחק שיוך</button>
-                                <button className="assign-cancel" onClick={() => setShowAssignPopup(false)}>סגירה</button>
+                            <div className="attach-buttons">
+                                <button className="submit-btn" onClick={() => removeOwner()}>מחק שיוך</button>
+                                <button className="cancel-btn" onClick={() => setShowAssignPopup(false)}>סגירה</button>
                             </div>
                         </div>
                     </div>
@@ -143,8 +143,8 @@ function Cards(props: cardsProps): JSX.Element {
                         <div className="Delete-PopUp">
                             <span>מוחק את {props.card.company}</span>
                             <p>האם אתה בטוח שברצונך למחוק את {props.card.company}?</p>
-                            <div className="confirm-btn">
-                                <button onClick={deleteCard}>מחיקה</button>
+                            <div className="delete-buttons">
+                                <button onClick={deleteCard} className="submit-btn">מחיקה</button>
                                 <button className="cancel-btn" onClick={() => setShowDelete(false)}>ביטול</button>
                             </div>
                         </div>
