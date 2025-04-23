@@ -1,39 +1,13 @@
-import { useEffect, useState } from "react";
 import "./AdminMenu.css";
-import { authStore } from "../../../redux/authState";
-import { jwtDecode } from "jwt-decode";
 import authService from "../../../services/authService";
 import notify from "../../../services/popupMessage"
 import { NavLink } from "react-router-dom";
+import useCurrentUser from "../../../utils/useCurrentUser";
 
 function AdminMenu(): JSX.Element {
 
-    type User = {
-        firstName: string;
-        lastName: string;
-        userId: string;
-    }
-
-    const [user, setUser] = useState<User>();
-
-    useEffect(() => {
-        const token = authStore.getState().token;
-        if (token) {
-            const user = jwtDecode<{ user: User }>(token).user;
-            setUser(user);
-        }
-        const unsubscribe = authStore.subscribe(() => {
-            const token = authStore.getState().token;
-            if (token) {
-                const user = jwtDecode<{ user: User }>(token).user;
-                setUser(user);
-            } else {
-                setUser(undefined);
-            }
-        });
-        return unsubscribe;
-    }, [])
-
+    const user = useCurrentUser();
+    
     function logOut() {
         authService.logout();
         notify.success('!התנתקת בהצלחה מהמערכת');

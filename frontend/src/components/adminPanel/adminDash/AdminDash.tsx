@@ -5,7 +5,7 @@ function AdminPanel(): JSX.Element {
     return (
         <div className="AdminDash">
             <AdminMenu />
-            
+
             <div className="dashboard-content">
                 <section className="welcome">
                     <h1>שלום אדמין!</h1>

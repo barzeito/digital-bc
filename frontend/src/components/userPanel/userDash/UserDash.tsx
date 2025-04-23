@@ -1,8 +1,5 @@
-import { Navigate, useParams } from "react-router-dom";
 import "./UserDash.css";
 import { useEffect, useState } from "react";
-import { authStore } from "../../../redux/authState";
-import { jwtDecode } from "jwt-decode";
 import UserMenu from "../userMenu/UserMenu";
 import CardModel from "../../../models/cardModel";
 import cardsService from "../../../services/cardsService";

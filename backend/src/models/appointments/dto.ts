@@ -6,4 +6,5 @@ export default interface DTO {
     company: string;
     days_schedule: JSON;
     slot_interval: number;
+    booked_appointments: JSON;
 }

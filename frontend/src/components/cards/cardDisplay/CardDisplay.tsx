@@ -17,6 +17,7 @@ import tikTok from "../../../assets/socialMedia/tik-tok.png";
 import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
 import AddToContactsButton from "../../../utils/addToContact";
+import ScheduleAppointment from "../../userPanel/scheduleAppointment/ScheduleAppointment";
 
 
 function CardDisplay(): JSX.Element {
@@ -143,6 +144,7 @@ function CardDisplay(): JSX.Element {
                 </div>
                 <div className="cardDisplay-info">
                 </div>
+                <ScheduleAppointment companyId={card?.id || ""} />
             </div>
         </div>
     );

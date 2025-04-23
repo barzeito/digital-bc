@@ -62,3 +62,21 @@ export const patch = async (req: Request, res: Response, next: NextFunction) => 
         next(err)
     }
 }
+
+export const addAppointment = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { company_id } = req.params;
+        const appointment = req.body;
+        const date = appointment.date;
+
+        console.log("📅 Date received:", appointment.date);
+
+        // ניסיון להוסיף תור
+        await getModel().addBookedAppointment(company_id, date, appointment);
+
+        res.status(StatusCodes.OK).json({ message: "התור הוזמן בהצלחה" });  // תגובה מוצלחת
+    } catch (err) {
+        console.error("Error occurred:", err);  // הדפס את השגיאה
+        next(err);  // מעבר לשגיאה הבאה
+    }
+}

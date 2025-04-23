@@ -92,7 +92,7 @@ function AppointmentForm(): JSX.Element {
         <div className="AppointmentForm">
             <UserMenu />
             <div className="optionsButtons">
-            <NavLink to={`/appointments/${companyId}/${uId}`} className="activeApps">תורים פעילים</NavLink>
+                <NavLink to={`/panel/user/appointments/list/${uId}/${companyId}`} className="activeApps">תורים פעילים</NavLink>
             </div>
             <div className="appOptions">
                 <h2>הגדרת זמני הזמינות</h2>

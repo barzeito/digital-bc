@@ -8,4 +8,5 @@ export default interface Model {
     add(app: DTO): Promise<DTO>;
     // deleteApp(id: string): Promise<boolean>;
     update(app: DTO): Promise<DTO>;
+    addBookedAppointment(companyId: string, date: string, time: string): Promise<void>;
 }
