@@ -53,7 +53,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
 
 export const patch = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = req.params.id;
+        const id = req.params.company_id;
         const existingApp = await getModel().getOneByCompanyId(id);
         const updatedApp = { ...existingApp, ...req.body };
         const app = await getModel().update(updatedApp);
@@ -69,14 +69,21 @@ export const addAppointment = async (req: Request, res: Response, next: NextFunc
         const appointment = req.body;
         const date = appointment.date;
 
-        console.log("📅 Date received:", appointment.date);
-
-        // ניסיון להוסיף תור
         await getModel().addBookedAppointment(company_id, date, appointment);
 
-        res.status(StatusCodes.OK).json({ message: "התור הוזמן בהצלחה" });  // תגובה מוצלחת
+        res.status(StatusCodes.OK).json({ message: "התור הוזמן בהצלחה" });
     } catch (err) {
-        console.error("Error occurred:", err);  // הדפס את השגיאה
-        next(err);  // מעבר לשגיאה הבאה
+        console.error("Error occurred:", err);
+        next(err);
+    }
+}
+
+export const getAvailableTimes = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const app = await getModel().getAvailableTimes(req.params.company_id);
+        if (!app) return next();
+        res.json(app)
+    } catch (err) {
+        next(err)
     }
 }

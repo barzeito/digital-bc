@@ -19,7 +19,8 @@
     display: block;
 }
 
-.sa-form input {
+.sa-form input,
+.sa-form select {
     width: 30%;
     display: flex;
     justify-content: center;
@@ -32,11 +33,17 @@
     transition: border-color 0.3s ease;
 }
 
-.sa-form input:focus {
+.sa-form input:focus,
+.sa-form select:focus {
     border-color: var(--Secondary-Color);
 }
 
 .sa-form textarea {
     width: 80%;
+    margin: 0 auto;
+}
+
+.sa-form .time {
+    width: 30%;
     margin: 0 auto;
 }

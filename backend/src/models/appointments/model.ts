@@ -9,4 +9,5 @@ export default interface Model {
     // deleteApp(id: string): Promise<boolean>;
     update(app: DTO): Promise<DTO>;
     addBookedAppointment(companyId: string, date: string, time: string): Promise<void>;
+    getAvailableTimes(companyId: string): Promise<any>;
 }

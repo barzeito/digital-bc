@@ -85,7 +85,7 @@ class Appointments implements Model {
 
     public async update(app: DTO): Promise<DTO> {
         const { appId, company_id, company, days_schedule, slot_interval, booked_appointments } = app;
-        await query(`
+        const updated = await query(`
                 UPDATE  app_availability
                 SET     company_id = ?,
                         company = ?,
@@ -93,8 +93,10 @@ class Appointments implements Model {
                         slot_interval = ?,
                         booked_appointments = ?
                 WHERE   company_id = ?
-            `, [company_id, company, days_schedule, slot_interval, booked_appointments, appId]);
-        return this.getOneByCompanyId(appId);
+            `, [company_id, company, days_schedule, slot_interval, booked_appointments, company_id]);
+        console.log(company_id)
+        console.log(updated)
+        return this.getOneByCompanyId(company_id);
     }
 
     public async addBookedAppointment(companyId: string, date: string, appointment: any): Promise<void> {
@@ -133,6 +135,17 @@ class Appointments implements Model {
         if (result.changedRows === 0) {
             console.warn("⚠️ לא עודכנה אף שורה - בדוק שה-company_id קיים:", companyId);
         }
+    }
+
+    public async getAvailableTimes(company_id: string): Promise<any> {
+        const app = await query(`
+                SELECT  days_schedule,
+                        slot_interval,
+                        booked_appointments
+                FROM    app_availability
+                WHERE   company_id = ?
+            `, [company_id]);
+        return app
     }
 
 }

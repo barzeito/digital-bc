@@ -56,7 +56,8 @@ class AppointmentsService {
                 booked_appointments: JSON.stringify(app.booked_appointments)
             };
 
-            const response = await axios.patch<AppointmentsModel>(`${appConfig.appointmentsUrl}/${app.appId}`, appointmentToSend);
+            const response = await axios.patch<AppointmentsModel>(`${appConfig.appointmentsUrl}/${app.company_id}`, appointmentToSend);
+            console.log("Response: ", response.data)
             return response.data;
         } catch (error) {
             throw error;
@@ -65,18 +66,28 @@ class AppointmentsService {
 
     public async bookAppointment(company_id: string, newApp: any): Promise<AppointmentsModel> {
         try {
-            // הוספתי את ה-date לתוך המידע שנשלח, ומוודא שהנתיב מעביר רק את company_id
             const response = await axios.patch(`${appConfig.appointmentsUrl}/new/${company_id}`, {
                 ...newApp,
-                date: newApp.date // ודא שהתאריך מועבר כראוי
+                date: newApp.date
             });
             const data = response.data;
             return data;
         } catch (error) {
-            console.error("שגיאה בהזמנה:", error);
             throw error;
         }
     };
+
+    public async getAvailableTimes(company_id: string, selectedDate: string): Promise<string[]> {
+        try {
+            const response = await axios.get(`${appConfig.appointmentsUrl}/available/${company_id}`, {
+                params: { date: selectedDate }
+            });
+            return response.data;
+        } catch (error: any) {
+            console.error('Error fetching available times:', error);
+            throw error;
+        }
+    }
 
 }
 

@@ -57,7 +57,6 @@ function CardDisplay(): JSX.Element {
                 .then(async cardFromServer => {
                     if (cardFromServer) {
                         setCard(cardFromServer);
-                        console.log('Fetched card:', cardFromServer);
                         const allSocials: SocialModel[] = await socialService.getAll();
                         const filtered = allSocials.filter(s => s.company_id === cardFromServer.id);
                         const socialMap: { [key: string]: string } = {};
