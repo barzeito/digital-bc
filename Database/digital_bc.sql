@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 14, 2025 at 06:41 AM
+-- Generation Time: Apr 24, 2025 at 06:14 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -26,12 +26,36 @@ USE `digital_bc`;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `app_availability`
+--
+
+CREATE TABLE `app_availability` (
+  `appId` varchar(36) NOT NULL,
+  `company_id` varchar(36) NOT NULL,
+  `company` varchar(255) NOT NULL,
+  `days_schedule` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`days_schedule`)),
+  `slot_interval` int(11) NOT NULL DEFAULT 30,
+  `booked_appointments` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '[]' CHECK (json_valid(`booked_appointments`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `app_availability`
+--
+
+INSERT INTO `app_availability` (`appId`, `company_id`, `company`, `days_schedule`, `slot_interval`, `booked_appointments`) VALUES
+('e5e2da2a-b25c-4b60-a656-c24e2bf5e457', 'f11addfa-9d66-443a-a3bc-67340b7d0110', 'גשגש', '{\"sunday\":{\"start\":\"07:00\",\"end\":\"16:00\"},\"monday\":{\"start\":\"08:00\",\"end\":\"08:00\"},\"tuesday\":{\"start\":\"07:00\",\"end\":\"20:00\"},\"wednesday\":{\"start\":\"07:00\",\"end\":\"20:00\"},\"thursday\":{\"start\":\"07:00\",\"end\":\"20:00\"},\"friday\":{\"start\":\"07:00\",\"end\":\"20:00\"},\"saturday\":{\"start\":\"07:00\",\"end\":\"20:00\"}}', 30, '[\"{\\\"name\\\":\\\"ddddd\\\",\\\"email\\\":\\\"bar199z51@gmail.com\\\",\\\"phone\\\":\\\"052-6773721\\\",\\\"date\\\":\\\"2025-04-25\\\",\\\"time\\\":\\\"07:00\\\",\\\"message\\\":\\\"cshev\\\",\\\"appointmentDate\\\":\\\"2025-04-25\\\"}\", \"{\\\"name\\\":\\\"ddddd\\\",\\\"email\\\":\\\"bar199z51@gmail.com\\\",\\\"phone\\\":\\\"052-6773721\\\",\\\"date\\\":\\\"2025-04-25\\\",\\\"time\\\":\\\"07:00\\\",\\\"message\\\":\\\"cshev\\\",\\\"appointmentDate\\\":\\\"2025-04-25\\\"}\", \"{\\\"name\\\":\\\"gfdgdf\\\",\\\"email\\\":\\\"barzeitony@gmail.com\\\",\\\"phone\\\":\\\"052-3242342\\\",\\\"date\\\":\\\"2025-04-25\\\",\\\"time\\\":\\\"10:00\\\",\\\"message\\\":\\\"asdsd\\\",\\\"appointmentDate\\\":\\\"2025-04-25\\\"}\", \"{\\\"name\\\":\\\"dsfdsf\\\",\\\"email\\\":\\\"bar199z51@gmail.com\\\",\\\"phone\\\":\\\"052-3456789\\\",\\\"date\\\":\\\"2025-04-30\\\",\\\"time\\\":\\\"08:00\\\",\\\"message\\\":\\\"asdads\\\",\\\"appointmentDate\\\":\\\"2025-04-30\\\"}\", \"{\\\"name\\\":\\\"ddddd\\\",\\\"email\\\":\\\"bar199z51@gmail.com\\\",\\\"phone\\\":\\\"052-3456789\\\",\\\"date\\\":\\\"2025-04-30\\\",\\\"time\\\":\\\"08:30\\\",\\\"message\\\":\\\"okokokko\\\",\\\"appointmentDate\\\":\\\"2025-04-30\\\"}\", \"{\\\"name\\\":\\\"ddddd\\\",\\\"email\\\":\\\"bar199z51@gmail.com\\\",\\\"phone\\\":\\\"052-6773721\\\",\\\"date\\\":\\\"2025-04-30\\\",\\\"time\\\":\\\"07:30\\\",\\\"message\\\":\\\"sdfda\\\",\\\"appointmentDate\\\":\\\"2025-04-30\\\"}\"]');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `business_cards`
 --
 
 CREATE TABLE `business_cards` (
   `id` varchar(36) NOT NULL,
   `company` varchar(50) NOT NULL,
+  `coverImage` varchar(255) DEFAULT NULL,
+  `profileImage` varchar(255) DEFAULT NULL,
   `name` varchar(25) NOT NULL,
   `description` varchar(50) NOT NULL,
   `about` text NOT NULL,
@@ -48,8 +72,9 @@ CREATE TABLE `business_cards` (
 -- Dumping data for table `business_cards`
 --
 
-INSERT INTO `business_cards` (`id`, `company`, `name`, `description`, `about`, `email`, `phone`, `website`, `address`, `created_at`, `updated_at`, `ownedBy`) VALUES
-('7ee3ae9e-31bd-4f1c-b403-940b587282dd', 'Digital Business Cards', 'Bar', 'כרטיסי ביקור דיגיטלים', '✨ כרטיסי ביקור דיגיטליים – הדרך החדשה להתחבר בעולם העסקי! ✨\n\nבימינו, כרטיס ביקור דיגיטלי הוא הרבה יותר מסתם פרטי יצירת קשר – הוא הדרך שלך להציג את עצמך בצורה מודרנית, נוחה ומרשימה! 🚀\n\n🔹 אינטראקטיבי וחדשני – כל פרטי העסק שלך במקום אחד, עם עיצובים מתקדמים שיבדל אותך מכל המתחרים. 🔹 עדכון מיידי – כל שינוי שתעשה בכרטיס הביקור יתעדכן בצורה אוטומטית, בלי לדאוג לכרטיסים פיזיים. 🔹 חוויית משתמש ידידותית – כרטיסי הביקור הדיגיטליים שלנו נגישים, קלים לשיתוף, וללא מגבלות על כמות המידע. 🔹 שיתוף קל ונוח – שיתוף הכרטיס דרך קישור, קוד QR או דרך רשתות חברתיות. 📲\n\n✅ כרטיס ביקור דיגיטלי לא רק שתורם למראה המקצועי שלך, אלא גם חוסך זמן ומשאבים. פשוט, נוח, ומרשים!\n\nמהחברה שלך ועד לכל לקוח פוטנציאלי – כרטיס ביקור דיגיטלי הוא הכלי המושלם לכל תחום! 💼\n\nהצטרף למהפכת הדיגיטל והתחל לשתף את כרטיס הביקור שלך בצורה חכמה ויעילה!\n\n📩 צרו קשר עכשיו וגלו איך אנחנו יכולים לשדרג את הפרופיל העסקי שלכם! 🌟', 'barzeitony@gmail.com', '052-3456789', 'www.soon.com', 'כתובת תיהיה בקרוב', '2025-04-13 23:47:48', '2025-04-14 06:47:48', '200e5ccd-1e80-4fee-b48a-b5118e0508cf');
+INSERT INTO `business_cards` (`id`, `company`, `coverImage`, `profileImage`, `name`, `description`, `about`, `email`, `phone`, `website`, `address`, `created_at`, `updated_at`, `ownedBy`) VALUES
+('ced48544-804f-464a-8d7a-814f56785fae', 'dsfdsf', NULL, NULL, 'dsfsdfsd', 'fsdf', '', 'nana@gmail.com', '052-3456789', '', 'dddd', '2025-04-20 19:29:31', '2025-04-21 02:29:31', NULL),
+('f11addfa-9d66-443a-a3bc-67340b7d0110', 'Digital Business Cards', '43d4e1e1-4fe3-4dc3-a268-8f915fef6d32.jpeg', '8a628444-47ce-44e4-8c31-44f20c4c73c0.jpeg', 'ddddd', 'dddd', 'jjii', 'bar199z51@gmail.com', '052-3456789', 'www.wawa.com', 'dddd', '2025-04-23 03:35:59', '2025-04-23 10:35:59', '4bce0221-bf20-46d5-9cde-2942fd3fd144');
 
 -- --------------------------------------------------------
 
@@ -68,7 +93,8 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`roleId`, `roleName`) VALUES
 (1, 'USER'),
-(2, 'ADMIN');
+(2, 'ADMIN'),
+(3, 'PREMIUM');
 
 -- --------------------------------------------------------
 
@@ -96,7 +122,8 @@ CREATE TABLE `social_links` (
 --
 
 INSERT INTO `social_links` (`id`, `company_id`, `company`, `facebook`, `instagram`, `linkedin`, `twitter`, `whatsapp`, `email`, `map`, `phone`, `tiktok`) VALUES
-('801dcf63-61cf-4263-b853-c12f25aa1982', '7ee3ae9e-31bd-4f1c-b403-940b587282dd', 'dfsdf', 'www.facebook.com', 'www.instagram.com', 'www.jhjhj.com', NULL, NULL, NULL, NULL, NULL, NULL);
+('15a5a776-fe86-43e5-89c9-d59ea3525453', 'ced48544-804f-464a-8d7a-814f56785fae', 'dsfdsf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('7763915b-97d5-4dc6-8dbb-c8538ede6e10', 'f11addfa-9d66-443a-a3bc-67340b7d0110', 'dff', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -121,13 +148,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userId`, `firstName`, `lastName`, `email`, `password`, `roleId`, `isTemporaryPassword`, `resetPasswordToken`, `resetPasswordExpires`) VALUES
-('200e5ccd-1e80-4fee-b48a-b5118e0508cf', 'Bar', 'Zeitony', 'bar199234@gmail.com', '301200949421c4b6aac8cf1b8f3b2b48', 1, 0, NULL, NULL),
-('4bce0221-bf20-46d5-9cde-2942fd3fd144', 'משתמש חדש', 'משתמש חדש', 'bar199z51@gmail.com', '301200949421c4b6aac8cf1b8f3b2b48', 1, 0, NULL, NULL),
+('4bce0221-bf20-46d5-9cde-2942fd3fd144', 'משתמש חדש', 'משתמש חדש', 'bar199z51@gmail.com', '301200949421c4b6aac8cf1b8f3b2b48', 3, 0, NULL, NULL),
 ('62a98347-ffe4-4069-8128-55e9e08fc392', 'בר', 'זיתוני', 'barzeitony@gmail.com', '301200949421c4b6aac8cf1b8f3b2b48', 2, 0, 'a4c9c4c9f894962c292bf06fc37cdba9310d8948946b3ab6526a91dfb6b03875', '2025-04-03 17:58:51');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `app_availability`
+--
+ALTER TABLE `app_availability`
+  ADD PRIMARY KEY (`appId`),
+  ADD KEY `company_id` (`company_id`);
 
 --
 -- Indexes for table `business_cards`
