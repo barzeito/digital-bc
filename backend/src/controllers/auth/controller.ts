@@ -95,6 +95,16 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
     }
 }
 
+export const isPremium = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await getModel().isPremium(req.params.id);
+        res.json(user);
+    } catch (err) {
+        console.error('Error checking premium status:', err);
+        next(err)
+    }
+}
+
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const isDeleted = await getModel().deleteUser(req.params.id)

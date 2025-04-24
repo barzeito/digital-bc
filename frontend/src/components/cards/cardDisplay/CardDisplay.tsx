@@ -18,6 +18,7 @@ import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
 import AddToContactsButton from "../../../utils/addToContact";
 import ScheduleAppointment from "../../userPanel/ScheduleAppointment/ScheduleAppointment";
+import authService from "../../../services/authService";
 
 
 function CardDisplay(): JSX.Element {
@@ -26,6 +27,7 @@ function CardDisplay(): JSX.Element {
     const navigate = useNavigate();
     const [card, setCard] = useState<CardModel>();
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
+    const [isOwnerPremium, setIsOwnerPremium] = useState<boolean>(false);
 
     const socialIcons: { [key: string]: string } = {
         facebook: facebookIcon,
@@ -79,6 +81,22 @@ function CardDisplay(): JSX.Element {
                 .catch(error => notify.error(error));
         }
     }, [company, navigate]);
+
+    useEffect(() => {
+        async function checkOwnerPremium() {
+            if (!card?.ownedBy) return;
+
+            try {
+                const result = await authService.isPremium(card.ownedBy);
+                setIsOwnerPremium(result);
+            } catch (err) {
+                console.error("Failed to check if owner is premium", err);
+                setIsOwnerPremium(false);
+            }
+        }
+
+        checkOwnerPremium();
+    }, [card?.ownedBy]);
 
     return (
         <div className="CardDisplay">
@@ -143,8 +161,9 @@ function CardDisplay(): JSX.Element {
                 </div>
                 <div className="cardDisplay-info">
                 </div>
-                {card?.id && <ScheduleAppointment companyId={card.id} />}
-            </div>
+                {isOwnerPremium && card?.id && (
+                    <ScheduleAppointment companyId={card.id} />
+                )}            </div>
         </div>
     );
 }

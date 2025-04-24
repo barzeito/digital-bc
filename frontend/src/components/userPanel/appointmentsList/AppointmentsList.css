@@ -4,7 +4,7 @@
     padding: 20px;
     border-radius: 8px;
     max-width: 800px;
-    margin: 20px auto;
+    margin: 100px auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -48,18 +48,10 @@
     margin-top: 10px;
 }
 
-.AppointmentList li button {
-    align-self: flex-start;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.AppointmentList li button:hover {
-    background-color: #d32f2f;
+.app-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 5px;
 }

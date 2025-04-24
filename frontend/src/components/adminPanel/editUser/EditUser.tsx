@@ -112,7 +112,9 @@ function EditUser(): JSX.Element {
                         >
                             <option value="">בחר תפקיד</option>
                             <option value="1">משתמש</option>
+                            <option value="3">פרימיום</option>
                             <option value="2">אדמין</option>
+
                         </select>
                         <span className="error">{formState.errors.roleId?.message}</span>
                     </div>

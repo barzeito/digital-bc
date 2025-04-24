@@ -2,45 +2,37 @@ import { useState } from "react";
 import "./ScheduleAppointment.css";
 import notify from "../../../services/popupMessage";
 import appointmentsService from "../../../services/appointmentsService";
+import { useForm } from "react-hook-form";
+
+interface FormData {
+    name: string;
+    email: string;
+    phone: string;
+    date: string;
+    time: string;
+    message: string;
+}
 
 function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element {
-
     const [availableTimes, setAvailableTimes] = useState<string[]>([]);
 
-
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        date: "",
-        time: "",
-        message: ""
-    });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-        if (name === "date") {
-            fetchAppointmentTimes(value);
-        }
-    };
+    // השתמש ב-useForm לניהול טופס
+    const { register, handleSubmit, reset } = useForm<FormData>();
 
     const fetchAppointmentTimes = async (selectedDate: string) => {
         try {
             const rawData = await appointmentsService.getAvailableTimes(companyId, selectedDate);
-
             const [company] = rawData.map((item: any) => ({
                 ...item,
                 days_schedule: JSON.parse(item.days_schedule),
                 booked_appointments: JSON.parse(item.booked_appointments),
             }));
 
-            const dayName = new Date(selectedDate).toLocaleDateString("en-US",
-                {
-                    weekday: "long",
-                    timeZone: "Asia/Jerusalem"
-                }).toLowerCase();
-                
+            const dayName = new Date(selectedDate).toLocaleDateString("en-US", {
+                weekday: "long",
+                timeZone: "Asia/Jerusalem",
+            }).toLowerCase();
+
             const schedule = company.days_schedule[dayName];
 
             if (!schedule) {
@@ -74,75 +66,62 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
         }
     };
 
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!formData.name || !formData.phone || !formData.date || !formData.time) {
+    const submitBookAppointment = async (data: FormData) => {
+        if (!data.name || !data.phone || !data.date || !data.time) {
             notify.error("אנא מלא את כל השדות הנדרשים");
             return;
         }
 
         const newAppointment = {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            date: formData.date,
-            time: formData.time,
-            message: formData.message,
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            date: data.date,
+            time: data.time,
+            message: data.message,
         };
 
         try {
             await appointmentsService.bookAppointment(companyId, newAppointment);
             notify.success("התור הוזמן בהצלחה!");
+            // לאחר השליחה, ננקה את הטופס
+            reset();
         } catch (error) {
             notify.error("אירעה שגיאה בהזמנת התור");
         }
     };
+
     return (
         <div className="ScheduleAppointment">
             <p>הזמנת תור</p>
-            <form className="sa-form" onSubmit={handleSubmit}>
+            <form className="sa-form" onSubmit={handleSubmit(submitBookAppointment)}>
                 <label>שם</label>
                 <input
                     type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
+                    {...register("name", { required: true })}
+                    placeholder="שם מלא"
                 />
                 <label>אימייל</label>
                 <input
                     type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
+                    {...register("email")}
+                    placeholder="דואר אלקטרוני"
                 />
                 <label>טלפון</label>
                 <input
                     type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
+                    {...register("phone", { required: true })}
+                    placeholder="מספר טלפון"
                 />
                 <label>תאריך</label>
                 <input
                     type="date"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    required
+                    {...register("date", { required: true })}
+                    onChange={(e) => fetchAppointmentTimes(e.target.value)}
                 />
                 <label>שעה</label>
                 <select
-                    name="time"
-                    className="time"
-                    value={formData.time}
-                    onChange={handleChange}
-                    required
-
+                    {...register("time", { required: true })}
                 >
                     <option value="">בחר שעה</option>
                     {availableTimes.map((time, index) => (
@@ -151,9 +130,8 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                 </select>
                 <label>הערות</label>
                 <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
+                    {...register("message")}
+                    placeholder="הזן הערות"
                 />
                 <button type="submit" className="submit-btn">הזמן תור</button>
             </form>

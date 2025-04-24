@@ -16,6 +16,7 @@ import EditUser from "../../adminPanel/editUser/EditUser";
 import AppointmentsForm from "../../userPanel/appointmentsForm/AppointmentsForm";
 import UserRoute from "./ProtectedUserRou";
 import AppointmentList from "../../userPanel/appointmentsList/AppointmentsList";
+import PremiumRoute from "./ProtectedPremiumRoute";
 function Routing(): JSX.Element {
 
     return (
@@ -31,8 +32,8 @@ function Routing(): JSX.Element {
 
             <Route path="/panel/user/:id" element={<UserRoute element={<UserDash />} />} />
             <Route path="/panel/user/edit-card/:userId/:id" element={<UserRoute element={<UserCardEdit />} />} />
-            <Route path="/panel/user/appointments/edit/:userId/:id" element={<UserRoute element={<AppointmentsForm />} />} />
-            <Route path="/panel/user/appointments/list/:userId/:id" element={<UserRoute element={<AppointmentList />} />} />
+            <Route path="/panel/user/appointments/edit/:userId/:id" element={<PremiumRoute element={<AppointmentsForm />} />} />
+            <Route path="/panel/user/appointments/list/:userId/:id" element={<PremiumRoute element={<AppointmentList />} />} />
 
             <Route path="/panel/admin" element={<AdminRoute element={<AdminDash />} />} />
             <Route path="/panel/admin/cards" element={<AdminRoute element={<CardList />} />} />

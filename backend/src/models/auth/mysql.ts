@@ -70,7 +70,6 @@ class Auth implements Model {
             WHERE   email = ?
             AND     password = ?
             `, [email, hashPassword(password, config.get<string>('app.secret'))]))[0];
-        console.log("User from DB (signIn):", user); // Debugging
         return user || null;
     }
 
@@ -128,6 +127,15 @@ class Auth implements Model {
             WHERE   userId = ?
             `, [userId]))[0];
         return user?.roleId === 2;
+    }
+
+    public async isPremium(userId: string): Promise<boolean> {
+        const user = (await query(`
+            SELECT  roleId
+            FROM    users  
+            WHERE   userId = ?
+            `, [userId]))[0];
+        return user?.roleId === 3;
     }
 
     public async deleteUser(id: string): Promise<boolean> {

@@ -94,8 +94,6 @@ class Appointments implements Model {
                         booked_appointments = ?
                 WHERE   company_id = ?
             `, [company_id, company, days_schedule, slot_interval, booked_appointments, company_id]);
-        console.log(company_id)
-        console.log(updated)
         return this.getOneByCompanyId(company_id);
     }
 

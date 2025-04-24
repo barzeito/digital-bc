@@ -32,6 +32,7 @@ function Users(props: usersProps): JSX.Element {
         switch (roleId) {
             case 1: return 'משתמש';
             case 2: return 'מנהל';
+            case 3: return 'פרימיום'
             default: return 'לא ידוע';
         }
     };

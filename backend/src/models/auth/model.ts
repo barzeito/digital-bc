@@ -11,6 +11,7 @@ export default interface Model {
     signIn(credentials: CredentialsDTO): Promise<userDTO>;
     getByEmail(email: string): Promise<userDTO | null>;
     isAdmin(id: string): Promise<boolean>;
+    isPremium(id: string): Promise<boolean>;
     updatePassword(user: userDTO): Promise<DTO>;
     forgotPassword(user: userDTO): Promise<DTO>;
 

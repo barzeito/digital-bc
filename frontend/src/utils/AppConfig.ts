@@ -8,6 +8,9 @@ class AppConfig {
     public appointmentsUrl = `${this.apiBaseUrl}/api/apps`;
     public changePasswordUrl = `${this.apiBaseUrl}/api/change-password`;
     public isAdminUrl = `${this.apiBaseUrl}/api/role`;
+    public isPremiumUrl = `${this.apiBaseUrl}/api/premium`;
+
+
 }
 
 const appConfig = new AppConfig();

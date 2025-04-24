@@ -59,12 +59,15 @@ function AppointmentList(): JSX.Element {
             <ul>
                 {appointments.map((app, index) => (
                     <li key={index}>
-                        <strong>{app.name}</strong>
-                        <div>{app.phone} </div>
-                        <div>{app.date} </div>
-                        <div> בשעה {app.time}</div>
+                        <strong>שם: {app.name}</strong>
+                        <div>מספר טלפון: {app.phone}</div>
+                        <div>בתאריך: {app.date}</div>
+                        <div>בשעה: {app.time}</div>
                         {app.message && <div>הערה: {app.message}</div>}
-                        <button>❌ מחק</button>
+                        <div className="app-btns">
+                            <button className="submit-btn">ערוך תור</button>
+                            <button className="cancel-btn">מחק תור</button>
+                        </div>
                     </li>
                 ))}
             </ul>

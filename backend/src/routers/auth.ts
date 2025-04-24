@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUser, forgotPassword, getAll, getOne, isAdmin, patchPassword, signIn, signUp } from "../controllers/auth/controller";
+import { deleteUser, forgotPassword, getAll, getOne, isAdmin, isPremium, patchPassword, signIn, signUp } from "../controllers/auth/controller";
 import validate from "../middlewares/input-validation";
 import { forgotPasswordValidator, signInValidator, signUpValidator, updatePasswordValidator } from "../controllers/auth/validator";
 import enforceAdmin from "../middlewares/enforce-admin";
@@ -13,6 +13,7 @@ router.post('/signin', validate(signInValidator), signIn);
 router.patch('/change-password/:id', validate(updatePasswordValidator), patchPassword);
 router.post('/forgot-Password/:id', validate(forgotPasswordValidator), forgotPassword);
 router.get('/role/:id', isAdmin);
+router.get('/premium/:id', isPremium);
 router.delete('/users/:id', enforceAdmin, deleteUser);
 
 

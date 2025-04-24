@@ -83,6 +83,16 @@ class AuthService {
         }
     }
 
+    public async isPremium(id: string): Promise<boolean> {
+        try {
+            const response = await axios.get(appConfig.isPremiumUrl + `/${id}`);
+            const isPremium = response.data === true;
+            return isPremium;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public isLoggedIn(): boolean {
         const token = localStorage.getItem("dbcToken");
         if (!token) return false;
