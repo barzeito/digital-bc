@@ -1,9 +1,11 @@
 export type Appointment = {
+    id: number;
+    company_id: string;
     name: string;
     email: string;
     phone: string;
-    date: string; // YYYY-MM-DD
-    time: string; // HH:mm
+    date: string;
+    time: string; 
     message?: string;
 };
 

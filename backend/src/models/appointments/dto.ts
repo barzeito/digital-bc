@@ -1,5 +1,3 @@
-import { UploadedFile } from "express-fileupload";
-
 export default interface DTO {
     appId: string;
     company_id: string;

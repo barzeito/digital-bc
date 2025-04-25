@@ -73,6 +73,7 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
         }
 
         const newAppointment = {
+            company_id: companyId,
             name: data.name,
             email: data.email,
             phone: data.phone,
@@ -82,9 +83,8 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
         };
 
         try {
-            await appointmentsService.bookAppointment(companyId, newAppointment);
+            await appointmentsService.bookNewAppointment(newAppointment);
             notify.success("התור הוזמן בהצלחה!");
-            // לאחר השליחה, ננקה את הטופס
             reset();
         } catch (error) {
             notify.error("אירעה שגיאה בהזמנת התור");

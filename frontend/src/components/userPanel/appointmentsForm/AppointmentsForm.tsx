@@ -69,7 +69,7 @@ function AppointmentForm(): JSX.Element {
                     days_schedule: cleanedSchedule,
                     slot_interval: Number(data.slot_interval),
                 };
-                await appointmentsService.editApps(updatedData);
+                await appointmentsService.editAvailability(updatedData);
                 notify.success("!זמינות עודכנה בהצלחה")
             } else {
                 const newData: Partial<AppointmentsModel> = {
@@ -79,7 +79,7 @@ function AppointmentForm(): JSX.Element {
                     slot_interval: Number(data.slot_interval),
                 };
                 notify.success("!זמינות עודכנה בהצלחה")
-                await appointmentsService.add(newData);
+                await appointmentsService.addAvailability(newData);
             }
         } catch (error: any) {
             const message = error.response?.data.message || error?.message ||

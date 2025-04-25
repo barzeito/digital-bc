@@ -1,73 +1,80 @@
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./AppointmentsList.css";
 import UserMenu from "../userMenu/UserMenu";
 import { Appointment } from "../../../models/appointmentsModel";
 import { useEffect, useState } from "react";
 import appointmentsService from "../../../services/appointmentsService";
 import notify from "../../../services/popupMessage";
+import formatDate from "../../../utils/formateDate";
 
 function AppointmentList(): JSX.Element {
     const params = useParams();
-    const companyId = String(params.id)
+    const companyId = String(params.id);
     const [appointments, setAppointments] = useState<Appointment[]>([]);
+    const [selectedAppointmentId, setSelectedAppointmentId] = useState<number | null>(null);
 
     useEffect(() => {
         if (!companyId) return;
-        loadAppointments();
-    }, [companyId])
 
-    const loadAppointments = async () => {
-        try {
-            const data = await appointmentsService.getOneByCompanyId(companyId);
-            console.log("📦 תשובה מהשרת:", data);
-
-            if (data) {
-                const raw = data.booked_appointments;
-
-                const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
-
-                // Convert each item from string to object if necessary
-                const appointmentsArray: Appointment[] = parsed.map((item: any) => {
-                    if (typeof item === "string") {
-                        try {
-                            return JSON.parse(item); // Convert JSON string to object
-                        } catch (err) {
-                            console.error("❌ לא ניתן לפענח את התור:", item, err);
-                            return null;
-                        }
-                    }
-                    return item;
-                }).filter(Boolean); // Remove any null values
-
-                console.log("📅 תורים לאחר עיבוד:", appointmentsArray);
-                setAppointments(appointmentsArray);
+        const loadAppointments = async () => {
+            try {
+                const apps = await appointmentsService.getAllByCompanyId(companyId);
+                setAppointments(apps);
+            } catch (error) {
+                console.error("❌ שגיאה בטעינה:", error);
+                notify.error("אירעה שגיאה בטעינת התורים");
             }
-        } catch (error) {
-            console.error("❌ שגיאה בטעינה:", error);
-            notify.error("אירעה שגיאה בטעינת התורים");
-        }
-    };
+        };
 
+        loadAppointments();
+    }, [companyId]);
+
+    async function deleteAppointment(id: number): Promise<void> {
+        try {
+            await appointmentsService.deleteAppointment(id);
+            notify.success("!התור נמחק בהצלחה");
+            setAppointments((prev) => prev.filter(app => app.id !== id));
+        } catch (error) {
+            notify.error(".אירעה שגיאה בעת מחיקת התור, אנא נסה שוב");
+        }
+        setSelectedAppointmentId(null);
+    }
 
     if (!appointments.length) {
-        return <p>אין תורים פעילים</p>
+        return <p>אין תורים פעילים</p>;
     }
+
     return (
         <div className="AppointmentList">
             <UserMenu />
             <h2>תורים שנקבעו</h2>
             <ul>
-                {appointments.map((app, index) => (
-                    <li key={index}>
+                {appointments.map((app) => (
+                    <li key={app.id}>
                         <strong>שם: {app.name}</strong>
                         <div>מספר טלפון: {app.phone}</div>
-                        <div>בתאריך: {app.date}</div>
+                        <div>בתאריך: {app.date && formatDate(app.date)}</div>
                         <div>בשעה: {app.time}</div>
                         {app.message && <div>הערה: {app.message}</div>}
                         <div className="app-btns">
                             <button className="submit-btn">ערוך תור</button>
-                            <button className="cancel-btn">מחק תור</button>
+                            <button className="cancel-btn" onClick={() => setSelectedAppointmentId(app.id)}>מחק תור</button>
                         </div>
+
+                        {selectedAppointmentId === app.id && (
+                            <div className="PopUpContainer">
+                                <div className="DeleteContainer">
+                                    <div className="Delete-PopUp">
+                                        <span>מוחק את התור</span>
+                                        <p>האם אתה בטוח שברצונך למחוק את התור?</p>
+                                        <div className="delete-buttons">
+                                            <button onClick={() => deleteAppointment(app.id)} className="submit-btn">מחיקה</button>
+                                            <button className="cancel-btn" onClick={() => setSelectedAppointmentId(null)}>ביטול</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </li>
                 ))}
             </ul>

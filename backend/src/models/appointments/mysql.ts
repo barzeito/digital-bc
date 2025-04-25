@@ -3,6 +3,7 @@ import DTO from './dto';
 import query from "../../db/mysql";
 import { v4 } from "uuid";
 import { OkPacketParams } from "mysql2";
+import BookDTO from "./bookDTO";
 
 class Appointments implements Model {
 
@@ -144,6 +145,92 @@ class Appointments implements Model {
                 WHERE   company_id = ?
             `, [company_id]);
         return app
+    }
+
+
+    public async getAllAppointments(): Promise<BookDTO[]> {
+        const apps = (await query(`
+            SELECT  id,
+                    company_id,
+                    name,
+                    email,
+                    phone,
+                    date,
+                    time,
+                    message
+            FROM    appointments 
+            ORDER BY company_id ASC
+        `,));
+        return apps;
+    }
+
+    public async getOneAppointment(id: number): Promise<BookDTO> {
+        const app = (await query(`
+            SELECT  id,
+                    company_id,
+                    name,
+                    email,
+                    phone,
+                    date,
+                    time,
+                    message
+            FROM    appointments 
+            WHERE   id = ?
+            ORDER BY company_id ASC
+        `, [id]))[0];
+        return app;
+    }
+
+    public async getAllAppsByCompany(companyId: string): Promise<BookDTO[]> {
+        const apps = await query(`
+            SELECT  id,
+                    company_id,
+                    name,
+                    email,
+                    phone,
+                    date,
+                    time,
+                    message
+            FROM    appointments 
+            WHERE   company_id = ?
+            ORDER BY date ASC
+        `, [companyId]);
+
+        return apps;
+    }
+
+    public async getOneAppByCompany(companyId: string): Promise<BookDTO> {
+        const app = (await query(`
+            SELECT  id,
+                    company_id,
+                    name,
+                    email,
+                    phone,
+                    date,
+                    time,
+                    message
+            FROM    appointments 
+            WHERE   company_id = ?
+        `, [companyId]))[0];
+        return app;
+    }
+
+    public async addAppointment(app: BookDTO): Promise<BookDTO> {
+        const { company_id, name, email, phone, date, time, message } = app;
+        const result = await query(`
+            INSERT INTO appointments(company_id, name, email, phone, date, time, message)
+            VALUES( ?, ?, ?, ?, ?, ?, ?)
+            `, [company_id, name, email, phone, date, time, message]);
+        const insertId = result.insertId;
+        return this.getOneAppointment(insertId);
+    }
+
+    public async deleteAppointment(id: number): Promise<boolean> {
+        const result: OkPacketParams = await query(`
+            DELETE FROM appointments
+            WHERE       id = ?
+        `, [id]);
+        return Boolean(result.affectedRows);
     }
 
 }
