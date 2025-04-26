@@ -7,14 +7,18 @@ import notify from "../../../services/popupMessage"
 import AdminMenu from "../AdminMenu/AdminMenu";
 import SignUpModel from "../../../models/signUpModel";
 import authService from "../../../services/authService";
+import { useState } from "react";
+import Loader from "../../layout/loader/Loader";
 
 function AddCard(): JSX.Element {
     const { register, handleSubmit, setValue, formState, getValues, watch } = useForm<CardModel>();
     const navigate = useNavigate();
     const showUserFields = watch("user");
+    const [loading, setLoading] = useState(false);
 
     async function submitNewCard(card: CardModel) {
         try {
+            setLoading(true);
             let user: any;
             if (showUserFields) {
                 user = getValues("user");
@@ -66,11 +70,10 @@ function AddCard(): JSX.Element {
             } else {
                 notify.error("אירעה שגיאה. נסה שוב.");
             }
+        } finally {
+            setLoading(false);
         }
     }
-
-
-
     return (
         <div className="AddCard">
             <AdminMenu />
@@ -190,8 +193,14 @@ function AddCard(): JSX.Element {
                 )}
 
                 <div className="buttons">
-                    <button className="submit-btn">שמירה</button>
-                    <NavLink to="/panel/admin/cards" className="cancel-btn">ביטול</NavLink>
+                    {!loading ? (
+                        <>
+                            <button className="submit-btn">שמירה</button>
+                            <NavLink to="/panel/admin/cards" className="cancel-btn">ביטול</NavLink>
+                        </>
+                    ) : (
+                        <Loader />
+                    )}
                 </div>
             </form>
         </div>

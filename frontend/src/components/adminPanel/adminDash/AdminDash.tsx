@@ -1,7 +1,42 @@
+import { useEffect, useState } from "react";
 import AdminMenu from "../AdminMenu/AdminMenu";
 import "./AdminDash.css";
+import CardModel from "../../../models/cardModel";
+import cardsService from "../../../services/cardsService";
+import notify from "../../../services/popupMessage";
+import { CardsStore } from "../../../redux/cardState";
+import userModel from "../../../models/userModel";
+import authService from "../../../services/authService";
+import { authStore } from "../../../redux/authState";
 
 function AdminPanel(): JSX.Element {
+
+    const [cards, setCards] = useState<CardModel[]>([]);
+    const [users, setUsers] = useState<userModel[]>([]);
+
+    useEffect(() => {
+        cardsService.getAll()
+            .then(cardsFromServer => setCards(cardsFromServer))
+            .catch(error => notify.error(error));
+
+        const unsubscribe = CardsStore.subscribe(() => {
+            setCards([...CardsStore.getState().cards])
+        })
+        return unsubscribe;
+    },);
+
+
+    useEffect(() => {
+        authService.getAllUsers()
+            .then(usersFromServer => setUsers(usersFromServer))
+            .catch(error => notify.error(error));
+
+        const unsubscribe = authStore.subscribe(() => {
+            setUsers([...authStore.getState().userData])
+        })
+        return unsubscribe;
+    }, []);
+
     return (
         <div className="AdminDash">
             <AdminMenu />
@@ -15,11 +50,11 @@ function AdminPanel(): JSX.Element {
                 <section className="system-status">
                     <div className="status-card">
                         <h3>משתמשים רשומים</h3>
-                        <p>124 משתמשים פעילים</p>
+                        <p>{users.length} משתמשים פעילים</p>
                     </div>
                     <div className="status-card">
                         <h3>כרטיסים פעילים</h3>
-                        <p>86 כרטיסים פעילים</p>
+                        <p>{cards.length} כרטיסים פעילים</p>
                     </div>
                     <div className="status-card">
                         <h3>פניות אחרונות</h3>

@@ -2,13 +2,14 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import "./EditCard.css";
 import { useEffect, useState } from "react";
 import cardsService from "../../../services/cardsService";
-import { Control, useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CardModel from "../../../models/cardModel";
 import notify from "../../../services/popupMessage"
 import AdminMenu from "../AdminMenu/AdminMenu";
 import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
 import ImageWatched from "../../../utils/imageWatch"
+import Loader from "../../layout/loader/Loader";
 
 function EditCard(): JSX.Element {
 
@@ -22,6 +23,7 @@ function EditCard(): JSX.Element {
     const { handleSubmit, setValue, register, formState, control } = useForm<CardModel>();
     const [selectedSocial, setSelectedSocial] = useState<string>("");
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
+    const [loading, setLoading] = useState(false);
 
 
     useEffect(() => {
@@ -50,6 +52,7 @@ function EditCard(): JSX.Element {
 
     async function submitCardUpdate(card: CardModel) {
         try {
+            setLoading(true);
             card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || undefined;
             card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || undefined;
 
@@ -69,6 +72,8 @@ function EditCard(): JSX.Element {
         } catch (error) {
             console.error(error);
             notify.error('.אירעה שגיאה בעת עדכון הכרטיס, אנא נסה שוב');
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -205,8 +210,14 @@ function EditCard(): JSX.Element {
                     </div>
                 </div>
                 <div className="edit-buttons">
-                    <button className="submit-btn">שמירה</button>
-                    <NavLink to="/panel/admin/cards" className="cancel-btn">ביטול</NavLink>
+                    {!loading ? (
+                        <>
+                            <button className="submit-btn">שמירה</button>
+                            <NavLink to="/panel/admin/cards" className="cancel-btn">ביטול</NavLink>
+                        </>
+                    ) : (
+                        <Loader />
+                    )}
                 </div>
             </form>
         </div>

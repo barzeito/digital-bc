@@ -3,7 +3,7 @@ import "./Cards.css";
 import cardsService from "../../../services/cardsService";
 import notify from "../../../services/popupMessage"
 import CardModel from "../../../models/cardModel";
-import formatDate from "../../../utils/formateDate";
+import formatDate, { cardFormatDate } from "../../../utils/formateDate";
 import { NavLink } from "react-router-dom";
 import userModel from "../../../models/userModel";
 import authService from "../../../services/authService";
@@ -85,8 +85,8 @@ function Cards(props: cardsProps): JSX.Element {
                     <p className="description">{props.card.description}</p>
                 </div>
                 <div className="times">
-                    <p><strong>נוצר בתאריך:</strong> {props.card.created_at && formatDate(props.card.created_at)}</p>
-                    <p><strong>עדכון אחרון:</strong> {props.card.updated_at && formatDate(props.card.updated_at)}</p>
+                    <p><strong>נוצר בתאריך:</strong> {props.card.created_at && cardFormatDate(props.card.created_at)}</p>
+                    <p><strong>עדכון אחרון:</strong> {props.card.updated_at && cardFormatDate(props.card.updated_at)}</p>
                 </div>
             </div>
 

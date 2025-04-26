@@ -18,7 +18,7 @@
 .card-body {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 20px;
     flex-wrap: wrap;
     justify-content: space-between;
 }
@@ -27,6 +27,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-width: 250px;
+    max-width: 300px;
 }
 
 .header-info .company-name {
@@ -47,7 +49,8 @@
     color: var(--Black-Text-Color);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    min-width: 200px;
 }
 
 .times p {
@@ -68,6 +71,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    min-width: 450px;
+    max-width: 700px;
 }
 
 .card-info p {

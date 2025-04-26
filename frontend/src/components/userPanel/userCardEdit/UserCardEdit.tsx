@@ -11,6 +11,7 @@ import SocialModel from "../../../models/socialModel";
 import socialService from "../../../services/socialService";
 import ImageWatched from "../../../utils/imageWatch";
 import { useCurrentUser } from "../../../utils/useCurrentUser";
+import Loader from "../../layout/loader/Loader";
 
 function UserCardEdit(): JSX.Element {
     const params = useParams();
@@ -21,8 +22,10 @@ function UserCardEdit(): JSX.Element {
     const navigate = useNavigate();
     const [selectedSocial, setSelectedSocial] = useState<string>("");
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
+
     const [coverSrc, setCoverSrc] = useState<string>('');
     const [profileSrc, setProfileSrc] = useState<string>('');
+    const [loading, setLoading] = useState(false);
 
     const { handleSubmit, setValue, register, formState, control } = useForm<CardModel>();
 
@@ -32,8 +35,6 @@ function UserCardEdit(): JSX.Element {
         cardsService.getOne(cardId)
             .then(cardFromServer => {
                 setValue('company', cardFromServer?.company);
-                setCoverSrc(cardFromServer?.coverImageUrl || '');
-                setProfileSrc(cardFromServer?.profileImageUrl || '');
                 setValue('name', cardFromServer?.name);
                 setValue('description', cardFromServer?.description);
                 setValue('about', cardFromServer?.about);
@@ -41,6 +42,9 @@ function UserCardEdit(): JSX.Element {
                 setValue('address', cardFromServer?.address);
                 setValue('phone', cardFromServer?.phone);
                 setValue('website', cardFromServer?.website);
+
+                setCoverSrc(cardFromServer?.coverImageUrl || '');
+                setProfileSrc(cardFromServer?.profileImageUrl || '');
             })
             .catch(error => notify.error(error));
     }, [cardId, setValue]);
@@ -55,6 +59,7 @@ function UserCardEdit(): JSX.Element {
 
     async function submitCardUpdate(card: CardModel) {
         try {
+            setLoading(true);
             card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || undefined;
             card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || undefined;
 
@@ -74,6 +79,8 @@ function UserCardEdit(): JSX.Element {
         } catch (error) {
             console.error(error);
             notify.error('Failed to update card and social links');
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -209,9 +216,16 @@ function UserCardEdit(): JSX.Element {
                     </div>
                 </div>
                 <div className="buttons">
-                    <button className="submit-btn">שמירה</button>
-                    <NavLink to={`/panel/user/${userId}`} className="cancel-btn">ביטול</NavLink>
+                    {!loading ? (
+                        <>
+                            <button className="submit-btn">שמירה</button>
+                            <NavLink to={`/panel/user/${userId}`} className="cancel-btn">ביטול</NavLink>
+                        </>
+                    ) : (
+                        <Loader />
+                    )}
                 </div>
+
             </form>
         </div>
     );
