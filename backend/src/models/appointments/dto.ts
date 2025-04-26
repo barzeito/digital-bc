@@ -5,4 +5,6 @@ export default interface DTO {
     days_schedule: JSON;
     slot_interval: number;
     booked_appointments: JSON;
+    email: string;
+    name: string;
 }

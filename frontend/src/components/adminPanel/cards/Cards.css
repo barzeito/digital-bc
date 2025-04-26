@@ -18,7 +18,7 @@
 .card-body {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: space-between;
 }
@@ -47,7 +47,7 @@
     color: var(--Black-Text-Color);
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .times p {

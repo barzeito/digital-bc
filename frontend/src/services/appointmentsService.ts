@@ -54,7 +54,7 @@ class AppointmentsService {
             const appointmentToSend = {
                 ...app,
                 days_schedule: JSON.stringify(app.days_schedule),
-                booked_appointments: JSON.stringify(app.booked_appointments)
+                // booked_appointments: JSON.stringify(app.booked_appointments)
             };
 
             const response = await axios.patch<AppointmentsModel>(`${appConfig.appointmentsUrl}/${app.company_id}`, appointmentToSend);
@@ -78,7 +78,7 @@ class AppointmentsService {
     //     }
     // };
 
-    public async getAvailableTimes(company_id: string, selectedDate: string): Promise<string[]> {
+    public async getAvailableTimes(company_id: string, selectedDate: string): Promise<{ company: AppointmentsModel; appointments: Appointment[] }> {
         try {
             const response = await axios.get(`${appConfig.appointmentsUrl}/available/${company_id}`, {
                 params: { date: selectedDate }
@@ -89,6 +89,7 @@ class AppointmentsService {
             throw error;
         }
     }
+    
 
 
     //============ Appointments ===============

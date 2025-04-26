@@ -4,9 +4,11 @@ import query from "../../db/mysql";
 import { v4 } from "uuid";
 import { OkPacketParams } from "mysql2";
 import BookDTO from "./bookDTO";
+import { sendAppointmentConfirmationEmail, sendAppointmentToCompanyEmail } from "../../utils/emailService";
 
 class Appointments implements Model {
 
+    // ============ Appointments Menage =============
     public async getAll(): Promise<DTO[]> {
         const apps = (await query(`
             SELECT  a.appId,
@@ -76,14 +78,6 @@ class Appointments implements Model {
         return this.getOne(appId);
     }
 
-    // public async deleteCard(id: string): Promise<boolean> {
-    //     const result: OkPacketParams = await query(`
-    //         DELETE FROM business_cards
-    //         WHERE       id = ?
-    //     `, [id]);
-    //     return Boolean(result.affectedRows);
-    // }
-
     public async update(app: DTO): Promise<DTO> {
         const { appId, company_id, company, days_schedule, slot_interval, booked_appointments } = app;
         const updated = await query(`
@@ -136,18 +130,45 @@ class Appointments implements Model {
         }
     }
 
+    // public async getAvailableTimes(company_id: string): Promise<any> {
+    //     const app = await query(`
+    //             SELECT  days_schedule,
+    //                     slot_interval
+    //             FROM    app_availability
+    //             WHERE   company_id = ?
+    //         `, [company_id]);
+    //     return app
+    // }
+
     public async getAvailableTimes(company_id: string): Promise<any> {
-        const app = await query(`
-                SELECT  days_schedule,
-                        slot_interval,
-                        booked_appointments
-                FROM    app_availability
-                WHERE   company_id = ?
-            `, [company_id]);
-        return app
+        // שליפת זמינות החברה
+        const [availability] = await query(`
+            SELECT days_schedule, slot_interval
+            FROM app_availability
+            WHERE company_id = ?
+        `, [company_id]);
+
+        if (!availability) {
+            throw new Error('Company availability not found');
+        }
+
+        // שליפת תורים של החברה
+        const appointments = await query(`
+            SELECT date, time
+            FROM appointments
+            WHERE company_id = ?
+        `, [company_id]);
+
+        return {
+            company: {
+                days_schedule: JSON.parse(availability.days_schedule),
+                slot_interval: availability.slot_interval,
+            },
+            appointments,
+        };
     }
 
-
+    // ============ Book Appointment =============
     public async getAllAppointments(): Promise<BookDTO[]> {
         const apps = (await query(`
             SELECT  id,
@@ -222,6 +243,7 @@ class Appointments implements Model {
             VALUES( ?, ?, ?, ?, ?, ?, ?)
             `, [company_id, name, email, phone, date, time, message]);
         const insertId = result.insertId;
+        await sendAppointmentConfirmationEmail(email, name, date, time, message);
         return this.getOneAppointment(insertId);
     }
 

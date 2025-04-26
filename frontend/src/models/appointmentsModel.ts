@@ -15,5 +15,4 @@ export default class AppointmentsModel {
     company?: string;
     days_schedule?: Record<string, { start: string; end: string }>;
     slot_interval?: number;
-    booked_appointments?: Appointment[];
 }

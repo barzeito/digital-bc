@@ -6,7 +6,7 @@
         "host": "localhost",
         "secret": "dbc-secret",
         "jwt": {
-            "expires": "24h",
+            "expires": "72h",
             "secret": "dbc-secret"
         },
         "images": {

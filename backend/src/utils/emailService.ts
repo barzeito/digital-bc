@@ -65,14 +65,6 @@ export const sendWelcomeEmail = async (email: string, firstName: string, passwor
 };
 
 export const sendResetEmail = async (email: string, resetLink: string) => {
-    const transporter = nodemailer.createTransport({
-        service: config.get("app.email_service.service"),
-        auth: {
-            user: config.get("app.email_service.email"),
-            pass: config.get("app.email_service.app_password")
-        }
-    });
-
     const mailOptions = {
         from: '"Digital Business Cards" <dbc@gmail.com>',
         to: email,
@@ -128,4 +120,127 @@ export const sendResetEmail = async (email: string, resetLink: string) => {
 
 
     await transporter.sendMail(mailOptions);
+};
+
+export const sendAppointmentConfirmationEmail = async (
+    email: string,
+    firstName: string,
+    appointmentDate: string,
+    appointmentTime: string,
+    phone: string,
+    message?: string
+) => {
+    const mailOptions = {
+        from: '"Digital Business Cards" <dbc@gmail.com>',
+        to: email,
+        subject: "אישור קביעת תור - Digital Business Cards",
+        html: `
+        <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto;">
+            <h2 style="color: #333;">שלום ${firstName},</h2>
+            
+            <p style="font-size: 16px; color: #444;">
+                תורך נקבע בהצלחה במערכת <strong>Digital Business Cards</strong>!
+            </p>
+        
+            <p style="font-size: 16px; color: #444;">
+                להלן פרטי התור שלך:
+            </p>
+        
+            <ul style="font-size: 16px; color: #444; list-style-type: none; padding: 0;">
+                <li><strong>תאריך התור:</strong> ${appointmentDate}</li>
+                <li><strong>שעת התור:</strong> ${appointmentTime}</li>
+                <li><strong>טלפון:</strong> ${phone}</li>
+                ${message ? `<li><strong>הודעה:</strong> ${message}</li>` : ''}
+            </ul>
+        
+            <p style="font-size: 16px; color: #d9534f; margin-top: 10px;">
+                ⚠️ אם יש שינויים בתור או אם ברצונך לבטל, אנא פנה אלינו בהקדם.
+            </p>
+        
+            <p style="font-size: 14px; color: #888;">
+                אם אינך מזהה הודעה זו, אנא התעלם ממנה או פנה לתמיכה.
+            </p>
+        
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+        
+            <p style="font-size: 14px; color: #666;">
+                בברכה,<br>
+                צוות <strong>Digital Business Cards</strong>
+            </p>
+        </div>
+    `
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log(`📧 Email sent successfully to :${email}`);
+    } catch (error) {
+        console.error("❌ Error sending appointment confirmation email", error);
+    }
+};
+
+
+export const sendAppointmentToCompanyEmail = async (
+    companyEmail: string,
+    customerName: string,
+    appointmentDate: string,
+    appointmentTime: string,
+    phone: string,
+    message?: string // הודעה אופציונלית
+) => {
+    const mailOptions = {
+        from: '"Digital Business Cards" <dbc@gmail.com>',
+        to: companyEmail,
+        subject: "תור חדש נקבע - Digital Business Cards",
+        html: `
+        <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto;">
+            <h2 style="color: #333;">שלום,</h2>
+            
+            <p style="font-size: 16px; color: #444;">
+                לקוח חדש קבע תור במערכת <strong>Digital Business Cards</strong>.
+            </p>
+        
+            <p style="font-size: 16px; color: #444;">
+                להלן פרטי התור החדש:
+            </p>
+        
+            <ul style="font-size: 16px; color: #444; list-style-type: none; padding: 0;">
+                <li><strong>שם הלקוח:</strong> ${customerName}</li>
+                <li><strong>תאריך התור:</strong> ${appointmentDate}</li>
+                <li><strong>שעת התור:</strong> ${appointmentTime}</li>
+                <li><strong>טלפון:</strong> ${phone}</li>
+                ${message ? `<li><strong>הודעה מהלקוח:</strong> ${message}</li>` : ''}
+            </ul>
+        
+            <p style="font-size: 16px; color: #d9534f; margin-top: 10px;">
+                ⚠️ אנא וודא שהתור נקבע ומוכן.
+            </p>
+        
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="${config.get("app.email_service.domain")}" 
+                   style="background-color: #007bff; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-size: 16px; display: inline-block;">
+                  ניהול התור שלך
+                </a>
+            </div>
+        
+            <p style="font-size: 14px; color: #888;">
+                אם אינך מזהה הודעה זו, אנא התעלם ממנה או פנה לתמיכה.
+            </p>
+        
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+        
+            <p style="font-size: 14px; color: #666;">
+                בברכה,<br>
+                צוות <strong>Digital Business Cards</strong>
+            </p>
+        </div>
+    `
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log(`📧 Email sent successfully to company: ${companyEmail}`);
+    } catch (error) {
+        console.error("❌ Error sending appointment email to company", error);
+    }
 };

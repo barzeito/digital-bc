@@ -16,17 +16,16 @@ interface FormData {
 function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element {
     const [availableTimes, setAvailableTimes] = useState<string[]>([]);
 
-    // השתמש ב-useForm לניהול טופס
     const { register, handleSubmit, reset } = useForm<FormData>();
 
     const fetchAppointmentTimes = async (selectedDate: string) => {
         try {
-            const rawData = await appointmentsService.getAvailableTimes(companyId, selectedDate);
-            const [company] = rawData.map((item: any) => ({
-                ...item,
-                days_schedule: JSON.parse(item.days_schedule),
-                booked_appointments: JSON.parse(item.booked_appointments),
-            }));
+            const { company, appointments } = await appointmentsService.getAvailableTimes(companyId, selectedDate);
+
+            if (!company?.days_schedule) {
+                setAvailableTimes([]);
+                return;
+            }
 
             const dayName = new Date(selectedDate).toLocaleDateString("en-US", {
                 weekday: "long",
@@ -40,20 +39,19 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                 return;
             }
 
-            const booked = company.booked_appointments
-                .map((a: any) => JSON.parse(a))
-                .filter((a: any) => a.appointmentDate === selectedDate)
-                .map((a: any) => a.time);
+            const bookedTimes = appointments
+                .filter((a: any) => new Date(a.date).toISOString().split('T')[0] === new Date(selectedDate).toISOString().split('T')[0])
+                .map((a: any) => a.time.slice(0, 5));
 
-            const interval = company.slot_interval;
-
+            const interval = company.slot_interval || 30;
             const available: string[] = [];
-            let current = new Date(selectedDate + 'T' + schedule.start);
-            const end = new Date(selectedDate + 'T' + schedule.end);
+
+            let current = new Date(`${selectedDate}T${schedule.start}`);
+            const end = new Date(`${selectedDate}T${schedule.end}`);
 
             while (current < end) {
                 const timeStr = current.toTimeString().slice(0, 5);
-                if (!booked.includes(timeStr)) {
+                if (!bookedTimes.includes(timeStr)) {
                     available.push(timeStr);
                 }
                 current.setMinutes(current.getMinutes() + interval);
@@ -65,6 +63,8 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
             notify.error("אירעה שגיאה בטעינת הזמנים הפנויים");
         }
     };
+
+
 
     const submitBookAppointment = async (data: FormData) => {
         if (!data.name || !data.phone || !data.date || !data.time) {
