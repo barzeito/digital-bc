@@ -18,7 +18,8 @@ export enum AuthActionType {
     logOut = 'logOut',
     tokenExpired = 'tokenExpired',
     deleteUser = 'deleteUser',
-    setUsers = 'setUsers'
+    setUsers = 'setUsers',
+    editUser = 'editUser'
 }
 
 const isTokenExpired = (token: string): boolean => {
@@ -40,7 +41,7 @@ const scheduleLogout = (token: string) => {
     }
 };
 
-export type AuthActionPayload = userModel[] | string | null;
+export type AuthActionPayload = userModel[] | userModel | string | null;
 export interface AuthAction {
     type: AuthActionType,
     payload: AuthActionPayload | { token: string, user: any }
@@ -74,6 +75,11 @@ export function authReducer(currentState = new AuthState(), action: AuthAction):
             const userId = action.payload as string;
             const indexToDelete = newState.userData.findIndex(userData => userData.userId === userId);
             if (indexToDelete !== -1) newState.userData.splice(indexToDelete, 1);
+            break;
+        case AuthActionType.editUser:
+            const userToUpdate = action.payload as userModel;
+            const indexToUpdate = newState.userData.findIndex(user => user.userId === userToUpdate.userId);
+            if (indexToUpdate !== -1) newState.userData[indexToUpdate] = userToUpdate;
             break;
     }
     return newState;

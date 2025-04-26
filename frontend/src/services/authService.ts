@@ -65,6 +65,20 @@ class AuthService {
         }
     }
 
+    public async editUser(user: userModel): Promise<userModel> {
+        const response = await axios.patch<userModel>(`${appConfig.usersUrl}/${user.userId}`, user)
+        if (response.status === 400) {
+            throw response.data;
+        }
+        const updatedUser = response.data;
+        const action: AuthAction = {
+            type: AuthActionType.editUser,
+            payload: updatedUser
+        };
+        authStore.dispatch(action);
+        return updatedUser;
+    }
+
     public logout() {
         const action: AuthAction = {
             type: AuthActionType.logOut,

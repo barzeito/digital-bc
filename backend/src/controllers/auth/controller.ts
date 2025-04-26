@@ -114,3 +114,17 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
         next(err)
     }
 }
+
+export const patchUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.params.id;
+        const existingUser = await getModel().getOne(id);
+        if (!existingUser) {
+            return res.status(StatusCodes.NOT_FOUND).json({ message: `User with ID ${id} not found` });
+        } const updatedUser = { ...existingUser, ...req.body };
+        const user = await getModel().updateUser(updatedUser);
+        res.status(StatusCodes.OK).json(user)
+    } catch (err) {
+        next(err)
+    }
+}

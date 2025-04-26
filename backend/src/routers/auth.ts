@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { deleteUser, forgotPassword, getAll, getOne, isAdmin, isPremium, patchPassword, signIn, signUp } from "../controllers/auth/controller";
+import { deleteUser, forgotPassword, getAll, getOne, isAdmin, isPremium, patchPassword, patchUser, signIn, signUp } from "../controllers/auth/controller";
 import validate from "../middlewares/input-validation";
 import { forgotPasswordValidator, signInValidator, signUpValidator, updatePasswordValidator } from "../controllers/auth/validator";
 import enforceAdmin from "../middlewares/enforce-admin";
+import enforceAuth from "../middlewares/enforce-auth";
 
 const router = Router();
 
@@ -15,6 +16,8 @@ router.post('/forgot-Password/:id', validate(forgotPasswordValidator), forgotPas
 router.get('/role/:id', isAdmin);
 router.get('/premium/:id', isPremium);
 router.delete('/users/:id', enforceAdmin, deleteUser);
+router.patch('/users/:id',patchUser);
+
 
 
 export default router;

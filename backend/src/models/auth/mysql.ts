@@ -73,6 +73,20 @@ class Auth implements Model {
         return user || null;
     }
 
+    public async updateUser(user: userDTO): Promise<userDTO> {
+        const { userId, firstName, lastName, roleId, email, password } = user;
+        const results = await query(`
+                UPDATE  users
+                SET     firstName = ?,
+                        lastName = ?,
+                        email = ?,
+                        password = ?,
+                        roleId = ?
+                WHERE   userId = ?
+            `, [firstName, lastName, email, hashPassword(password, config.get<string>('app.secret')), roleId, userId]);
+        return this.getOne(userId);
+    }
+
     public async updatePassword(user: userDTO): Promise<userDTO> {
         const { userId, password } = user;
 
