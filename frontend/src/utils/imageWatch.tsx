@@ -19,7 +19,15 @@ function ImageWatched({ control, name, defaultSrc, setValue }: ImageWatchedProps
 
     const handleDelete = () => {
         setIsDeleted(true);
-        setValue?.(name, undefined);
+        // Set the file to null
+        setValue?.(name, null);
+
+        // Also clear the URL field when deleting an image
+        if (name === "coverImageFile") {
+            setValue?.("coverImageUrl", undefined);
+        } else if (name === "profileImageFile") {
+            setValue?.("profileImageUrl", undefined);
+        }
     };
 
     useEffect(() => {

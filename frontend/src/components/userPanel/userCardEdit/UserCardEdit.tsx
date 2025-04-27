@@ -60,8 +60,16 @@ function UserCardEdit(): JSX.Element {
     async function submitCardUpdate(card: CardModel) {
         try {
             setLoading(true);
-            card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || undefined;
-            card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || undefined;
+            card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || null;
+            card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || null;
+
+            // Explicitly set image URLs to null if they were deleted
+            if (card.coverImageUrl === null) {
+                card.coverImageUrl = undefined; // This will tell the backend to remove the cover image
+            }
+            if (card.profileImageUrl === null) {
+                card.profileImageUrl = undefined; // This will tell the backend to remove the profile image
+            }
 
             card.id = cardId;
             await cardsService.editCard(card);

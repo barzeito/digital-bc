@@ -14,6 +14,8 @@ export default interface Model {
     isPremium(id: string): Promise<boolean>;
     updatePassword(user: userDTO): Promise<DTO>;
     forgotPassword(user: userDTO): Promise<DTO>;
+    resetPassword(user: userDTO): Promise<DTO>;
     updateUser(user: userDTO): Promise<userDTO>;
+    getByResetToken(resetPasswordToken: string): Promise<userDTO | null>;
 
 }

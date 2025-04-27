@@ -53,8 +53,20 @@ function EditCard(): JSX.Element {
     async function submitCardUpdate(card: CardModel) {
         try {
             setLoading(true);
-            card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || undefined;
-            card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || undefined;
+            card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || null;
+            card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || null;
+
+            card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || null;
+            card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || null;
+
+            // If images were deleted, set their value to null
+            if (card.coverImageFile === null) {
+                card.coverImageUrl = undefined; // Clear cover image URL if the cover image was deleted
+            }
+            if (card.profileImageFile === null) {
+                card.profileImageUrl = undefined; // Clear profile image URL if the profile image was deleted
+            }
+
 
             card.id = cardId;
             await cardsService.editCard(card);
@@ -170,7 +182,7 @@ function EditCard(): JSX.Element {
                             <input type="file" accept="image/*" {...register('profileImageFile', {
                             })} /><span>{formState.errors.profileImageFile?.message}</span>
 
-                            <ImageWatched control={control} name="profileImageFile" defaultSrc={profileSrc} />
+                            <ImageWatched control={control} name="profileImageFile" defaultSrc={profileSrc} setValue={setValue} />
                         </div>
                     </div>
                 </div>

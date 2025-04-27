@@ -69,3 +69,15 @@
   margin-top: 4px;
   display: block;
 }
+
+.forgotPassword-Link {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--Black-Text-Color);
+}
+
+.forgotPassword-Link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--Black-Text-Color);
+}

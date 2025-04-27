@@ -7,9 +7,10 @@ class AppConfig {
     public signInUrl = `${this.apiBaseUrl}/api/signin`;
     public appointmentsUrl = `${this.apiBaseUrl}/api/apps`;
     public changePasswordUrl = `${this.apiBaseUrl}/api/change-password`;
+    public forgotPasswordUrl = `${this.apiBaseUrl}/api/forgot-Password`;
+    public resetPasswordUrl = `${this.apiBaseUrl}/api/reset-password`;
     public isAdminUrl = `${this.apiBaseUrl}/api/role`;
     public isPremiumUrl = `${this.apiBaseUrl}/api/premium`;
-
 
 }
 

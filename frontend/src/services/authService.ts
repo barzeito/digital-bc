@@ -130,6 +130,24 @@ class AuthService {
         }
     }
 
+    public async forgotPassword(email: string): Promise<void> {
+        try {
+            console.log('Sending forgot password request for email:', email); // לוודא שהנתון הגיע
+            const response = await axios.post(appConfig.forgotPasswordUrl, { email });
+            console.log('Password reset request response:', response.data); // לוג התגובה מהשרת
+        } catch (error) {
+            console.error('Error during forgot password request:', error); // תפס שגיאות אם יש
+            throw error;
+        }
+    }
+    public async resetPassword(token: string, newPassword: string): Promise<void> {
+        try {
+            await axios.patch(`${appConfig.resetPasswordUrl}?token=${token}`, { password: newPassword });
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public async deleteUser(id: string): Promise<void> {
         await axios.delete(appConfig.usersUrl + `/${id}`);
         const action: AuthAction = {

@@ -6,6 +6,8 @@ export default interface userDTO extends CredentialsDTO {
     lastName: string;
     roleId: number;
     isTemporaryPassword: boolean;
+    resetPasswordToken: string;
+    resetPasswordExpires: string;
 }
 
 export enum Roles {

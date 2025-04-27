@@ -103,22 +103,66 @@ class Auth implements Model {
     }
 
     public async forgotPassword(user: userDTO): Promise<userDTO> {
-        const { userId, email } = user;
+        const { email, userId } = user;
+        const existingUser = await this.getByEmail(email);
+        if (!existingUser) {
+            throw new Error('User not found');
+        }
+
         const passwordResetToken = crypto.randomBytes(32).toString("hex");
-        const tokenExpire = new Date(Date.now() + 15 * 60 * 1000)
+        const tokenExpire = new Date(Date.now() + 15 * 60 * 1000);
 
         await query(`
             UPDATE users
-            SET resetPasswordToken = ?,
+            SET resetPasswordToken = ?, 
                 resetPasswordExpires = ?
             WHERE userId = ?
         `, [passwordResetToken, tokenExpire, userId]);
 
-        const resetLink = `https://example.com/reset-password?token=${passwordResetToken}`;
+        const resetLink = `${config.get("app.email_service.forgot-password")}?token=${passwordResetToken}`;
+
         await sendResetEmail(email, resetLink);
 
         return this.getOne(userId);
     }
+
+    public async getByResetToken(resetPasswordToken: string): Promise<userDTO | null> {
+        console.log('Checking token:', resetPasswordToken); // הדפסת ה-token שנשלח
+        const result = await query(`
+            SELECT  userId, resetPasswordExpires
+            FROM    users  
+            WHERE   resetPasswordToken = ?
+            AND     resetPasswordExpires > NOW()
+        `, [resetPasswordToken]);
+
+        if (result.length === 0) {
+            return null;
+        }
+        return result[0];
+    }
+
+
+    public async resetPassword(user: userDTO): Promise<userDTO> {
+        const { userId, password, resetPasswordToken, resetPasswordExpires } = user;
+
+        // Check if token expired
+        if (new Date() > new Date(resetPasswordExpires)) {
+            throw new Error('הטוקן פג תוקף');
+        }
+
+        await query(`
+            UPDATE users
+            SET password = ?,
+                isTemporaryPassword = ?,
+                resetPasswordToken = NULL,
+                resetPasswordExpires = NULL
+            WHERE userId = ? AND resetPasswordToken = ?
+        `, [hashPassword(password, config.get<string>('app.secret')), 0, userId, resetPasswordToken]);
+
+        console.log(`User updated password for userId: ${userId}`);
+        return this.getOne(userId);
+    }
+
 
     public async getByEmail(email: string): Promise<userDTO | null> {
         const user = (await query(`

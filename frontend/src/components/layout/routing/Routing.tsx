@@ -18,6 +18,8 @@ import UserRoute from "./ProtectedUserRou";
 import AppointmentList from "../../userPanel/appointmentsList/AppointmentsList";
 import PremiumRoute from "./ProtectedPremiumRoute";
 import Loader from "../loader/Loader";
+import ForgotPassword from "../../auth/forgotPassword/ForgotPassword";
+import ResetPassword from "../../auth/resetPassword /ResetPassword";
 function Routing(): JSX.Element {
 
     return (
@@ -27,6 +29,8 @@ function Routing(): JSX.Element {
 
             <Route path="/login" element={<SignIn />} />
             <Route path="/settings/change-password/:id" element={<ChangePassword />} />
+            <Route path="/settings/forgot-password" element={<ForgotPassword />} />
+            <Route path="/settings/reset-password" element={<ResetPassword />} />
 
             <Route path="/cards/:company" element={<CardDisplay />} />
 

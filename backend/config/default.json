@@ -16,6 +16,7 @@
             "email": "bar199234@gmail.com",
             "app_password": "pjrr vlbw njzj irms",
             "domain": "http://localhost:3000/login",
+            "forgot-password": "http://localhost:3000/settings/reset-password",
             "service": "gmail"
         }
     },

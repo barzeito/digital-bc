@@ -76,14 +76,46 @@ export const patchPassword = async (req: Request, res: Response, next: NextFunct
 export const forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email } = req.body;
+        if (!email) {
+            return next(createHttpError(400, "Email is required"));
+        }
+
         const user = await getModel().getByEmail(email);
-        if (!user) return next(createHttpError(NotFound("User with this email not found")));
+        if (!user) {
+            return next(createHttpError(404, "User with this email not found"));
+        }
+
         await getModel().forgotPassword(user);
-        res.status(StatusCodes.OK).json({ message: "Password reset email sent successfully" });
+        res.status(200).json({ message: "Password reset email sent successfully" });
     } catch (err) {
         next(err);
     }
 }
+
+export const resetPassword = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const token = Array.isArray(req.query.token) ? req.query.token[0] : req.query.token;
+
+        if (!token || typeof token !== 'string') {
+            return next(createHttpError(Unauthorized("No valid token provided")));
+        }
+
+        const { password } = req.body;
+
+        const user = await getModel().getByResetToken(token);
+        if (!user) return next(createHttpError(Unauthorized("Invalid or expired token")));
+
+        // עדכן את הסיסמה
+        const updatedPassword = { ...user, password };
+        await getModel().updatePassword(updatedPassword);
+
+        res.status(StatusCodes.OK).json({ message: "Password updated successfully" });
+    } catch (err) {
+        next(err);
+    }
+}
+
+
 
 export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -5,8 +5,8 @@ export default class CardModel {
     company?: string;
     coverImageUrl?: string;
     profileImageUrl?: string;
-    coverImageFile?: File;
-    profileImageFile?: File;
+    coverImageFile?: File | null;
+    profileImageFile?: File | null;
     name?: string;
     description?: string;
     about?: string;
