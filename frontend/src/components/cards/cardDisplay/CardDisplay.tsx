@@ -19,6 +19,7 @@ import SocialModel from "../../../models/socialModel";
 import AddToContactsButton from "../../../utils/addToContact";
 import ScheduleAppointment from "../../userPanel/ScheduleAppointment/ScheduleAppointment";
 import authService from "../../../services/authService";
+import appointmentsService from "../../../services/appointmentsService";
 
 
 function CardDisplay(): JSX.Element {
@@ -26,6 +27,8 @@ function CardDisplay(): JSX.Element {
     const { company } = useParams();
     const navigate = useNavigate();
     const [card, setCard] = useState<CardModel>();
+    const [appAvailable, setAppAvailable] = useState<boolean>(false);
+    const [companyId, setCompanyId] = useState<string>();
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
     const [isOwnerPremium, setIsOwnerPremium] = useState<boolean>(false);
 
@@ -74,6 +77,7 @@ function CardDisplay(): JSX.Element {
                             if (s.tiktok) socialMap["tiktok"] = s.tiktok;
                         });
                         setSocialLinks(socialMap);
+                        setCompanyId(cardFromServer.id);
                     } else {
                         navigate("/");
                     }
@@ -97,6 +101,25 @@ function CardDisplay(): JSX.Element {
 
         checkOwnerPremium();
     }, [card?.ownedBy]);
+
+    useEffect(() => {
+        const fetchAvailability = async () => {
+            if (!companyId) return;
+            try {
+                const app = await appointmentsService.getAppAvailable(companyId);
+                setAppAvailable(app);
+            } catch (error) {
+                console.log(error);
+            }
+            console.log(appAvailable)
+        };
+
+        fetchAvailability();
+    }, [companyId]);
+
+    useEffect(() => {
+        console.log("App available changed:", appAvailable);
+    }, [appAvailable]);
 
     return (
         <div className="CardDisplay">
@@ -161,7 +184,7 @@ function CardDisplay(): JSX.Element {
                 </div>
                 <div className="cardDisplay-info">
                 </div>
-                {isOwnerPremium && card?.id && (
+                {appAvailable && card?.id && (
                     <ScheduleAppointment companyId={card.id} />
                 )}            </div>
         </div>

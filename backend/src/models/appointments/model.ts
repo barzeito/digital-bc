@@ -3,14 +3,16 @@ import DTO from './dto';
 import BookDTO from './bookDTO';
 
 export default interface Model {
-    getAll(): Promise<DTO[]>;
-    getOne(id: string): Promise<DTO>;
+    getAllAvailable(): Promise<DTO[]>;
+    getOneAvailable(id: string): Promise<DTO>;
     getOneByCompanyId(id: string): Promise<DTO>;
-    add(app: DTO): Promise<DTO>;
+    addAvailable(app: DTO): Promise<DTO>;
     // deleteApp(id: string): Promise<boolean>;
-    update(app: DTO): Promise<DTO>;
-    addBookedAppointment(companyId: string, date: string, time: string): Promise<void>;
+    updateAvailable(app: DTO): Promise<DTO>;
     getAvailableTimes(companyId: string): Promise<any>;
+    setAppAvailable(companyId: string, isAvailable: boolean): Promise<any>;
+    getAppAvailable(companyId: string): Promise<any>;
+
 
     getAllAppointments(): Promise<BookDTO[]>;
     getAllAppsByCompany(id: string): Promise<BookDTO[]>;

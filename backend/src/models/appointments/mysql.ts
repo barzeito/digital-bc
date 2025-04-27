@@ -9,14 +9,14 @@ import { sendAppointmentConfirmationEmail, sendAppointmentToCompanyEmail } from 
 class Appointments implements Model {
 
     // ============ Appointments Menage =============
-    public async getAll(): Promise<DTO[]> {
+    public async getAllAvailable(): Promise<DTO[]> {
         const apps = (await query(`
             SELECT  a.appId,
                     a.company_id,
                     a.company,
                     a.days_schedule,
                     a.slot_interval,
-                    a.booked_appointments,
+                    a.appAvailable,
                     bc.company
             FROM    app_availability a
             LEFT JOIN business_cards bc ON a.company_id = bc.id 
@@ -29,14 +29,14 @@ class Appointments implements Model {
         return apps;
     }
 
-    public async getOne(id: string): Promise<DTO> {
+    public async getOneAvailable(id: string): Promise<DTO> {
         const app = (await query(`
             SELECT  appId,
                     company_id,
                     company,
                     days_schedule,
                     slot_interval,
-                    booked_appointments
+                    appAvailable
             FROM    app_availability 
             WHERE   appId = ?
         `, [id]))[0];
@@ -55,7 +55,7 @@ class Appointments implements Model {
                     company,
                     days_schedule,
                     slot_interval,
-                    booked_appointments
+                    appAvailable
             FROM    app_availability 
             WHERE   company_id = ?
         `, [id]))[0];
@@ -67,78 +67,48 @@ class Appointments implements Model {
         return app;
     }
 
-    public async add(app: DTO): Promise<DTO> {
-        const { company_id, company, days_schedule, slot_interval, booked_appointments } = app;
+    public async addAvailable(app: DTO): Promise<DTO> {
+        const { company_id, company, days_schedule, slot_interval, appAvailable } = app;
         const appId = v4();
         const daysScheduleString = JSON.stringify(days_schedule);
         const addApp: OkPacketParams = await query(`
-            INSERT INTO app_availability (appId, company_id, company, days_schedule, slot_interval, booked_appointments)
+            INSERT INTO app_availability (appId, company_id, company, days_schedule, slot_interval, appAvailable)
             VALUES (?, ?, ?, ?, ?, ?)
-            `, [appId, company_id, company, daysScheduleString, slot_interval, booked_appointments]);
-        return this.getOne(appId);
+            `, [appId, company_id, company, daysScheduleString, slot_interval, appAvailable]);
+        return this.getOneAvailable(appId);
     }
 
-    public async update(app: DTO): Promise<DTO> {
-        const { appId, company_id, company, days_schedule, slot_interval, booked_appointments } = app;
-        const updated = await query(`
+    public async updateAvailable(app: DTO): Promise<DTO> {
+        const { company_id, company, days_schedule, slot_interval } = app;
+        await query(`
                 UPDATE  app_availability
                 SET     company_id = ?,
                         company = ?,
                         days_schedule = ?,
                         slot_interval = ?,
-                        booked_appointments = ?
                 WHERE   company_id = ?
-            `, [company_id, company, days_schedule, slot_interval, booked_appointments, company_id]);
+            `, [company_id, company, days_schedule, slot_interval, company_id]);
         return this.getOneByCompanyId(company_id);
     }
 
-    public async addBookedAppointment(companyId: string, date: string, appointment: any): Promise<void> {
-        if (!date) {
-            throw new Error("תאריך אינו מוגדר - לא ניתן לעדכן את ההזמנה");
-        }
-
-        const appointmentObject = {
-            name: appointment.name,
-            email: appointment.email,
-            phone: appointment.phone,
-            date: appointment.date,
-            time: appointment.time,
-            message: appointment.message,
-            appointmentDate: date
-        };
-
-        const updateQuery = `
+    public async setAppAvailable(companyId: string, isAvailable: boolean): Promise<any> {
+        const result = await query(`
             UPDATE app_availability
-            SET booked_appointments = JSON_ARRAY_APPEND(
-                COALESCE(booked_appointments, '[]'),
-                '$',
-                ?
-            )
-            WHERE company_id = ?
-        `;
-
-        const params = [
-            JSON.stringify(appointmentObject),
-            companyId
-        ];
-
-        const result = await query(updateQuery, params);
-        console.log('SQL result:', result);
-
-        if (result.changedRows === 0) {
-            console.warn("⚠️ לא עודכנה אף שורה - בדוק שה-company_id קיים:", companyId);
-        }
+            SET    appAvailable = ?
+            WHERE  company_id = ?
+        `, [isAvailable, companyId]);
+        return result;
     }
 
-    // public async getAvailableTimes(company_id: string): Promise<any> {
-    //     const app = await query(`
-    //             SELECT  days_schedule,
-    //                     slot_interval
-    //             FROM    app_availability
-    //             WHERE   company_id = ?
-    //         `, [company_id]);
-    //     return app
-    // }
+    public async getAppAvailable(companyId: string): Promise<any> {
+        const result = await query(`
+            SELECT appAvailable
+            FROM   app_availability
+            WHERE  company_id = ?
+        `, [companyId]);
+        return result;
+    }
+
 
     public async getAvailableTimes(company_id: string): Promise<any> {
         // שליפת זמינות החברה

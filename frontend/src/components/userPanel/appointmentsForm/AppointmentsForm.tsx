@@ -23,11 +23,26 @@ function AppointmentForm(): JSX.Element {
     const uId = String(params.userId);
     const { handleSubmit, register, formState } = useForm<AppointmentsModel>();
     const [appointmentData, setAppointmentData] = useState<AppointmentsModel | null>(null);
+    const [isAvailable, setIsAvailable] = useState<boolean>(false);  // state למעקב אחרי המצב של הזמינות
+    // const [appAvailable, setAppAvailable] = useState<boolean>(false);
 
     const [daysSchedule, setDaysSchedule] = useState<Record<string, { start: string; end: string }>>(
         Object.fromEntries(Object.keys(daysMap).map(day => [day, { start: "", end: "" }]))
     );
 
+    const toggleAvailability = async () => {
+        try {
+            setIsAvailable(prevState => !prevState);  // משנה את המצב של הזמינות
+            const status = !isAvailable;
+
+            await appointmentsService.setAppAvailable(companyId, status);
+
+            const message = status ? "הזמינות הופעלה בהצלחה" : "הזמינות בוטלה בהצלחה";
+            notify.success(message);
+        } catch (error) {
+            notify.error("שגיאה בשינוי מצב התורים");
+        }
+    };
 
 
     useEffect(() => {
@@ -52,6 +67,19 @@ function AppointmentForm(): JSX.Element {
         fetchAppointmentData();
     }, [companyId]);
 
+    useEffect(() => {
+        const fetchAvailability = async () => {
+            if (!companyId) return;
+            try {
+                const app = await appointmentsService.getAppAvailable(companyId);
+                setIsAvailable(app);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchAvailability();
+    }, [companyId]);
 
     const onSubmit = async (data: Partial<AppointmentsModel>) => {
         try {
@@ -91,15 +119,23 @@ function AppointmentForm(): JSX.Element {
     return (
         <div className="AppointmentForm">
             <UserMenu />
-            <div className="optionsButtons">
-                <NavLink to={`/panel/user/appointments/list/${uId}/${companyId}`} className="activeApps">תורים פעילים</NavLink>
+            <div className="appFromActions">
+                <div className="actionsTitle">
+                    <h2>פעולות</h2>
+                </div>
+                <div className="optionsButtons">
+                    <NavLink to={`/panel/user/appointments/list/${uId}/${companyId}`} className="activeApps">תורים פעילים</NavLink>
+                    <button onClick={toggleAvailability} className={`availability-btn ${isAvailable ? 'available' : 'unavailable'}`}>
+                        {isAvailable ? "כבה זמינות" : "הפעל זמינות"}
+                    </button>
+                </div>
             </div>
+
             <div className="appOptions">
                 <h2>הגדרת זמני הזמינות</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <input type="hidden" {...register("company_id")} value={companyId} />
                     <input type="hidden" {...register("company")} />
-
                     <h3>שעות פעילות</h3>
                     {Object.entries(daysMap).map(([dayKey, hebrewDay]) => (
                         <div key={dayKey} className="day-row">

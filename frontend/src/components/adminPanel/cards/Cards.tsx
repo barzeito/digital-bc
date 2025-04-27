@@ -3,7 +3,7 @@ import "./Cards.css";
 import cardsService from "../../../services/cardsService";
 import notify from "../../../services/popupMessage"
 import CardModel from "../../../models/cardModel";
-import formatDate, { cardFormatDate } from "../../../utils/formateDate";
+import { cardFormatDate } from "../../../utils/formateDate";
 import { NavLink } from "react-router-dom";
 import userModel from "../../../models/userModel";
 import authService from "../../../services/authService";

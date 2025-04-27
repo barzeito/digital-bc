@@ -20,6 +20,7 @@ body,
     height: 100%;
     text-align: center;
     background-color: var(--Background-color);
+    font-family: 'Assistant', sans-serif;
 }
 
 :root {

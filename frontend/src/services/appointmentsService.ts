@@ -65,22 +65,9 @@ class AppointmentsService {
         }
     }
 
-    // public async bookAppointment(company_id: string, newApp: any): Promise<AppointmentsModel> {
-    //     try {
-    //         const response = await axios.patch(`${appConfig.appointmentsUrl}/new/${company_id}`, {
-    //             ...newApp,
-    //             date: newApp.date
-    //         });
-    //         const data = response.data;
-    //         return data;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // };
-
     public async getAvailableTimes(company_id: string, selectedDate: string): Promise<{ company: AppointmentsModel; appointments: Appointment[] }> {
         try {
-            const response = await axios.get(`${appConfig.appointmentsUrl}/available/${company_id}`, {
+            const response = await axios.get(`${appConfig.appointmentsUrl}/times/${company_id}`, {
                 params: { date: selectedDate }
             });
             return response.data;
@@ -89,7 +76,26 @@ class AppointmentsService {
             throw error;
         }
     }
-    
+
+    public async setAppAvailable(companyId: string, status: boolean): Promise<AppointmentsModel> {
+        try {
+            const response = await axios.patch<AppointmentsModel>(`${appConfig.appointmentsUrl}/available/${companyId}`, {
+                isAvailable: status
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async getAppAvailable(companyId: string): Promise<boolean> {
+        try {
+            const response = await axios.get(`${appConfig.appointmentsUrl}/available/${companyId}`);
+            return response.data[0].appAvailable || false;
+        } catch (error) {
+            throw error;
+        }
+    }
 
 
     //============ Appointments ===============

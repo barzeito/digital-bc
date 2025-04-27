@@ -34,7 +34,7 @@ function ImageWatched({ control, name, defaultSrc, setValue }: ImageWatchedProps
             const newSrc = window.URL.createObjectURL(file);
             return (
                 <div className="image-container">
-                    <img src={newSrc} alt="Image Preview" />
+                    <img src={newSrc} alt="Preview" />
                     <button type="button" className="deleteImage-btn" onClick={handleDelete}>
                         &#10005;
                     </button>
@@ -46,7 +46,7 @@ function ImageWatched({ control, name, defaultSrc, setValue }: ImageWatchedProps
     if (defaultSrc) {
         return (
             <div className="image-container">
-                <img src={defaultSrc} alt="Existing Image" />
+                <img src={defaultSrc} alt="Existing" />
                 <button type="button" className="deleteImage-btn" onClick={handleDelete}>
                     &#10005;
                 </button>

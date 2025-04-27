@@ -5,7 +5,7 @@ export type Appointment = {
     email: string;
     phone: string;
     date: string;
-    time: string; 
+    time: string;
     message?: string;
 };
 
@@ -15,4 +15,5 @@ export default class AppointmentsModel {
     company?: string;
     days_schedule?: Record<string, { start: string; end: string }>;
     slot_interval?: number;
+    appAvailable?: boolean;
 }

@@ -5,7 +5,7 @@ import getModel from "../../models/appointments/factory";
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const apps = await getModel().getAll();
+        const apps = await getModel().getAllAvailable();
         res.json(apps)
     } catch (err) {
         next(err)
@@ -14,7 +14,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getOne = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const app = await getModel().getOne(req.params.id);
+        const app = await getModel().getOneAvailable(req.params.id);
         if (!app) return next();
         res.json(app)
     } catch (err) {
@@ -43,7 +43,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
                 });
             }
         }
-        const app = await getModel().add(req.body);
+        const app = await getModel().addAvailable(req.body);
         res.status(StatusCodes.CREATED).json(app)
     } catch (err) {
         console.log(err)
@@ -56,27 +56,12 @@ export const patch = async (req: Request, res: Response, next: NextFunction) => 
         const id = req.params.company_id;
         const existingApp = await getModel().getOneByCompanyId(id);
         const updatedApp = { ...existingApp, ...req.body };
-        const app = await getModel().update(updatedApp);
+        const app = await getModel().updateAvailable(updatedApp);
         res.status(StatusCodes.OK).json(app)
     } catch (err) {
         next(err)
     }
 }
-
-// export const addAppointment = async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//         const { company_id } = req.params;
-//         const appointment = req.body;
-//         const date = appointment.date;
-
-//         await getModel().addBookedAppointment(company_id, date, appointment);
-
-//         res.status(StatusCodes.OK).json({ message: "התור הוזמן בהצלחה" });
-//     } catch (err) {
-//         console.error("Error occurred:", err);
-//         next(err);
-//     }
-// }
 
 export const getAvailableTimes = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -99,7 +84,7 @@ export const getAllAppointments = async (req: Request, res: Response, next: Next
 
 export const getOneAppointment = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const app = await getModel().getOne(req.params.id);
+        const app = await getModel().getOneAvailable(req.params.id);
         if (!app) return next();
         res.json(app)
     } catch (err) {
@@ -151,3 +136,28 @@ export const deleteAppointment = async (req: Request, res: Response, next: NextF
         next(err);
     }
 };
+
+export const setAppAvailable = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const companyId = req.params.company_id;
+        const { isAvailable } = req.body;
+        if (typeof isAvailable !== 'boolean') {
+            return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Invalid value for isAvailable' });
+        }
+
+        const app = await getModel().setAppAvailable(companyId, isAvailable);
+        res.status(StatusCodes.OK).json(app);
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const getAppAvailable = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const app = await getModel().getAppAvailable(req.params.company_id);
+        if (!app) return next();
+        res.json(app)
+    } catch (err) {
+        next(err)
+    }
+}
