@@ -3,6 +3,7 @@ import CardModel from "../models/cardModel";
 import "./ImageWatched.css";
 import { useState, useEffect } from "react";
 import notify from "../services/popupMessage";
+import Loader from "../components/layout/loader/Loader";
 
 interface ImageWatchedProps {
     control: Control<CardModel>;
@@ -14,6 +15,7 @@ interface ImageWatchedProps {
 function ImageWatched({ control, name, defaultSrc, setValue }: ImageWatchedProps): JSX.Element | null {
     const [isDeleted, setIsDeleted] = useState(false);
     const imageSrc = useWatch({ control, name });
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleDelete = () => {
         setIsDeleted(true);
@@ -26,7 +28,17 @@ function ImageWatched({ control, name, defaultSrc, setValue }: ImageWatchedProps
         }
     }, [isDeleted]);
 
+    useEffect(() => {
+        if (imageSrc || defaultSrc) {
+            setIsLoading(false);
+        }
+    }, [imageSrc, defaultSrc]);
+
     if (isDeleted) return null;
+
+    if (isLoading) {
+        return <Loader />;
+    }
 
     if (imageSrc) {
         const file = (imageSrc as unknown as FileList)[0];

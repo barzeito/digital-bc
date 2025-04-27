@@ -29,11 +29,11 @@ function UserCardEdit(): JSX.Element {
 
     const { handleSubmit, setValue, register, formState, control } = useForm<CardModel>();
 
-
-
     useEffect(() => {
+        console.log("Loading new card with ID:", cardId);
         cardsService.getOne(cardId)
             .then(cardFromServer => {
+                console.log("Loaded card:", cardFromServer);
                 setValue('company', cardFromServer?.company);
                 setValue('name', cardFromServer?.name);
                 setValue('description', cardFromServer?.description);

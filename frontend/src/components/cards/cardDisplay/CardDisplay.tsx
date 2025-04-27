@@ -111,16 +111,11 @@ function CardDisplay(): JSX.Element {
             } catch (error) {
                 console.log(error);
             }
-            console.log(appAvailable)
         };
 
         fetchAvailability();
     }, [companyId]);
-
-    useEffect(() => {
-        console.log("App available changed:", appAvailable);
-    }, [appAvailable]);
-
+    
     return (
         <div className="CardDisplay">
             <div className="Card-Main">
