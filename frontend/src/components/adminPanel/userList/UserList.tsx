@@ -6,6 +6,7 @@ import authService from "../../../services/authService";
 import notify from "../../../services/popupMessage";
 import { authStore } from "../../../redux/authState";
 import AdminMenu from "../AdminMenu/AdminMenu";
+import DashboardLayout from "../dashboardLayout/DashboardLayout";
 
 function UserList(): JSX.Element {
 
@@ -24,10 +25,27 @@ function UserList(): JSX.Element {
 
     return (
         <div className="UserList">
-            <AdminMenu />
-            <div className="DisplayUsers">
-                {users.map(u => <Users key={u.userId} user={u} />)}
-            </div>
+            <DashboardLayout>
+                <div >
+                    <h2>ניהול משתמשים</h2>
+                    <p>ניהול משתמשים וגישות</p>
+                </div>
+                <div className="DisplayUsers">
+                    <table className="users-table">
+                        <thead>
+                            <tr>
+                                <th>שם מלא</th>
+                                <th>אימייל</th>
+                                <th>דרגה</th>
+                                <th>פעולות</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map(u => <Users key={u.userId} user={u} />)}
+                        </tbody>
+                    </table>
+                </div>
+            </DashboardLayout>
         </div>
     );
 }

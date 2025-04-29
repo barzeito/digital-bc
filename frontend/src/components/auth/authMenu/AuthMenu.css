@@ -2,74 +2,67 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
-    background-color: var(--Tertiary-Color);
+    padding: 5px 20px;
+    direction: rtl; 
 }
 
-.logo {
+.companyLogo {
     font-size: 24px;
     font-weight: 600;
     color: var(--Secondary-Color);
 }
 
-.nav ul {
+.navigationItems ul {
     list-style: none;
     display: flex;
-    margin: 0;
-    padding: 0;
     gap: 20px;
+    padding: 0;
+    margin: 0;
 }
 
-.nav a {
+.navigationItems a {
     text-decoration: none;
-    color: var(--White-Text-Color);
-    transition: transform 0.2s ease;
+    color: var(--Black-Text-Color);
     display: inline-block;
-    font-size: 20px;
+    font-size: 22px;
 }
 
-.nav a:hover {
+.navigationItems a:hover {
     color: var(--Secondary-Color);
     transform: scale(1.2);
 }
 
-.UserActions {
+.menuItems {
     display: flex;
-    align-items: center;
-    color: var(--White-Text-Color);
+    flex-direction: column;
+    align-items: center; 
     font-size: 18px;
 }
 
-.HelloUser {
-    margin-right: 20px;
+.menuItems .userItem {
+    font-size: 20px;
 }
 
-.NavLogged div {
-    margin-right: 20px;
-}
-
-.NavLogin {
-    margin-left: 5px;
-}
-
-.UserLogin {
+.menuItems .loginButton {
     display: flex;
-    gap: 2px;
+    text-decoration: none;
+    align-items: center;
 }
 
-.NavLoginIcon {
-    margin-left: 5px;
+.loginButton .NavLogin {
+    color: var(--Black-Text-Color);
+    text-decoration: none;
 }
 
 .NavLogged .action,
 .NavLogin {
     text-decoration: none;
-    color: var(--White-Text-Color);
-
+    color: var(--Black-Text-Color);
 }
 
 .NavLogged .action:hover,
 .NavLogin:hover,
 .UserLogin:hover {
     color: var(--Secondary-Color);
+    text-decoration: underline;
 }

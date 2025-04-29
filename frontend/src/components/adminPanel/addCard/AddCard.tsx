@@ -9,6 +9,7 @@ import SignUpModel from "../../../models/signUpModel";
 import authService from "../../../services/authService";
 import { useState } from "react";
 import Loader from "../../layout/loader/Loader";
+import DashboardLayout from "../dashboardLayout/DashboardLayout";
 
 function AddCard(): JSX.Element {
     const { register, handleSubmit, setValue, formState, getValues, watch } = useForm<CardModel>();
@@ -76,7 +77,7 @@ function AddCard(): JSX.Element {
     }
     return (
         <div className="AddCard">
-            <AdminMenu />
+            <DashboardLayout>
             <h2>יצירת כרטיס חדש</h2>
             <form onSubmit={handleSubmit(submitNewCard)}>
                 <div className="add-row">
@@ -203,6 +204,7 @@ function AddCard(): JSX.Element {
                     )}
                 </div>
             </form>
+            </DashboardLayout>
         </div>
     );
 }

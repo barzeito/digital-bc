@@ -1,3 +1,79 @@
 .DisplayUsers {
-    margin-top: 100px;
+    background-color: #ffffff;
+    padding: 24px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    direction: rtl;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.users-table th,
+.users-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    word-break: break-word;
+}
+
+.users-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+    color: #333;
+    text-align: right;
+}
+
+/* name */
+.users-table td:nth-child(1),
+.users-table th:nth-child(1) {
+    text-align: right;
+    min-width: 150px;
+}
+
+/* email */
+.users-table td:nth-child(2),
+.users-table th:nth-child(2) {
+    text-align: center;
+    min-width: 200px;
+}
+
+/* role */
+.users-table td:nth-child(3),
+.users-table th:nth-child(3) {
+    text-align: center;
+    width: 100px;
+}
+
+/* actions */
+.users-table td:nth-child(4),
+.users-table th:nth-child(4) {
+    text-align: left;
+    width: 140px;
+}
+
+.editUser-btn,
+.deleteUser-btn {
+    margin-left: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.editUser-btn {
+    color: #4CAF50;
+}
+
+.delete-btn {
+    color: #f44336;
 }

@@ -36,7 +36,7 @@ function PremiumRoute({ element }: { element: JSX.Element }) {
         }
 
         checkPremium();
-    }, [navigate]);
+    }, [navigate,uId]);
 
     if (isChecking) {
         return <NavLink to={`/panel/user/${uId}`}></NavLink>;

@@ -1,18 +1,112 @@
 .cards-options {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .newCard-btn {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 150px;
-    padding: 10px;
-    background-color: var(--Secondary-Color);
+    padding: 10px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
     text-decoration: none;
-    color: var(--White-Text-Color);
-    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.newCard-btn:hover {
+    background-color: #388e3c;
+}
+
+.NavIcon {
+    margin-left: 8px;
+}
+
+.DisplayCards {
+    background-color: #ffffff;
+    padding: 24px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.cards-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    direction: rtl;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+
+.cards-table th,
+.cards-table td {
+    border-bottom: 1px solid #eee;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+.cards-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+    color: #333;
+    text-align: right;
+}
+
+/* company name */
+.cards-table td:nth-child(1),
+.cards-table th:nth-child(1) {
+    text-align: right;
+    min-width: 150px;
+}
+
+/* email */
+.cards-table td:nth-child(2),
+.cards-table th:nth-child(2) {
+    text-align: center;
+    min-width: 200px;
+}
+
+/* phone */
+.cards-table td:nth-child(3),
+.cards-table th:nth-child(3) {
+    text-align: center;
+    width: 120px;
+}
+
+/* created date */
+.cards-table td:nth-child(4),
+.cards-table th:nth-child(4) {
+    text-align: center;
+    width: 120px;
+}
+
+/* updated date */
+.cards-table td:nth-child(5),
+.cards-table th:nth-child(5) {
+    text-align: center;
+    width: 120px;
+}
+
+/* owner */
+.cards-table td:nth-child(6),
+.cards-table th:nth-child(6) {
+    text-align: center;
+    width: 150px;
+}
+
+/* actions */
+.cards-table td:nth-child(7),
+.cards-table th:nth-child(7) {
+    text-align: left;
+    width: 180px;
 }

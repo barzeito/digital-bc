@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { AuthActionType, authStore } from "../redux/authState";
 
 

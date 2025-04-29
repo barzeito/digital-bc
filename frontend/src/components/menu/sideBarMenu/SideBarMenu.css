@@ -1,0 +1,108 @@
+.SidebarMenu {
+    width: 260px;
+    height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    font-family: 'Assistant', sans-serif;
+}
+
+.companyLogo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--Secondary-Color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.MenuSection {
+    margin-bottom: 20px;
+}
+
+.SectionTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.NavCard {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #374151;
+    transition: background-color 0.2s ease;
+}
+
+.NavCard:hover {
+    background-color: #f3f4f6;
+}
+
+.NavCard:hover .NavText,
+.NavCard:hover .NavIcon {
+    color: var(--White-Text-Color);
+}
+
+.NavCard.active {
+    background-color: #dffae9;
+    color: var(--Secondary-Color);
+    font-weight: 600;
+}
+
+.NavIcon {
+    font-size: 16px;
+    width: 24px;
+    text-align: center;
+    color: var(--Black-Text-Color);
+}
+
+.NavText {
+    font-size: 15px;
+    color: var(--Black-Text-Color);
+}
+
+.SidebarFooter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 15px;
+}
+
+.UserCircle {
+    background-color: #dffae9;
+    color: var(--Secondary-Color);
+    font-weight: 600;
+    border-radius: 9999px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.UserInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.UserName {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.UserEmail {
+    font-size: 12px;
+    color: #6b7280;
+}

@@ -1,0 +1,12 @@
+.DashboardLayout {
+    display: flex;
+    height: 100vh;
+}
+
+.DashboardContent {
+    flex: 1;
+    padding: 24px;
+    background-color: #f9fafb;
+    overflow-y: auto; /* גלילה רק בתוך התוכן */
+    height: 100%; /* וודא שהתוכן מתפשט לגובה המלא של החלון */
+}

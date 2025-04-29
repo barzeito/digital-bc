@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import authService from "../../../services/authService";
 import notify from "../../../services/popupMessage";
 import AdminMenu from "../AdminMenu/AdminMenu";
+import DashboardLayout from "../dashboardLayout/DashboardLayout";
 
 function EditUser(): JSX.Element {
     const params = useParams();
@@ -48,7 +49,7 @@ function EditUser(): JSX.Element {
 
     return (
         <div className="EditUser">
-            <AdminMenu />
+            <DashboardLayout>
             <h2>עריכת משתמש</h2>
             <form onSubmit={handleSubmit(submitUserUpdate)}>
                 <div className="edit-row">
@@ -124,6 +125,8 @@ function EditUser(): JSX.Element {
                     <button type="button" className="cancel-btn" onClick={() => navigate("/panel/admin/users")}>ביטול</button>
                 </div>
             </form>
+            </DashboardLayout>
+
         </div>
     );
 }

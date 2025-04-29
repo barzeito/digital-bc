@@ -55,23 +55,23 @@ function AuthMenu(): JSX.Element {
 
     return (
         <div className="AuthMenu">
-            <div className="logo">
+            <div className="companyLogo">
                 <p>כרטיסי ביקור דיגיטלים</p>
             </div>
-            <div className="nav">
+            <div className="navigationItems">
                 <ul>
                     <li><a href="#">בית</a></li>
                     <li><a href="#">אודות</a></li>
                     <li><a href="#">שירותים</a></li>
-                    <li><a href="#">צור קשר</a></li>
+                    <li><a href="#home-contact-form-section">צור קשר</a></li>
                 </ul>
             </div>
-            <div className="UserActions">
-                <div className="HelloUser">
+            <div className="menuItems">
+                <div className="userDiv">
                     {user ? (
-                        <span className="NavLogged">שלום, {user.firstName} {user.lastName}</span>
+                        <span className="userItem">שלום, {user.firstName} {user.lastName}</span>
                     ) : (
-                        <div className="UserLogin">
+                        <div className="loginButton">
                             <NavLink to="/login" className="NavLogin"><span>התחבר</span></NavLink>
                             <div className="NavLoginIcon"><i className="fa-solid fa-right-to-bracket"></i></div>
                         </div>

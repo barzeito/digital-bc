@@ -6,6 +6,8 @@ type User = {
     userId: string;
     firstName: string;
     lastName: string;
+    email: string;
+    roleId: number;
 };
 
 export function useCurrentUser(): User | null {

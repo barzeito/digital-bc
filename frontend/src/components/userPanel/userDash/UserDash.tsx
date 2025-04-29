@@ -7,6 +7,7 @@ import notify from "../../../services/popupMessage"
 import { CardsStore } from "../../../redux/cardState";
 import UserCards from "../userCards/UserCards";
 import { useCurrentUser } from "../../../utils/useCurrentUser";
+import SideBarMenu from "../../menu/sideBarMenu/SideBarMenu";
 
 function UserDash(): JSX.Element {
 
@@ -32,7 +33,7 @@ function UserDash(): JSX.Element {
 
     return (
         <div className="UserDash">
-            <UserMenu />
+            <SideBarMenu />
             <div className="DisplayCards">
                 {userCards.length === 0 && (
                     <div className="NoCardsMessage">

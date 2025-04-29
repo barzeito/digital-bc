@@ -10,6 +10,7 @@ import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
 import ImageWatched from "../../../utils/imageWatch"
 import Loader from "../../layout/loader/Loader";
+import DashboardLayout from "../dashboardLayout/DashboardLayout";
 
 function EditCard(): JSX.Element {
 
@@ -92,7 +93,7 @@ function EditCard(): JSX.Element {
 
     return (
         <div className="EditCard">
-            <AdminMenu />
+            <DashboardLayout>
             <h2>עריכת כרטיס</h2>
             <form onSubmit={handleSubmit(submitCardUpdate)}>
                 <div className="edit-row">
@@ -232,6 +233,7 @@ function EditCard(): JSX.Element {
                     )}
                 </div>
             </form>
+            </DashboardLayout>
         </div>
     );
 }

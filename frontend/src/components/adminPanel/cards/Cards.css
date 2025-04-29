@@ -1,84 +1,3 @@
-.Cards {
-    background-color: var(--Primary-Color);
-    border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    padding: 20px;
-    margin: 20px 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    transition: transform 0.2s ease;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    border: 0.2px solid var(--Tertiary-Color);
-}
-
-.card-header,
-.card-body {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.header-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 250px;
-    max-width: 300px;
-}
-
-.header-info .company-name {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--Black-Text-Color);
-    margin: 0;
-}
-
-.header-info .description {
-    color: var(--Black-Text-Color);
-    font-size: 0.95rem;
-}
-
-.times {
-    flex: 1;
-    font-size: 0.85rem;
-    color: var(--Black-Text-Color);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-width: 200px;
-}
-
-.times p {
-    margin: 5px 0;
-}
-
-.card-body {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.card-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    min-width: 450px;
-    max-width: 700px;
-}
-
-.card-info p {
-    margin-bottom: 0;
-}
-
 .card-buttons {
     display: flex;
     justify-content: flex-start;
@@ -86,18 +5,45 @@
     margin-top: 16px;
 }
 
-.edit-btn,
-.delete-btn,
-.view-btn,
-.assign-btn {
-    padding: 8px 16px;
+.cardActions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-left: 8px;
+    font-size: 14px;
     border: none;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    background-color: var(--Submit-Button);
-    color: var(--White-Text-Color);
+    border-radius: 4px;
     text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.viewCard-btn,
+.editCard-btn,
+.deleteCard-btn,
+.assign-btn {
+    font-size: 16px;
+    color: var(--Secondary-Color);
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.deleteCard-btn{
+    color: var(--Cancel-Button) !important;
+}
+
+button.action-btn {
+    all: unset;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .assign-btn {

@@ -39,24 +39,17 @@ function Users(props: usersProps): JSX.Element {
 
 
     return (
-        <div className="Users">
-            <div className="users-header">
-                <div className="header-info">
-                    <h2 className="user-fullName">{props.user.firstName} {props.user.lastName}</h2>
-                </div>
+        <>
+            <tr>
+                <td>{props.user.firstName} {props.user.lastName}</td>
+                <td>{props.user.email}</td>
+                <td>{getRoleName(props.user.roleId ?? 1)}</td>
+                <td>
+                    <NavLink to={`/panel/admin/edit-user/${props.user.userId}`} className="editUser-btn">עריכה</NavLink>
+                    <button className="deleteUser-btn" onClick={() => setShowDelete(true)}>מחיקה</button>
+                </td>
+            </tr>
 
-                <div className="users-body">
-                    <div className="users-info">
-                        <p><strong>אימייל:</strong> {props.user.email}</p>
-                        <p><strong>דרגה:</strong> {getRoleName(props.user.roleId ?? 1)}</p>
-                    </div>
-                </div>
-
-                <div className="users-footer">
-                    <NavLink to={`/panel/admin/edit-user/${props.user.userId}`} className="edit-btn">עריכה</NavLink>
-                    <button className="delete-btn" onClick={() => setShowDelete(true)}>מחיקה</button>
-                </div>
-            </div>
             {showDelete && (
                 <div className="PopUpContainer">
                     <div className="DeleteContainer">
@@ -71,7 +64,7 @@ function Users(props: usersProps): JSX.Element {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }
 

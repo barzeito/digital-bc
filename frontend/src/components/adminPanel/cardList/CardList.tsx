@@ -6,7 +6,7 @@ import notify from "../../../services/popupMessage"
 import { CardsStore } from "../../../redux/cardState";
 import Cards from "../cards/Cards";
 import { NavLink, useNavigate } from "react-router-dom";
-import AdminMenu from "../AdminMenu/AdminMenu";
+import DashboardLayout from "../dashboardLayout/DashboardLayout";
 
 function CardList(): JSX.Element {
 
@@ -26,16 +26,36 @@ function CardList(): JSX.Element {
 
     return (
         <div className="CardList">
-            <AdminMenu />
-            <div className="cards-options">
-                <NavLink to="/panel/admin/cards/add-card" className="newCard-btn">
-                    <div className="NavIcon"><i className="fa-solid fa-plus"></i></div>
-                    <div className="NavText">יצירת כרטיס חדש</div>
-                </NavLink>
-            </div>
-            <div className="DisplayCards">
-                {cards.map(c => <Cards key={c.id} card={c} />)}
-            </div>
+            <DashboardLayout>
+                <div>
+                    <h2>ניהול כרטיסים</h2>
+                    <p>ניהול כרטיסים ושיוכים</p>
+                </div>
+                <div className="cards-options">
+                    <NavLink to="/panel/admin/cards/add-card" className="newCard-btn">
+                        <div className="NavIcon"><i className="fa-solid fa-plus"></i></div>
+                        <div className="NavText">יצירת כרטיס חדש</div>
+                    </NavLink>
+                </div>
+                <div className="DisplayCards">
+                    <table className="cards-table">
+                        <thead>
+                            <tr>
+                                <th>שם חברה</th>
+                                <th>נוצר בתאריך</th>
+                                <th>עדכון אחרון</th>
+                                <th>אימייל</th>
+                                <th>טלפון</th>
+                                <th>בעלים</th>
+                                <th>פעולות</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cards.map(c => <Cards key={c.id} card={c} />)}
+                        </tbody>
+                    </table>
+                </div>
+            </DashboardLayout>
         </div>
     );
 }

@@ -132,11 +132,8 @@ class AuthService {
 
     public async forgotPassword(email: string): Promise<void> {
         try {
-            console.log('Sending forgot password request for email:', email); // לוודא שהנתון הגיע
-            const response = await axios.post(appConfig.forgotPasswordUrl, { email });
-            console.log('Password reset request response:', response.data); // לוג התגובה מהשרת
+            await axios.post(appConfig.forgotPasswordUrl, { email });
         } catch (error) {
-            console.error('Error during forgot password request:', error); // תפס שגיאות אם יש
             throw error;
         }
     }

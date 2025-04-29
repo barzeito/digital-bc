@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import "./ForgotPassword.css";
 import authService from "../../../services/authService";
 import notify from "../../../services/popupMessage";
-import UserMenu from "../../userPanel/userMenu/UserMenu";
 import { useState } from "react";
 import Loader from "../../layout/loader/Loader";
 

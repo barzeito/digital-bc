@@ -4,7 +4,6 @@ import "./Home.css";
 
 function Home(): JSX.Element {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-    const [loading, setLoading] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -130,9 +129,7 @@ function Home(): JSX.Element {
                                 onChange={handleChange}
                                 required
                             />
-                            <button type="submit" className="home-cta-button" disabled={loading}>
-                                {loading ? "שולח..." : "שלח הודעה"}
-                            </button>
+                            <button type="submit" className="home-cta-button"></button>
                         </form>
                     </div>
                 </section>

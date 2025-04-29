@@ -1,9 +1,9 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./ResetPassword.css";
 import notify from "../../../services/popupMessage"
 import authService from "../../../services/authService";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loader from "../../layout/loader/Loader";
 
 interface ChangePasswordModel {
