@@ -1,97 +1,54 @@
-.UserCards {
-    background-color: var(--Primary-Color);
-    border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    padding: 20px;
-    margin: 100px auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    transition: transform 0.2s ease;
+.card-buttons {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    border: 0.2px solid var(--Tertiary-Color);
+    justify-content: flex-start;
+    gap: 5px;
+    margin-top: 16px;
 }
 
-.uc-header,
-.uc-body {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.uc-header-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.uc-header-info .uc-company-name {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--Black-Text-Color);
-    margin: 0;
-}
-
-.uc-header-info .uc-description {
-    color: var(--Black-Text-Color);
-    font-size: 0.95rem;
-}
-
-.uc-times {
-    flex: 1;
-    font-size: 0.85rem;
-    color: var(--Black-Text-Color);
+.cardActions {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.uc-times p {
-    margin: 5px 0;
-}
-
-.uc--body {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.uc-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
-
-.uc-info p {
-    margin-bottom: 0;
-}
-
-.uc-btn {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    margin-top: 16px;
-}
-
-.edit-btn,
-.view-btn {
-    padding: 8px 16px;
+.action-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-left: 8px;
+    font-size: 14px;
     border: none;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    background-color: var(--Secondary-Color);
-    color: var(--White-Text-Color);
+    border-radius: 4px;
     text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
+
+.view-btn,
+.edit-btn,
+.app-btn {
+    font-size: 16px;
+    color: var(--Black-Text-Color);
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.view-btn:hover,
+.edit-btn:hover,
+.app-btn:hover {
+    font-size: 16px;
+    color: var(--Secondary-Color);
+    text-decoration: underline;
+}
+
+button.action-btn {
+    all: unset;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 
 @media screen and (max-width: 1024px) {
     .Cards {

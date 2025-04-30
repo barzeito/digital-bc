@@ -110,3 +110,30 @@
     text-align: left;
     width: 180px;
 }
+
+@media (max-width: 768px) {
+    .cards-options {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .newCard-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+        margin-bottom: 10px;
+    }
+
+    .DisplayCards {
+        padding: 16px;
+    }
+
+    .cards-table {
+        font-size: 16px;
+        min-width: 650px;
+    }
+
+    .cards-table th,
+    .cards-table td {
+        padding: 8px;
+    }
+}

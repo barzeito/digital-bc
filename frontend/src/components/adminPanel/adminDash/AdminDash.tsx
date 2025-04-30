@@ -82,7 +82,7 @@ function AdminPanel(): JSX.Element {
                         <p>🛠️ בקרוב: לוח ניתוחים וסטטיסטיקות שימוש.</p>
                     </section>
                 </div>
-                </DashboardLayout>
+            </DashboardLayout>
         </div>
     );
 }

@@ -6,6 +6,7 @@ import notify from "../../../services/popupMessage";
 import AppointmentsModel from "../../../models/appointmentsModel";
 import "./AppointmentsForm.css";
 import UserMenu from "../userMenu/UserMenu";
+import DashboardLayout from "../../adminPanel/dashboardLayout/DashboardLayout";
 
 const daysMap: Record<string, string> = {
     sunday: "ראשון",
@@ -118,83 +119,84 @@ function AppointmentForm(): JSX.Element {
 
     return (
         <div className="AppointmentForm">
-            <UserMenu />
-            <div className="appFromActions">
-                <div className="actionsTitle">
-                    <h2>פעולות</h2>
+            <DashboardLayout>
+                <div className="appFromActions">
+                    <div className="actionsTitle">
+                        <h2>פעולות</h2>
+                    </div>
+                    <div className="optionsButtons">
+                        <NavLink to={`/panel/user/appointments/list/${uId}/${companyId}`} className="activeApps">תורים פעילים</NavLink>
+                        <button onClick={toggleAvailability} className={`availability-btn ${isAvailable ? 'available' : 'unavailable'}`}>
+                            {isAvailable ? "כבה זמינות" : "הפעל זמינות"}
+                        </button>
+                    </div>
                 </div>
-                <div className="optionsButtons">
-                    <NavLink to={`/panel/user/appointments/list/${uId}/${companyId}`} className="activeApps">תורים פעילים</NavLink>
-                    <button onClick={toggleAvailability} className={`availability-btn ${isAvailable ? 'available' : 'unavailable'}`}>
-                        {isAvailable ? "כבה זמינות" : "הפעל זמינות"}
-                    </button>
-                </div>
-            </div>
 
-            <div className="appOptions">
-                <h2>הגדרת זמני הזמינות</h2>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <input type="hidden" {...register("company_id")} value={companyId} />
-                    <input type="hidden" {...register("company")} />
-                    <h3>שעות פעילות</h3>
-                    {Object.entries(daysMap).map(([dayKey, hebrewDay]) => (
-                        <div key={dayKey} className="day-row">
-                            <label>{hebrewDay}</label>
-                            <div className="time-range">
-                                <span>פתיחה: </span>
-                                <input
-                                    type="time"
-                                    value={daysSchedule[dayKey]?.start || ""}
-                                    onChange={(e) =>
-                                        setDaysSchedule((prev) => ({
-                                            ...prev,
-                                            [dayKey]: {
-                                                ...prev[dayKey],
-                                                start: e.target.value,
-                                            },
-                                        }))
-                                    }
-                                />
-                                <span> סגירה: </span>
-                                <input
-                                    type="time"
-                                    value={daysSchedule[dayKey]?.end || ""}
-                                    onChange={(e) =>
-                                        setDaysSchedule((prev) => ({
-                                            ...prev,
-                                            [dayKey]: {
-                                                ...prev[dayKey],
-                                                end: e.target.value,
-                                            },
-                                        }))
-                                    }
-                                />
+                <div className="appOptions">
+                    <h2>הגדרת זמני הזמינות</h2>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <input type="hidden" {...register("company_id")} value={companyId} />
+                        <input type="hidden" {...register("company")} />
+                        <h3>שעות פעילות</h3>
+                        {Object.entries(daysMap).map(([dayKey, hebrewDay]) => (
+                            <div key={dayKey} className="day-row">
+                                <label>{hebrewDay}</label>
+                                <div className="time-range">
+                                    <span>פתיחה: </span>
+                                    <input
+                                        type="time"
+                                        value={daysSchedule[dayKey]?.start || ""}
+                                        onChange={(e) =>
+                                            setDaysSchedule((prev) => ({
+                                                ...prev,
+                                                [dayKey]: {
+                                                    ...prev[dayKey],
+                                                    start: e.target.value,
+                                                },
+                                            }))
+                                        }
+                                    />
+                                    <span> סגירה: </span>
+                                    <input
+                                        type="time"
+                                        value={daysSchedule[dayKey]?.end || ""}
+                                        onChange={(e) =>
+                                            setDaysSchedule((prev) => ({
+                                                ...prev,
+                                                [dayKey]: {
+                                                    ...prev[dayKey],
+                                                    end: e.target.value,
+                                                },
+                                            }))
+                                        }
+                                    />
+                                </div>
                             </div>
+                        ))}
+
+                        <div className="form-group">
+                            <label>משך כל פגישה: </label>
+                            <select
+                                {...register("slot_interval", { required: "שדה חובה!" })}
+                                defaultValue=""
+                            >
+                                <option value="">בחר משך פגישה</option>
+                                {[5, 10, 15, 20, 25, 30, 45, 60].map((v) => (
+                                    <option key={v} value={v}>
+                                        {v} דקות
+                                    </option>
+                                ))}
+                            </select>
+                            <span className="error">{formState.errors.slot_interval?.message}</span>
                         </div>
-                    ))}
 
-                    <div className="form-group">
-                        <label>משך כל פגישה: </label>
-                        <select
-                            {...register("slot_interval", { required: "שדה חובה!" })}
-                            defaultValue=""
-                        >
-                            <option value="">בחר משך פגישה</option>
-                            {[5, 10, 15, 20, 25, 30, 45, 60].map((v) => (
-                                <option key={v} value={v}>
-                                    {v} דקות
-                                </option>
-                            ))}
-                        </select>
-                        <span className="error">{formState.errors.slot_interval?.message}</span>
-                    </div>
-
-                    <div className="buttons">
-                        <button className="submit-btn">שמירה</button>
-                        <NavLink to={`/panel/user/${uId}`} className="cancel-btn">ביטול</NavLink>
-                    </div>
-                </form>
-            </div>
+                        <div className="buttons">
+                            <button className="submit-btn">שמירה</button>
+                            <NavLink to={`/panel/user/${uId}`} className="cancel-btn">ביטול</NavLink>
+                        </div>
+                    </form>
+                </div>
+            </DashboardLayout>
         </div>
     );
 }

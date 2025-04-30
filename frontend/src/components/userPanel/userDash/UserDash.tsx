@@ -8,6 +8,7 @@ import { CardsStore } from "../../../redux/cardState";
 import UserCards from "../userCards/UserCards";
 import { useCurrentUser } from "../../../utils/useCurrentUser";
 import SideBarMenu from "../../menu/sideBarMenu/SideBarMenu";
+import DashboardLayout from "../../adminPanel/dashboardLayout/DashboardLayout";
 
 function UserDash(): JSX.Element {
 
@@ -33,16 +34,35 @@ function UserDash(): JSX.Element {
 
     return (
         <div className="UserDash">
-            <SideBarMenu />
-            <div className="DisplayCards">
-                {userCards.length === 0 && (
-                    <div className="NoCardsMessage">
-                        <p>לא נמצאו כרטיסים המשויכים למשתמש שלך.</p>
-                        <p>במידה ומדובר בטעות, אנא צור קשר עם צוות התמיכה.</p>
-                    </div>
-                )}
-                {userCards.map(uc => <UserCards key={uc.id} card={uc} />)}
-            </div>
+            <DashboardLayout>
+                <div>
+                    <h2>הכרטיסים שלי</h2>
+                    <p>ניהול הכרטיסים שברשותך</p>
+                </div>
+                <div className="DisplayCards">
+                    {userCards.length === 0 && (
+                        <div className="NoCardsMessage">
+                            <p>לא נמצאו כרטיסים המשויכים למשתמש שלך.</p>
+                            <p>במידה ומדובר בטעות, אנא צור קשר עם צוות התמיכה.</p>
+                        </div>
+                    )}
+                    <table className="cards-table">
+                        <thead>
+                            <tr>
+                                <th>שם חברה</th>
+                                <th>נוצר בתאריך</th>
+                                <th>עדכון אחרון</th>
+                                <th>אימייל</th>
+                                <th>טלפון</th>
+                                <th>פעולות</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {userCards.map(uc => <UserCards key={uc.id} card={uc} />)}
+                        </tbody>
+                    </table>
+                </div>
+            </DashboardLayout>
         </div>
     );
 }

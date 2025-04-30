@@ -3,7 +3,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 5px 20px;
-    direction: rtl; 
+    direction: rtl;
+    position: relative;
 }
 
 .companyLogo {
@@ -35,7 +36,7 @@
 .menuItems {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     font-size: 18px;
 }
 
@@ -65,4 +66,97 @@
 .UserLogin:hover {
     color: var(--Secondary-Color);
     text-decoration: underline;
+}
+
+.NavLogged {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.mobileMenuToggle {
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 100;
+}
+
+/* Contact link underline */
+.navigationItems a[href="#home-contact-form-section"] {
+    border-bottom: 2px solid var(--Secondary-Color);
+    padding-bottom: 2px;
+}
+
+.mobileUserMenu {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .AuthMenu {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .companyLogo {
+        font-size: 20px;
+        flex: 1;
+    }
+
+    .mobileMenuToggle {
+        display: block;
+    }
+
+    .navigationItems {
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        transition: height 0.3s ease;
+        order: 3; 
+    }
+
+    .navigationItems.open {
+        height: auto;
+    }
+
+    .navigationItems ul {
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    .menuItems {
+        display: none;
+    }
+    
+    .mobileUserMenu {
+        display: block;
+        margin-top: 20px;
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+    }
+    
+    .mobileUserMenu .userItem {
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+    
+    .NavLogged {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .companyLogo {
+        font-size: 18px;
+    }
+    
+    .menuItems .userItem {
+        font-size: 16px;
+    }
+    
+    .navigationItems a {
+        font-size: 18px;
+    }
 }

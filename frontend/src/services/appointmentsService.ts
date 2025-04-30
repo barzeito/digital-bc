@@ -54,11 +54,9 @@ class AppointmentsService {
             const appointmentToSend = {
                 ...app,
                 days_schedule: JSON.stringify(app.days_schedule),
-                // booked_appointments: JSON.stringify(app.booked_appointments)
             };
 
             const response = await axios.patch<AppointmentsModel>(`${appConfig.appointmentsUrl}/${app.company_id}`, appointmentToSend);
-            console.log("Response: ", response.data)
             return response.data;
         } catch (error) {
             throw error;

@@ -1,20 +1,19 @@
 .AdminDash {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    padding: 20px;
+    min-height: 100vh;
     background-color: #f9f9f9;
-    display: flex;
-    flex-direction: column;
     font-family: "Assistant", sans-serif;
+    overflow: hidden;
 }
 
 .dashboard-content {
-    padding: 40px;
+    padding: 40px 20px;
     flex-grow: 1;
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 30px auto 0 auto;
+    box-sizing: border-box;
 }
 
 .welcome {
@@ -25,6 +24,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin-bottom: 30px;
+    animation: fadeIn 1s ease-out;
 }
 
 .welcome h1 {
@@ -41,7 +41,7 @@
 
 .system-status {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     margin-bottom: 40px;
 }
@@ -59,6 +59,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    animation: fadeIn 1s ease-out;
 }
 
 .status-card:hover {
@@ -83,6 +84,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
 }
 
 .quick-links h2 {
@@ -106,6 +108,7 @@
     max-width: 250px;
     text-align: center;
     margin: 0 auto;
+    animation: fadeIn 1s ease-out;
 }
 
 .link-card button:hover {
@@ -124,6 +127,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin-top: 30px;
+    animation: fadeIn 1s ease-out;
 }
 
 .system-info h2 {
@@ -149,40 +153,41 @@
     }
 }
 
-.welcome,
-.status-card,
-.link-card button {
-    animation: fadeIn 1s ease-out;
-}
-
+/* רספונסיביות למסכים בינוניים וקטנים */
 @media (max-width: 768px) {
-    .system-status {
-        grid-template-columns: 1fr;
-    }
-
     .quick-links h2 {
         font-size: 1.4rem;
-    }
-
-    .link-card button {
-        width: 100%;
     }
 
     .system-info {
         padding: 20px;
     }
+
+    .link-card button {
+        width: 100%;
+        max-width: none;
+    }
 }
 
+/* רספונסיביות למסכים קטנים מאוד */
+@media (max-width: 480px) {
+    .welcome h1 {
+        font-size: 1.6rem;
+    }
 
-.AdminDash {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-}
+    .welcome p,
+    .status-card p,
+    .system-info p {
+        font-size: 1rem;
+    }
 
-.dashboard-content {
-    flex-grow: 1;
-    width: 100%;
-    padding: 40px;
-    margin-top: 30px;
+    .status-card h3,
+    .system-info h2,
+    .quick-links h2 {
+        font-size: 1.3rem;
+    }
+
+    .dashboard-content {
+        padding: 30px 15px;
+    }
 }

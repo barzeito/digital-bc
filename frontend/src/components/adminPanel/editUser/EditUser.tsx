@@ -50,81 +50,81 @@ function EditUser(): JSX.Element {
     return (
         <div className="EditUser">
             <DashboardLayout>
-            <h2>עריכת משתמש</h2>
-            <form onSubmit={handleSubmit(submitUserUpdate)}>
-                <div className="edit-row">
-                    <div className="edit-group">
-                        <label>שם פרטי:</label>
-                        <input
-                            type="text"
-                            {...register('firstName', {
-                                required: { value: true, message: "שדה חובה!" },
-                                minLength: { value: 2, message: "מינימום 2 תווים." }
-                            })}
-                        />
-                        <span className="error">{formState.errors.firstName?.message}</span>
+                <h2>עריכת משתמש</h2>
+                <form onSubmit={handleSubmit(submitUserUpdate)}>
+                    <div className="edit-row">
+                        <div className="edit-group">
+                            <label>שם פרטי:</label>
+                            <input
+                                type="text"
+                                {...register('firstName', {
+                                    required: { value: true, message: "שדה חובה!" },
+                                    minLength: { value: 2, message: "מינימום 2 תווים." }
+                                })}
+                            />
+                            <span className="error">{formState.errors.firstName?.message}</span>
+                        </div>
+
+                        <div className="edit-group">
+                            <label>שם משפחה:</label>
+                            <input
+                                type="text"
+                                {...register('lastName', {
+                                    required: { value: true, message: "שדה חובה!" },
+                                    minLength: { value: 2, message: "מינימום 2 תווים." }
+                                })}
+                            />
+                            <span className="error">{formState.errors.lastName?.message}</span>
+                        </div>
                     </div>
 
-                    <div className="edit-group">
-                        <label>שם משפחה:</label>
-                        <input
-                            type="text"
-                            {...register('lastName', {
-                                required: { value: true, message: "שדה חובה!" },
-                                minLength: { value: 2, message: "מינימום 2 תווים." }
-                            })}
-                        />
-                        <span className="error">{formState.errors.lastName?.message}</span>
+                    <div className="edit-row">
+                        <div className="edit-group">
+                            <label>אימייל:</label>
+                            <input
+                                type="text"
+                                {...register('email', {
+                                    required: { value: true, message: "שדה חובה!" },
+                                    pattern: {
+                                        value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                        message: "אימייל אינו תקין."
+                                    }
+                                })}
+                            />
+                            <span className="error">{formState.errors.email?.message}</span>
+                        </div>
+
+                        <div className="edit-group">
+                            <label>סיסמה:</label>
+                            <input
+                                type="password"
+                                {...register('password')}
+                            />
+                            <span className="error">{formState.errors.password?.message}</span>
+                        </div>
+
+                        <div className="edit-group">
+                            <label>תפקיד:</label>
+                            <select
+                                {...register('roleId', {
+                                    required: { value: true, message: "שדה חובה!" }
+                                })}
+                            >
+                                <option value="">בחר תפקיד</option>
+                                <option value="1">משתמש</option>
+                                <option value="3">פרימיום</option>
+                                <option value="2">אדמין</option>
+
+                            </select>
+                            <span className="error">{formState.errors.roleId?.message}</span>
+                        </div>
                     </div>
-                </div>
 
-                <div className="edit-row">
-                    <div className="edit-group">
-                        <label>אימייל:</label>
-                        <input
-                            type="text"
-                            {...register('email', {
-                                required: { value: true, message: "שדה חובה!" },
-                                pattern: {
-                                    value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                                    message: "אימייל אינו תקין."
-                                }
-                            })}
-                        />
-                        <span className="error">{formState.errors.email?.message}</span>
+                    <div className="editUser-buttons">
+                        <button className="submit-btn">שמירה</button>
+                        <button type="button" className="cancel-btn" onClick={() => navigate("/panel/admin/users")}>ביטול</button>
                     </div>
-
-                    <div className="edit-group">
-                        <label>סיסמה:</label>
-                        <input
-                            type="password"
-                            {...register('password')}
-                        />
-                        <span className="error">{formState.errors.password?.message}</span>
-                    </div>
-
-                    <div className="edit-group">
-                        <label>תפקיד:</label>
-                        <select
-                            {...register('roleId', {
-                                required: { value: true, message: "שדה חובה!" }
-                            })}
-                        >
-                            <option value="">בחר תפקיד</option>
-                            <option value="1">משתמש</option>
-                            <option value="3">פרימיום</option>
-                            <option value="2">אדמין</option>
-
-                        </select>
-                        <span className="error">{formState.errors.roleId?.message}</span>
-                    </div>
-                </div>
-
-                <div className="editUser-buttons">
-                    <button className="submit-btn">שמירה</button>
-                    <button type="button" className="cancel-btn" onClick={() => navigate("/panel/admin/users")}>ביטול</button>
-                </div>
-            </form>
+                </form>
             </DashboardLayout>
 
         </div>

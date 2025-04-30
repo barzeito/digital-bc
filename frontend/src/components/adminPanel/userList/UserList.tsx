@@ -31,19 +31,22 @@ function UserList(): JSX.Element {
                     <p>ניהול משתמשים וגישות</p>
                 </div>
                 <div className="DisplayUsers">
-                    <table className="users-table">
-                        <thead>
-                            <tr>
-                                <th>שם מלא</th>
-                                <th>אימייל</th>
-                                <th>דרגה</th>
-                                <th>פעולות</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users.map(u => <Users key={u.userId} user={u} />)}
-                        </tbody>
-                    </table>
+                    <div className="table-container">
+
+                        <table className="users-table">
+                            <thead>
+                                <tr>
+                                    <th>שם מלא</th>
+                                    <th>אימייל</th>
+                                    <th>דרגה</th>
+                                    <th>פעולות</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map(u => <Users key={u.userId} user={u} />)}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </DashboardLayout>
         </div>

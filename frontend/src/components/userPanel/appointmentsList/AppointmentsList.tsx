@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import appointmentsService from "../../../services/appointmentsService";
 import notify from "../../../services/popupMessage";
 import formatDate from "../../../utils/formateDate";
+import DashboardLayout from "../../adminPanel/dashboardLayout/DashboardLayout";
 
 function AppointmentList(): JSX.Element {
     const params = useParams();
@@ -46,38 +47,39 @@ function AppointmentList(): JSX.Element {
 
     return (
         <div className="AppointmentList">
-            <UserMenu />
-            <h2>תורים שנקבעו</h2>
-            <ul>
-                {appointments.map((app) => (
-                    <li key={app.id}>
-                        <strong>שם: {app.name}</strong>
-                        <div>מספר טלפון: {app.phone}</div>
-                        <div>בתאריך: {app.date && formatDate(app.date)}</div>
-                        <div>בשעה: {app.time}</div>
-                        {app.message && <div>הערה: {app.message}</div>}
-                        <div className="app-btns">
-                            <button className="submit-btn">ערוך תור</button>
-                            <button className="cancel-btn" onClick={() => setSelectedAppointmentId(app.id)}>מחק תור</button>
-                        </div>
+            <DashboardLayout>
+                <h2>תורים שנקבעו</h2>
+                <ul>
+                    {appointments.map((app) => (
+                        <li key={app.id}>
+                            <strong>שם: {app.name}</strong>
+                            <div>מספר טלפון: {app.phone}</div>
+                            <div>בתאריך: {app.date && formatDate(app.date)}</div>
+                            <div>בשעה: {app.time}</div>
+                            {app.message && <div>הערה: {app.message}</div>}
+                            <div className="app-btns">
+                                <button className="submit-btn">ערוך תור</button>
+                                <button className="cancel-btn" onClick={() => setSelectedAppointmentId(app.id)}>מחק תור</button>
+                            </div>
 
-                        {selectedAppointmentId === app.id && (
-                            <div className="PopUpContainer">
-                                <div className="DeleteContainer">
-                                    <div className="Delete-PopUp">
-                                        <span>מוחק את התור</span>
-                                        <p>האם אתה בטוח שברצונך למחוק את התור?</p>
-                                        <div className="delete-buttons">
-                                            <button onClick={() => deleteAppointment(app.id)} className="submit-btn">מחיקה</button>
-                                            <button className="cancel-btn" onClick={() => setSelectedAppointmentId(null)}>ביטול</button>
+                            {selectedAppointmentId === app.id && (
+                                <div className="PopUpContainer">
+                                    <div className="DeleteContainer">
+                                        <div className="Delete-PopUp">
+                                            <span>מוחק את התור</span>
+                                            <p>האם אתה בטוח שברצונך למחוק את התור?</p>
+                                            <div className="delete-buttons">
+                                                <button onClick={() => deleteAppointment(app.id)} className="submit-btn">מחיקה</button>
+                                                <button className="cancel-btn" onClick={() => setSelectedAppointmentId(null)}>ביטול</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        )}
-                    </li>
-                ))}
-            </ul>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </DashboardLayout>
         </div>
     );
 }

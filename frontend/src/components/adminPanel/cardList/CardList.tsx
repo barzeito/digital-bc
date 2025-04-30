@@ -22,7 +22,7 @@ function CardList(): JSX.Element {
             setCards([...CardsStore.getState().cards])
         })
         return unsubscribe;
-    }, [navigate]);
+    });
 
     return (
         <div className="CardList">

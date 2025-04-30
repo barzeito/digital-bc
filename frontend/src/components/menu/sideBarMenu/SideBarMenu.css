@@ -2,12 +2,15 @@
     width: 260px;
     height: 100vh;
     background-color: #fff;
-    border-right: 1px solid #e5e7eb;
+    border-left: 1px solid #e5e7eb;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
     font-family: 'Assistant', sans-serif;
+    transition: all 0.3s ease;
+    position: relative;
+    direction: rtl;
 }
 
 .companyLogo {
@@ -41,6 +44,7 @@
     text-decoration: none;
     color: #374151;
     transition: background-color 0.2s ease;
+    text-align: right;
 }
 
 .NavCard:hover {
@@ -49,7 +53,7 @@
 
 .NavCard:hover .NavText,
 .NavCard:hover .NavIcon {
-    color: var(--White-Text-Color);
+    color: var(--Black-Text-Color);
 }
 
 .NavCard.active {
@@ -76,6 +80,8 @@
     gap: 10px;
     border-top: 1px solid #e5e7eb;
     padding-top: 15px;
+    flex-direction: row-reverse;
+    text-align: right;
 }
 
 .UserCircle {
@@ -89,20 +95,117 @@
     align-items: center;
     justify-content: center;
     font-size: 14px;
+    flex-shrink: 0;
 }
 
 .UserInfo {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .UserName {
     font-size: 14px;
     font-weight: 600;
     color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .UserEmail {
     font-size: 12px;
     color: #6b7280;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Toggle button for mobile */
+.SidebarToggle {
+    display: none;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background-color: var(--Secondary-Color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+    .SidebarMenu {
+        position: fixed;
+        right: -280px;
+        z-index: 999;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .SidebarMenu.open {
+        right: 0;
+    }
+
+    .SidebarToggle {
+        display: flex;
+    }
+
+    /* When sidebar is open, add overlay */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+}
+
+/* Tablet styles */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .SidebarMenu {
+        width: 220px;
+        padding: 15px;
+    }
+
+    .companyLogo {
+        font-size: 18px;
+    }
+
+    .NavText {
+        font-size: 14px;
+    }
+}
+
+/* Small screens and portrait mode adjustments */
+@media screen and (max-height: 600px) {
+    .SidebarMenu {
+        padding: 10px;
+    }
+
+    .MenuSection {
+        margin-bottom: 10px;
+    }
+
+    .NavCard {
+        padding: 8px;
+    }
+
+    .SectionTitle {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
 }

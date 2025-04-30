@@ -85,7 +85,7 @@ class Appointments implements Model {
                 SET     company_id = ?,
                         company = ?,
                         days_schedule = ?,
-                        slot_interval = ?,
+                        slot_interval = ?
                 WHERE   company_id = ?
             `, [company_id, company, days_schedule, slot_interval, company_id]);
         return this.getOneByCompanyId(company_id);
