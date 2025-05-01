@@ -114,6 +114,17 @@ class CardsService {
         return cards;
     }
 
+    public async getColors(id: string): Promise<CardModel | null> {
+        const response = await axios.get<CardModel>(appConfig.cardsUrl + `/colors/${id}`);
+        const cards = response.data;
+
+        const action: CardsAction = {
+            type: CardsActionType.setCard,
+            payload: cards
+        }
+        CardsStore.dispatch(action);
+        return cards;
+    }
 
 }
 

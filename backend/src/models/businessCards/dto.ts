@@ -17,4 +17,7 @@ export default interface DTO {
     created_at: string;
     updated_at: string;
     ownedBy: string;
+    themeColor: string;
+    textColor: string;
+    backgroundColor: string;
 }

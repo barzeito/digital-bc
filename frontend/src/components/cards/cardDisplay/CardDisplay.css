@@ -1,8 +1,8 @@
 .Card-Main {
-    background-color: #e9ecf3;
+    /* background-color: #e9ecf3; */
     color: var(--Black-Text-Color);
-    width: 80%;
-    max-width: 1200px;
+    width: 100%;
+    /* max-width: 1200px; */
     margin: 0 auto;
     padding: 20px;
 }
@@ -17,10 +17,9 @@
 
 .cd-CoverImage {
     width: 100%;
-    max-height: 300px;
+    max-height: 400px;
     display: block;
     border-radius: 8px;
-    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
 }
 
 .cd-ProfileImage {
@@ -64,9 +63,9 @@
     gap: 10px;
 }
 
-.cd-item img {
-    width: 32px;
-    height: 32px;
+.cd-item .social-icon {
+    width: 40px;
+    height: 40px;
 }
 
 .cd-item p {

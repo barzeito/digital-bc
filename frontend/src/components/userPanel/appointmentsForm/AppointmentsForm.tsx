@@ -5,7 +5,6 @@ import appointmentsService from "../../../services/appointmentsService";
 import notify from "../../../services/popupMessage";
 import AppointmentsModel from "../../../models/appointmentsModel";
 import "./AppointmentsForm.css";
-import UserMenu from "../userMenu/UserMenu";
 import DashboardLayout from "../../adminPanel/dashboardLayout/DashboardLayout";
 
 const daysMap: Record<string, string> = {

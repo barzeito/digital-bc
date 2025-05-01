@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import AdminMenu from "../AdminMenu/AdminMenu";
 import "./AdminDash.css";
 import CardModel from "../../../models/cardModel";
 import cardsService from "../../../services/cardsService";
@@ -8,7 +7,6 @@ import { CardsStore } from "../../../redux/cardState";
 import userModel from "../../../models/userModel";
 import authService from "../../../services/authService";
 import { authStore } from "../../../redux/authState";
-import SidebarMenu from "../../menu/sideBarMenu/SideBarMenu";
 import DashboardLayout from "../dashboardLayout/DashboardLayout";
 
 function AdminPanel(): JSX.Element {

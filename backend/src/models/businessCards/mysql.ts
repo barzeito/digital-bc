@@ -22,6 +22,9 @@ class BusinessCards implements Model {
                     bc.created_at,
                     bc.updated_at,
                     bc.ownedBy,
+                    bc.themeColor,
+                    bc.backgroundColor,
+                    bc.textColor,
                     u.firstName,
                     u.lastName
             FROM    business_cards bc
@@ -46,7 +49,10 @@ class BusinessCards implements Model {
                     address,
                     created_at,
                     updated_at,
-                    ownedBy
+                    ownedBy,
+                    themeColor,
+                    backgroundColor,
+                    textColor
             FROM    business_cards  
             WHERE   company = ?
         `, [company]))[0];
@@ -68,7 +74,10 @@ class BusinessCards implements Model {
                     address,
                     created_at,
                     updated_at,
-                    ownedBy
+                    ownedBy,
+                    themeColor,
+                    backgroundColor,
+                    textColor
             FROM    business_cards  
             WHERE   id = ?
         `, [id]))[0];
@@ -76,13 +85,13 @@ class BusinessCards implements Model {
     }
 
     public async add(card: DTO): Promise<DTO> {
-        const { company, coverImage, profileImage, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy } = card;
+        const { company, coverImage, profileImage, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy, themeColor, backgroundColor, textColor } = card;
         const id = v4();
         const socialId = v4()
         const addCard: OkPacketParams = await query(`
-            INSERT INTO business_cards(id, company, coverImage, profileImage, name, description,about, email, phone, website, address, created_at, updated_at, ownedBy)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?)
-            `, [id, company, coverImage, profileImage, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy || null]);
+            INSERT INTO business_cards(id, company, coverImage, profileImage, name, description,about, email, phone, website, address, created_at, updated_at, ownedBy, themeColor, backgroundColor, textColor )
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?)
+            `, [id, company, coverImage, profileImage, name, description, about, email, phone, website, address, created_at, updated_at, ownedBy || null, themeColor || '', backgroundColor || '', textColor || '']);
         await query(`
                 INSERT INTO social_links(id, company_id, company, facebook, instagram, linkedin, twitter, whatsapp, email, map, phone, tiktok)
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -99,7 +108,7 @@ class BusinessCards implements Model {
     }
 
     public async update(card: DTO): Promise<DTO> {
-        const { id, company, coverImage, profileImage, name, description, about, email, phone, website, address, ownedBy } = card;
+        const { id, company, coverImage, profileImage, name, description, about, email, phone, website, address, ownedBy, themeColor, backgroundColor, textColor } = card;
         const updated_at = new Date().toISOString().slice(0, 19).replace("T", " ");
         await query(`
                 UPDATE  business_cards
@@ -114,9 +123,12 @@ class BusinessCards implements Model {
                         website = ?,
                         address = ?,
                         updated_at = ?,
-                        ownedBy = ?
+                        ownedBy = ?,
+                        themeColor = ?,
+                        backgroundColor = ?,
+                        textColor = ?
                 WHERE   id = ?
-            `, [company, coverImage, profileImage, name, description, about, email, phone, website, address, updated_at, ownedBy || null, id]);
+            `, [company, coverImage, profileImage, name, description, about, email, phone, website, address, updated_at, ownedBy || null, themeColor, backgroundColor, textColor, id]);
         return this.getOneById(id);
     }
 
@@ -135,7 +147,10 @@ class BusinessCards implements Model {
                     address,
                     created_at,
                     updated_at,
-                    ownedBy
+                    ownedBy,
+                    themeColor,
+                    backgroundColor,
+                    textColor
             FROM    business_cards  
             WHERE   ownedBy = ?
         `, [id]));
@@ -157,6 +172,17 @@ class BusinessCards implements Model {
         `, [userId, updated_at, cardId]);
 
         return this.getOneById(cardId);
+    }
+
+    public async getColors(id: string): Promise<DTO> {
+        const card = (await query(`
+            SELECT  themeColor,
+                    backgroundColor,
+                    textColor
+            FROM    business_cards  
+            WHERE   id = ?
+        `, [id]))[0];
+        return card;
     }
 }
 

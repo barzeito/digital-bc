@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import CardModel from "../../../models/cardModel";
 import "./CardDisplay.css";
 import cardsService from "../../../services/cardsService";
-import notify from "../../../services/popupMessage"
 import { useNavigate, useParams } from "react-router-dom";
 import noImage from "../../../assets/images/image-not-found.jpeg"
-import facebookIcon from "../../../assets/socialMedia/facebook.png";
-import instagramIcon from "../../../assets/socialMedia/instagram.png";
-import linkedinIcon from "../../../assets/socialMedia/linkedin.png";
-import twitterIcon from "../../../assets/socialMedia/twitter.png";
-import whatsApp from "../../../assets/socialMedia/whatsapp.png";
-import email from "../../../assets/socialMedia/mail.png";
-import map from "../../../assets/socialMedia/map.png";
-import phone from "../../../assets/socialMedia/telephone.png";
-import tikTok from "../../../assets/socialMedia/tik-tok.png";
+import { ReactComponent as facebookIcon } from "../../../assets/socialMedia/icons8-facebook.svg";
+import { ReactComponent as instagramIcon } from "../../../assets/socialMedia/icons8-instagram.svg";
+import { ReactComponent as linkedinIcon } from "../../../assets/socialMedia/icons8-linkedin.svg";
+import { ReactComponent as twitterIcon } from "../../../assets/socialMedia/icons8-x.svg";
+import { ReactComponent as whatsApp } from "../../../assets/socialMedia/icons8-whatsapp.svg";
+// import email from "../../../assets/socialMedia/mail.png";
+// import map from "../../../assets/socialMedia/map.png";
+// import phone from "../../../assets/socialMedia/telephone.png";
+import { ReactComponent as tikTok } from "../../../assets/socialMedia/icons8-tiktok.svg";
 import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
 import AddToContactsButton from "../../../utils/addToContact";
@@ -29,17 +28,15 @@ function CardDisplay(): JSX.Element {
     const [appAvailable, setAppAvailable] = useState<boolean>(false);
     const [companyId, setCompanyId] = useState<string>();
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
+    const [colors, setColors] = useState({ backgroundColor: '', themeColor: '', textColor: '' });
 
-    const socialIcons: { [key: string]: string } = {
+    const socialIcons: { [key: string]: React.FC<React.SVGProps<SVGSVGElement>> } = {
         facebook: facebookIcon,
         instagram: instagramIcon,
         linkedin: linkedinIcon,
         twitter: twitterIcon,
         whatsapp: whatsApp,
-        email: email,
-        map: map,
-        phone: phone,
-        tiktok: tikTok
+        tikTok: tikTok,
     };
 
     const socialLabels: { [key: string]: string } = {
@@ -80,7 +77,7 @@ function CardDisplay(): JSX.Element {
                         navigate("/");
                     }
                 })
-                .catch(error => notify.error(error));
+                .catch(Error);
         }
     }, [company, navigate]);
 
@@ -98,9 +95,29 @@ function CardDisplay(): JSX.Element {
         fetchAvailability();
     }, [companyId]);
 
+    useEffect(() => {
+        if (companyId) {
+            cardsService.getColors(companyId).then((data) => {
+                if (data) {
+                    setColors({
+                        backgroundColor: data?.backgroundColor || '',
+                        themeColor: data?.themeColor || '',
+                        textColor: data?.textColor || ''
+                    });
+                } else {
+                    setColors({
+                        backgroundColor: '',
+                        themeColor: '',
+                        textColor: ''
+                    });
+                }
+            });
+        }
+    }, [companyId])
+
     return (
         <div className="CardDisplay">
-            <div className="Card-Main">
+            <div className="Card-Main" style={{ backgroundColor: `${colors.backgroundColor}`, color: `${colors.textColor}` }}>
                 <div className="cd-Header">
                     <img className="cd-CoverImage" src={card?.coverImageUrl ? card.coverImageUrl : noImage}
                         alt="Cover"
@@ -118,7 +135,7 @@ function CardDisplay(): JSX.Element {
                     />
                 </div>
                 <div className="cd-details">
-                    <h2 className="cd-CompanyName">{card?.company}</h2>
+                    <h2 className="cd-CompanyName">{card?.name}</h2>
                     <p className="cd-CompanyDesc">{card?.description}</p>
                 </div>
                 <div className="cd-body">
@@ -126,9 +143,12 @@ function CardDisplay(): JSX.Element {
                         <div className="cd-item">
                             {Object.keys(socialIcons).map((platform) => {
                                 if (!socialLinks[platform]) return null;
+
                                 const href = socialLinks[platform].startsWith("http")
                                     ? socialLinks[platform]
                                     : "https://" + socialLinks[platform];
+
+                                const IconComponent = socialIcons[platform];
 
                                 return (
                                     <a
@@ -138,7 +158,7 @@ function CardDisplay(): JSX.Element {
                                         rel="noopener noreferrer"
                                         className="social-item"
                                     >
-                                        <img src={socialIcons[platform]} alt={platform} />
+                                        <IconComponent className="social-icon" style={{ fill: `${colors.themeColor}` }} />
                                         <p>{socialLabels[platform]}</p>
                                     </a>
                                 );
@@ -156,15 +176,16 @@ function CardDisplay(): JSX.Element {
                     </div>
                 </div>
                 <div className="cd-About">
-                    <p>קצת עליי</p>
+                    <p style={{ color: `${colors.themeColor}` }}>קצת עליי</p>
                     <span>{card?.about}</span>
                 </div>
                 <div className="cardDisplay-info">
                 </div>
                 {appAvailable && card?.id && (
                     <ScheduleAppointment companyId={card.id} />
-                )}            </div>
-        </div>
+                )}
+            </div>
+        </div >
     );
 }
 

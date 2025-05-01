@@ -1,13 +1,11 @@
 import "./UserDash.css";
 import { useEffect, useState } from "react";
-import UserMenu from "../userMenu/UserMenu";
 import CardModel from "../../../models/cardModel";
 import cardsService from "../../../services/cardsService";
 import notify from "../../../services/popupMessage"
 import { CardsStore } from "../../../redux/cardState";
 import UserCards from "../userCards/UserCards";
 import { useCurrentUser } from "../../../utils/useCurrentUser";
-import SideBarMenu from "../../menu/sideBarMenu/SideBarMenu";
 import DashboardLayout from "../../adminPanel/dashboardLayout/DashboardLayout";
 
 function UserDash(): JSX.Element {

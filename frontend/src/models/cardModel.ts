@@ -17,6 +17,9 @@ export default class CardModel {
     created_at?: string;
     updated_at?: string;
     ownedBy?: string;
+    themeColor?: string;
+    backgroundColor?: string;
+    textColor?: string
     firstName?: string;
     lastName?: string;
     user?: UserModel;

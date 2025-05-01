@@ -4,7 +4,6 @@ import "./AddCard.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import cardsService from "../../../services/cardsService";
 import notify from "../../../services/popupMessage"
-import AdminMenu from "../AdminMenu/AdminMenu";
 import SignUpModel from "../../../models/signUpModel";
 import authService from "../../../services/authService";
 import { useState } from "react";

@@ -5,7 +5,6 @@ import userModel from "../../../models/userModel";
 import { useEffect } from "react";
 import authService from "../../../services/authService";
 import notify from "../../../services/popupMessage";
-import AdminMenu from "../AdminMenu/AdminMenu";
 import DashboardLayout from "../dashboardLayout/DashboardLayout";
 
 function EditUser(): JSX.Element {

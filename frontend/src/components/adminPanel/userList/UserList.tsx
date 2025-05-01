@@ -5,7 +5,6 @@ import Users from "../users/Users";
 import authService from "../../../services/authService";
 import notify from "../../../services/popupMessage";
 import { authStore } from "../../../redux/authState";
-import AdminMenu from "../AdminMenu/AdminMenu";
 import DashboardLayout from "../dashboardLayout/DashboardLayout";
 
 function UserList(): JSX.Element {

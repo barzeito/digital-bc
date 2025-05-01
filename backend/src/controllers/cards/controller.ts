@@ -125,3 +125,13 @@ export const assignCardOwner = async (req: Request, res: Response, next: NextFun
         next(err);
     }
 };
+
+export const getColors = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const colors = await getModel().getColors(req.params.id);
+        if (!colors) return next();
+        res.json(colors)
+    } catch (err) {
+        next(err)
+    }
+}

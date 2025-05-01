@@ -5,12 +5,12 @@ import cardsService from "../../../services/cardsService";
 import { useForm } from "react-hook-form";
 import CardModel from "../../../models/cardModel";
 import notify from "../../../services/popupMessage"
-import AdminMenu from "../AdminMenu/AdminMenu";
 import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
 import ImageWatched from "../../../utils/imageWatch"
 import Loader from "../../layout/loader/Loader";
 import DashboardLayout from "../dashboardLayout/DashboardLayout";
+import useCurrentUser from "../../../utils/useCurrentUser";
 
 function EditCard(): JSX.Element {
 
@@ -18,6 +18,11 @@ function EditCard(): JSX.Element {
     const cardId = String(params.id);
     const socialCompanyId = String(params.id);
     const navigate = useNavigate();
+
+    const user = useCurrentUser();
+    const isAdmin = user?.roleId === 2;
+
+    const uId = user?.userId;
 
     const [coverSrc, setCoverSrc] = useState<string>('');
     const [profileSrc, setProfileSrc] = useState<string>('');
@@ -40,6 +45,10 @@ function EditCard(): JSX.Element {
                 setValue('address', cardFromServer?.address);
                 setValue('phone', cardFromServer?.phone);
                 setValue('website', cardFromServer?.website);
+                setValue('themeColor', cardFromServer?.themeColor);
+                setValue('backgroundColor', cardFromServer?.backgroundColor);
+                setValue('textColor', cardFromServer?.textColor);
+
             })
             .catch(error => notify.error(error))
     }, [cardId, setValue]);
@@ -56,18 +65,6 @@ function EditCard(): JSX.Element {
             setLoading(true);
             card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || null;
             card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || null;
-
-            card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || null;
-            card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || null;
-
-            // If images were deleted, set their value to null
-            if (card.coverImageFile === null) {
-                card.coverImageUrl = undefined; // Clear cover image URL if the cover image was deleted
-            }
-            if (card.profileImageFile === null) {
-                card.profileImageUrl = undefined; // Clear profile image URL if the profile image was deleted
-            }
-
 
             card.id = cardId;
             await cardsService.editCard(card);
@@ -170,20 +167,43 @@ function EditCard(): JSX.Element {
                         </div>
                     </div>
                     <div className="edit-row">
+
+                        <div className="edit-group">
+                            <label>צבע נושא:</label>
+                            <input type="color" {...register('themeColor')} defaultValue="#2C2D33" />
+                            <span className="error">{formState.errors.themeColor?.message}</span>
+                        </div>
+
+                        <div className="edit-group">
+                            <label>צבע רקע:</label>
+                            <input type="color" {...register('backgroundColor')} defaultValue="#e9ecf3" />
+                            <span className="error">{formState.errors.backgroundColor?.message}</span>
+                        </div>
+
+                        <div className="edit-group">
+                            <label>צבע טקסט:</label>
+                            <select {...register('textColor')}>
+                                <option value="#2C2D33">שחור</option>
+                                <option value="#F4F5F6">לבן</option>
+                            </select>
+                            <span className="error">{formState.errors.textColor?.message}</span>
+                        </div>
+                    </div>
+                    <div className="edit-row">
                         <div className="pc-images">
                             <div className="edit-group">
                                 <label>תמונת קאבר:</label>
                                 <input type="file" accept="image/*" {...register('coverImageFile', {
                                 })} /><span>{formState.errors.coverImageFile?.message}</span>
 
-                                <ImageWatched control={control} name="coverImageFile" defaultSrc={coverSrc} setValue={setValue} />
+                                <ImageWatched control={control} name="coverImageFile" defaultSrc={coverSrc} />
                             </div>
                             <div className="edit-group">
                                 <label>תמונת פרופיל:</label>
                                 <input type="file" accept="image/*" {...register('profileImageFile', {
                                 })} /><span>{formState.errors.profileImageFile?.message}</span>
 
-                                <ImageWatched control={control} name="profileImageFile" defaultSrc={profileSrc} setValue={setValue} />
+                                <ImageWatched control={control} name="profileImageFile" defaultSrc={profileSrc} />
                             </div>
                         </div>
                     </div>
@@ -225,8 +245,17 @@ function EditCard(): JSX.Element {
                     <div className="edit-buttons">
                         {!loading ? (
                             <>
-                                <button className="submit-btn">שמירה</button>
-                                <NavLink to="/panel/admin/cards" className="cancel-btn">ביטול</NavLink>
+                                {isAdmin ? (
+                                    <>
+                                        <button className="submit-btn">שמירה</button>
+                                        <NavLink to="/panel/admin/cards" className="cancel-btn">ביטול</NavLink>
+                                    </>
+                                ) : (
+                                    <>
+                                        <NavLink to={`/panel/user/${uId}`} className="submit-btn">שמירה</NavLink>
+                                        <NavLink to={`/panel/user/${uId}`} className="cancel-btn">ביטול</NavLink>
+                                    </>
+                                )}
                             </>
                         ) : (
                             <Loader />
@@ -234,7 +263,7 @@ function EditCard(): JSX.Element {
                     </div>
                 </form>
             </DashboardLayout>
-        </div>
+        </div >
     );
 }
 

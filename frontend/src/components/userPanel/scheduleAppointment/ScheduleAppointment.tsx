@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ScheduleAppointment.css";
 import notify from "../../../services/popupMessage";
 import appointmentsService from "../../../services/appointmentsService";
 import { useForm } from "react-hook-form";
+import cardsService from "../../../services/cardsService";
 
 interface FormData {
     name: string;
@@ -14,6 +15,28 @@ interface FormData {
 }
 
 function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element {
+    const [colors, setColors] = useState({ backgroundColor: '', themeColor: '', textColor: '' });
+
+    useEffect(() => {
+        if (companyId) {
+            cardsService.getColors(companyId).then((data) => {
+                if (data) {
+                    setColors({
+                        backgroundColor: data?.backgroundColor || '',
+                        themeColor: data?.themeColor || '',
+                        textColor: data?.textColor || ''
+                    });
+                } else {
+                    setColors({
+                        backgroundColor: '',
+                        themeColor: '',
+                        textColor: ''
+                    });
+                }
+            });
+        }
+    }, [companyId])
+
     const [availableTimes, setAvailableTimes] = useState<string[]>([]);
 
     const { register, handleSubmit, reset } = useForm<FormData>();
@@ -93,33 +116,33 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
 
     return (
         <div className="ScheduleAppointment">
-            <p>הזמנת תור</p>
-            <form className="sa-form" onSubmit={handleSubmit(submitBookAppointment)}>
-                <label>שם</label>
+            <p style={{color:`${colors.themeColor}`}}>הזמנת תור</p>
+            <form className="sa-form" onSubmit={handleSubmit(submitBookAppointment)} style={{ backgroundColor: `${colors.backgroundColor}` }}>
+                <label style={{ color: `${colors.textColor}` }}>שם</label>
                 <input
                     type="text"
                     {...register("name", { required: true })}
                     placeholder="שם מלא"
                 />
-                <label>אימייל</label>
+                <label style={{ color: `${colors.textColor}` }}>אימייל</label>
                 <input
                     type="email"
                     {...register("email")}
                     placeholder="דואר אלקטרוני"
                 />
-                <label>טלפון</label>
+                <label style={{ color: `${colors.textColor}` }}>טלפון</label>
                 <input
                     type="tel"
                     {...register("phone", { required: true })}
                     placeholder="מספר טלפון"
                 />
-                <label>תאריך</label>
+                <label style={{ color: `${colors.textColor}` }}>תאריך</label>
                 <input
                     type="date"
                     {...register("date", { required: true })}
                     onChange={(e) => fetchAppointmentTimes(e.target.value)}
                 />
-                <label>שעה</label>
+                <label style={{ color: `${colors.textColor}` }}>שעה</label>
                 <select
                     {...register("time", { required: true })}
                 >
@@ -128,12 +151,12 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                         <option key={index} value={time}>{time}</option>
                     ))}
                 </select>
-                <label>הערות</label>
+                <label style={{ color: `${colors.textColor}` }}>הערות</label>
                 <textarea
                     {...register("message")}
                     placeholder="הזן הערות"
                 />
-                <button type="submit" className="submit-btn">הזמן תור</button>
+                <button type="submit" className="submit-btn" style={{ color: `${colors.themeColor}`,border:`1px solid ${colors.themeColor}`}}>הזמן תור</button>
             </form>
         </div>
     );

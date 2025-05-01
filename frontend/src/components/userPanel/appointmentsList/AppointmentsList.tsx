@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import "./AppointmentsList.css";
-import UserMenu from "../userMenu/UserMenu";
 import { Appointment } from "../../../models/appointmentsModel";
 import { useEffect, useState } from "react";
 import appointmentsService from "../../../services/appointmentsService";

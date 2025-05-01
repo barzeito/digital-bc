@@ -10,4 +10,5 @@ export default interface Model {
     deleteCard(id: string): Promise<boolean>;
     update(card: DTO): Promise<DTO>;
     getUserCards(id: string): Promise<DTO>;
+    getColors(id: string): Promise<DTO>;
 }

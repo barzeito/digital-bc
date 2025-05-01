@@ -10,7 +10,6 @@ import AdminRoute from "./ProtectedAdminRout";
 import EditCard from "../../adminPanel/editCard/EditCard";
 import AddCard from "../../adminPanel/addCard/AddCard";
 import UserDash from "../../userPanel/userDash/UserDash";
-import UserCardEdit from "../../userPanel/userCardEdit/UserCardEdit";
 import UserList from "../../adminPanel/userList/UserList";
 import EditUser from "../../adminPanel/editUser/EditUser";
 import AppointmentsForm from "../../userPanel/appointmentsForm/AppointmentsForm";
@@ -38,7 +37,7 @@ function Routing(): JSX.Element {
 
 
             <Route path="/panel/user/:id" element={<UserRoute element={<UserDash />} />} />
-            <Route path="/panel/user/edit-card/:userId/:id" element={<UserRoute element={<UserCardEdit />} />} />
+            <Route path="/panel/user/edit-card/:userId/:id" element={<UserRoute element={<EditCard />} />} />
             <Route path="/panel/user/appointments/edit/:userId/:id" element={<PremiumRoute element={<AppointmentsForm />} />} />
             <Route path="/panel/user/appointments/list/:userId/:id" element={<PremiumRoute element={<AppointmentList />} />} />
 
