@@ -24,9 +24,9 @@ function ImageWatched({ control, name, defaultSrc, setValue }: ImageWatchedProps
 
         // Also clear the URL field when deleting an image
         if (name === "coverImageFile") {
-            setValue?.("coverImageUrl", undefined);
+            setValue?.("coverImageUrl", null);
         } else if (name === "profileImageFile") {
-            setValue?.("profileImageUrl", undefined);
+            setValue?.("profileImageUrl", null);
         }
     };
 

@@ -82,7 +82,7 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
 
             setAvailableTimes(available);
         } catch (error) {
-            console.error(error);
+            console.error("Error loading available appointments: ", error);
             notify.error("אירעה שגיאה בטעינת הזמנים הפנויים");
         }
     };
@@ -110,13 +110,14 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
             notify.success("התור הוזמן בהצלחה!");
             reset();
         } catch (error) {
+            console.log("Error book appointment: ", error)
             notify.error("אירעה שגיאה בהזמנת התור");
         }
     };
 
     return (
         <div className="ScheduleAppointment">
-            <p style={{color:`${colors.themeColor}`}}>הזמנת תור</p>
+            <p style={{ color: `${colors.themeColor}` }}>הזמנת תור</p>
             <form className="sa-form" onSubmit={handleSubmit(submitBookAppointment)} style={{ backgroundColor: `${colors.backgroundColor}` }}>
                 <label style={{ color: `${colors.textColor}` }}>שם</label>
                 <input
@@ -156,7 +157,7 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                     {...register("message")}
                     placeholder="הזן הערות"
                 />
-                <button type="submit" className="submit-btn" style={{ color: `${colors.themeColor}`,border:`1px solid ${colors.themeColor}`}}>הזמן תור</button>
+                <button type="submit" className="submit-btn" style={{ color: `${colors.themeColor}`, border: `1px solid ${colors.themeColor}` }}>הזמן תור</button>
             </form>
         </div>
     );

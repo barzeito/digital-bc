@@ -60,13 +60,20 @@ function EditCard(): JSX.Element {
         }));
     };
 
+
     async function submitCardUpdate(card: CardModel) {
         try {
             setLoading(true);
             card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || null;
             card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || null;
-
+            if (card.coverImageFile === null) {
+                card.coverImageUrl = null;
+            }
+            if (card.profileImageFile === null) {
+                card.profileImageUrl = null;
+            }
             card.id = cardId;
+            console.log(card)
             await cardsService.editCard(card);
 
             const social = new SocialModel();
@@ -176,10 +183,12 @@ function EditCard(): JSX.Element {
 
                         <div className="edit-group">
                             <label>צבע רקע:</label>
-                            <input type="color" {...register('backgroundColor')} defaultValue="#e9ecf3" />
+                            <select {...register('backgroundColor')}>
+                                <option value="#424242">שחור</option>
+                                <option value="#F8F9FD">לבן</option>
+                            </select>
                             <span className="error">{formState.errors.backgroundColor?.message}</span>
                         </div>
-
                         <div className="edit-group">
                             <label>צבע טקסט:</label>
                             <select {...register('textColor')}>

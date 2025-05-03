@@ -3,10 +3,10 @@ import { UploadedFile } from "express-fileupload";
 export default interface DTO {
     id: string;
     company: string;
-    coverImage: string;
-    profileImage: string;
-    coverImageFile: UploadedFile;
-    profileImageFile: UploadedFile;
+    coverImage: string | null;
+    profileImage: string | null;
+    coverImageFile: UploadedFile | null;
+    profileImageFile: UploadedFile | null;
     name: string;
     description: string;
     about: string;

@@ -22,7 +22,7 @@ function EditUser(): JSX.Element {
                         setValue('firstName', userFromServer.firstName);
                         setValue('lastName', userFromServer.lastName);
                         setValue('email', userFromServer.email);
-                        setValue('password', userFromServer.password)
+                        // setValue('password', userFromServer.password)
                         setValue('roleId', userFromServer.roleId);
                     } else {
                         notify.error("User not found");
@@ -38,7 +38,16 @@ function EditUser(): JSX.Element {
     async function submitUserUpdate(user: userModel) {
         try {
             user.userId = userId;
+
+            // Remove the password property completely if empty
+            if (!user.password || user.password.trim() === "") {
+                delete user.password;
+            }
+
+            console.log("נשלח לשרת:", user); // לבדוק מה באמת נשלח
+
             await authService.editUser(user);
+            console.log(user);
             notify.success("המשתמש עודכן בהצלחה!");
             navigate("/panel/admin/users");
         } catch (err: any) {

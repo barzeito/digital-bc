@@ -40,6 +40,7 @@ function AppointmentForm(): JSX.Element {
             const message = status ? "הזמינות הופעלה בהצלחה" : "הזמינות בוטלה בהצלחה";
             notify.success(message);
         } catch (error) {
+            console.log("Error toggle appointments: ", error)
             notify.error("שגיאה בשינוי מצב התורים");
         }
     };
@@ -60,6 +61,7 @@ function AppointmentForm(): JSX.Element {
                     }
                 }
             } catch (error) {
+                console.log("Error fetch appointments data: ", error)
                 notify.error(".קבלת נתונים נכשלה, אנא נסה שוב מאוחר יותר");
             }
         };
@@ -74,7 +76,7 @@ function AppointmentForm(): JSX.Element {
                 const app = await appointmentsService.getAppAvailable(companyId);
                 setIsAvailable(app);
             } catch (error) {
-                console.log(error);
+                console.log("Error fetch available time: ", error);
             }
         };
 
@@ -112,7 +114,7 @@ function AppointmentForm(): JSX.Element {
         } catch (error: any) {
             const message = error.response?.data.message || error?.message ||
                 'שגיאה כללית בעת שמירת זמינות';
-            notify.error(message);
+            notify.error("Error updated available: ", error);
         }
     };
 

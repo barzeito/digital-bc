@@ -1,70 +1,93 @@
 .AddCard {
-    width: 100%;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
     direction: rtl;
-}
-
-.AddCard h2 {
+  }
+  
+  .AddCard h2 {
     text-align: center;
-    margin-top: 50px;
+    margin-bottom: 2rem;
+    font-size: 2rem;
     color: #333;
-}
-
-.AddCard form {
+  }
+  
+  form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-}
-
-.AddCard input[type="text"] {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 100%;
-    gap: 10px;
-}
-
-.AddCard .error {
-    color: #ff4040;
-    font-size: 12px;
-    margin-top: 4px;
-    display: block;
-}
-
-.add-row {
+    gap: 2rem;
+  }
+  
+  .add-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-.add-group {
-    flex: 1 1 calc(33.333% - 20px);
+    gap: 2rem;
+  }
+  
+  .add-group {
+    flex: 1;
     min-width: 250px;
     display: flex;
     flex-direction: column;
-}
-
-.checkbox-group {
+  }
+  
+  .add-group label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #444;
+  }
+  
+  .add-group input,
+  .add-group textarea {
+    padding: 0.7rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border 0.3s;
+  }
+  
+  .add-group input:focus,
+  .add-group textarea:focus {
+    border-color: var(--Secondary-Color);
+    outline: none;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+  }
+  
+  .checkbox-group {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.checkbox-group input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-}
-
-.user-fields {
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-    margin-top: 10px;
-}
-
-@media (max-width: 768px) {
-    .add-group {
-        flex: 1 1 100%;
+    gap: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .user-fields {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .add-row {
+      flex-direction: column;
     }
-}
+  }
+  

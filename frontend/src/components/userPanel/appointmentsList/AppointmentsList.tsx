@@ -21,7 +21,7 @@ function AppointmentList(): JSX.Element {
                 const apps = await appointmentsService.getAllByCompanyId(companyId);
                 setAppointments(apps);
             } catch (error) {
-                console.error("❌ שגיאה בטעינה:", error);
+                console.error("Error loading appointments: ", error);
                 notify.error("אירעה שגיאה בטעינת התורים");
             }
         };
@@ -35,6 +35,7 @@ function AppointmentList(): JSX.Element {
             notify.success("!התור נמחק בהצלחה");
             setAppointments((prev) => prev.filter(app => app.id !== id));
         } catch (error) {
+            console.log("Error deleting appointment: ", error)
             notify.error(".אירעה שגיאה בעת מחיקת התור, אנא נסה שוב");
         }
         setSelectedAppointmentId(null);

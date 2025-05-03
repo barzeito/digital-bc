@@ -1,91 +1,75 @@
 .EditUser {
-    width: 100%;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     direction: rtl;
 }
 
 .EditUser h2 {
     text-align: center;
-    margin-top: 50px;
-    color: #333;
+    font-size: 2rem;
+    margin-bottom: 2rem;
 }
 
-.EditUser form {
+form {
     display: flex;
     flex-direction: column;
-    margin: 50px auto;
-    gap: 15px;
-}
-
-.EditUser input[type="text"],
-.EditUser input[type="password"],
-.EditUser select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 100%;
-}
-
-.EditUser .error {
-    color: #ff4040;
-    font-size: 12px;
-    margin-top: 4px;
-    display: block;
+    gap: 2rem;
 }
 
 .edit-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 1.5rem;
     justify-content: space-between;
 }
 
 .edit-group {
-    flex: 1 1 calc(33.333% - 20px);
-    min-width: 250px;
+    flex: 1;
+    min-width: 240px;
     display: flex;
     flex-direction: column;
 }
 
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 15px 0;
+.edit-group label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
-.checkbox-group input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
+.edit-group input,
+.edit-group select {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
 }
 
-.user-fields {
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-    margin-top: 10px;
+.edit-group input:focus,
+.edit-group select:focus {
+    border-color: var(--Secondary-Color);
+    outline: none;
 }
 
-textarea {
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-    resize: none;
-    line-height: 1.5;
-    width: 100%;
-    height: 150px;
-}
-
-.edit-social {
-    width: 20%;
-}
-
-@media (max-width: 768px) {
-    .edit-group {
-        flex: 1 1 100%;
-    }
+.edit-group .error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.3rem;
 }
 
 .editUser-buttons {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .edit-row {
+        flex-direction: column;
+    }
+
+    .editUser-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }

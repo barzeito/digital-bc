@@ -153,7 +153,12 @@ export const patchUser = async (req: Request, res: Response, next: NextFunction)
         const existingUser = await getModel().getOne(id);
         if (!existingUser) {
             return res.status(StatusCodes.NOT_FOUND).json({ message: `User with ID ${id} not found` });
-        } const updatedUser = { ...existingUser, ...req.body };
+        }
+        if (!req.body.password || req.body.password.trim() === "") {
+            delete req.body.password;
+            delete existingUser.password;
+        }
+        const updatedUser = { ...existingUser, ...req.body };
         const user = await getModel().updateUser(updatedUser);
         res.status(StatusCodes.OK).json(user)
     } catch (err) {

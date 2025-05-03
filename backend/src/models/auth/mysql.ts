@@ -75,15 +75,27 @@ class Auth implements Model {
 
     public async updateUser(user: userDTO): Promise<userDTO> {
         const { userId, firstName, lastName, roleId, email, password } = user;
-        const results = await query(`
-                UPDATE  users
-                SET     firstName = ?,
-                        lastName = ?,
-                        email = ?,
-                        password = ?,
-                        roleId = ?
-                WHERE   userId = ?
+        if (password !== undefined && password !== "") {
+            // update with password
+            await query(`
+                UPDATE users
+                SET firstName = ?,
+                    lastName = ?,
+                    email = ?,
+                    password = ?,
+                    roleId = ?
+                WHERE userId = ?
             `, [firstName, lastName, email, hashPassword(password, config.get<string>('app.secret')), roleId, userId]);
+        } else {
+            await query(`
+                UPDATE users
+                SET firstName = ?,
+                    lastName = ?,
+                    email = ?,
+                    roleId = ?
+                WHERE userId = ?
+            `, [firstName, lastName, email, roleId, userId]);
+        }
         return this.getOne(userId);
     }
 

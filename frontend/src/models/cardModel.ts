@@ -3,8 +3,8 @@ import UserModel from './userModel';
 export default class CardModel {
     id?: string;
     company?: string;
-    coverImageUrl?: string;
-    profileImageUrl?: string;
+    coverImageUrl?: string | null;
+    profileImageUrl?: string | null;
     coverImageFile?: File | null;
     profileImageFile?: File | null;
     name?: string;
