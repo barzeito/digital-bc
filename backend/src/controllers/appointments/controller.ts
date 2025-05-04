@@ -161,3 +161,15 @@ export const getAppAvailable = async (req: Request, res: Response, next: NextFun
         next(err)
     }
 }
+
+export const updateAppointment = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = Number(req.params.id);
+        const existingApp = await getModel().getOneAppointment(id);
+        const updatedApp = { ...existingApp, ...req.body };
+        const app = await getModel().updateAppointment(updatedApp);
+        res.status(StatusCodes.OK).json(app)
+    } catch (err) {
+        next(err)
+    }
+}

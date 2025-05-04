@@ -98,7 +98,7 @@ function Cards(props: cardsProps): JSX.Element {
                 <td className="cardActions">
                     <NavLink to={`/cards/${props.card.company}`} className="action-btn viewCard-btn">צפייה</NavLink>
                     <NavLink to={`/panel/admin/edit/${props.card.id}`} className="action-btn editCard-btn">עריכה</NavLink>
-                    <button className="action-btn deleteCard-btn" onClick={() => setShowDelete(true)}>מחיקה</button>
+                    <button className="deleteCard-btn" onClick={() => setShowDelete(true)}>מחיקה</button>
                 </td>
             </tr>
 

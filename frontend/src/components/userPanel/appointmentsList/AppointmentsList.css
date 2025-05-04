@@ -51,3 +51,73 @@
     margin: 0 auto;
     gap: 5px;
 }
+
+.PopUpContainer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.EditContainer {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    direction: rtl;
+    text-align: right;
+    font-family: "Heebo", sans-serif;
+}
+
+.edit-appointment-form h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.edit-appointment-form .form-group {
+    margin-bottom: 1.2rem;
+}
+
+.edit-appointment-form label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: #444;
+}
+
+.edit-appointment-form input,
+.edit-appointment-form textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.edit-appointment-form textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.edit-appointment-form .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}

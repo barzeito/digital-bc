@@ -225,6 +225,22 @@ class Appointments implements Model {
         return Boolean(result.affectedRows);
     }
 
+
+    public async updateAppointment(app: BookDTO): Promise<BookDTO> {
+        const { id, name, email, phone, date, time, message } = app;
+        await query(`
+                UPDATE  appointments
+                SET     name = ?,
+                        email = ?,
+                        phone = ?,
+                        date = ?,
+                        time = ?,
+                        message = ?
+                WHERE   id = ?
+            `, [name, email, phone, date, time, message, id]);
+        return this.getOneAppointment(id);
+    }
+
 }
 
 const appointments = new Appointments();

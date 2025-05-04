@@ -13,16 +13,18 @@ import DashboardLayout from "../dashboardLayout/DashboardLayout";
 import useCurrentUser from "../../../utils/useCurrentUser";
 
 function EditCard(): JSX.Element {
-
+    const user = useCurrentUser();
     const params = useParams();
-    const cardId = String(params.id);
+
+    const isAdmin = user?.roleId === 2;
+    const uId = user?.userId;
+
+    const { id, ownedBy } = useParams();
+    const cardId = String(id);
+    const userId = String(ownedBy);
+
     const socialCompanyId = String(params.id);
     const navigate = useNavigate();
-
-    const user = useCurrentUser();
-    const isAdmin = user?.roleId === 2;
-
-    const uId = user?.userId;
 
     const [coverSrc, setCoverSrc] = useState<string>('');
     const [profileSrc, setProfileSrc] = useState<string>('');
@@ -33,8 +35,11 @@ function EditCard(): JSX.Element {
 
 
     useEffect(() => {
+        console.log('EditCard component mounted');
+
         cardsService.getOne(cardId)
             .then(cardFromServer => {
+                console.log('Card data:', cardFromServer);
                 setValue('company', cardFromServer?.company);
                 setCoverSrc(cardFromServer?.coverImageUrl || '');
                 setProfileSrc(cardFromServer?.profileImageUrl || '');
@@ -48,10 +53,9 @@ function EditCard(): JSX.Element {
                 setValue('themeColor', cardFromServer?.themeColor);
                 setValue('backgroundColor', cardFromServer?.backgroundColor);
                 setValue('textColor', cardFromServer?.textColor);
-
             })
             .catch(error => notify.error(error))
-    }, [cardId, setValue]);
+    }, [cardId, userId, setValue]);
 
     const handleSocialLinkChange = (platform: string, value: string) => {
         setSocialLinks(prevLinks => ({
@@ -67,13 +71,14 @@ function EditCard(): JSX.Element {
             card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || null;
             card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || null;
             if (card.coverImageFile === null) {
+                card.coverImageFile = null
                 card.coverImageUrl = null;
             }
             if (card.profileImageFile === null) {
+                card.profileImageFile = null;
                 card.profileImageUrl = null;
             }
             card.id = cardId;
-            console.log(card)
             await cardsService.editCard(card);
 
             const social = new SocialModel();
@@ -84,7 +89,14 @@ function EditCard(): JSX.Element {
             }
 
             await socialService.editSocial(social);
-            navigate("/panel/admin/cards")
+            {
+                isAdmin ? (
+                    navigate("/panel/admin/cards")
+                ) : (
+                    navigate(`/panel/user/${uId}`)
+
+                )
+            }
             notify.success('!כרטיס עודכן בהצלחה');
         } catch (error) {
             console.error(error);
@@ -205,14 +217,14 @@ function EditCard(): JSX.Element {
                                 <input type="file" accept="image/*" {...register('coverImageFile', {
                                 })} /><span>{formState.errors.coverImageFile?.message}</span>
 
-                                <ImageWatched control={control} name="coverImageFile" defaultSrc={coverSrc} />
+                                <ImageWatched control={control} name="coverImageFile" defaultSrc={coverSrc} setValue={setValue} />
                             </div>
                             <div className="edit-group">
                                 <label>תמונת פרופיל:</label>
                                 <input type="file" accept="image/*" {...register('profileImageFile', {
                                 })} /><span>{formState.errors.profileImageFile?.message}</span>
 
-                                <ImageWatched control={control} name="profileImageFile" defaultSrc={profileSrc} />
+                                <ImageWatched control={control} name="profileImageFile" defaultSrc={profileSrc} setValue={setValue} />
                             </div>
                         </div>
                     </div>
@@ -261,7 +273,7 @@ function EditCard(): JSX.Element {
                                     </>
                                 ) : (
                                     <>
-                                        <NavLink to={`/panel/user/${uId}`} className="submit-btn">שמירה</NavLink>
+                                        <button className="submit-btn">שמירה</button>
                                         <NavLink to={`/panel/user/${uId}`} className="cancel-btn">ביטול</NavLink>
                                     </>
                                 )}

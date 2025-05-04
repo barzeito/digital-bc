@@ -154,6 +154,15 @@ class AppointmentsService {
     public async deleteAppointment(id: number): Promise<void> {
         await axios.delete(`${appConfig.appointmentsUrl}/book/${id}`);
     }
+
+    public async editAppointment(app: Appointment): Promise<Appointment> {
+        try {
+            const response = await axios.patch<Appointment>(`${appConfig.appointmentsUrl}/book/${app.id}`, app);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 const appointmentsService = new AppointmentsService();

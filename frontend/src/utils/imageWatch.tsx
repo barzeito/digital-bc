@@ -10,25 +10,27 @@ interface ImageWatchedProps {
     name: "coverImageFile" | "profileImageFile";
     defaultSrc?: string;
     setValue?: UseFormSetValue<CardModel>;
+    onDelete?: () => void;
 }
 
-function ImageWatched({ control, name, defaultSrc, setValue }: ImageWatchedProps): JSX.Element | null {
+function ImageWatched({ control, name, defaultSrc, setValue, onDelete }: ImageWatchedProps): JSX.Element | null {
     const [isDeleted, setIsDeleted] = useState(false);
     const imageSrc = useWatch({ control, name });
     const [isLoading, setIsLoading] = useState(true);
 
     const handleDelete = () => {
         setIsDeleted(true);
-        // Set the file to null
         setValue?.(name, null);
 
-        // Also clear the URL field when deleting an image
         if (name === "coverImageFile") {
             setValue?.("coverImageUrl", null);
         } else if (name === "profileImageFile") {
             setValue?.("profileImageUrl", null);
         }
+
+        onDelete?.();
     };
+
 
     useEffect(() => {
         if (isDeleted) {

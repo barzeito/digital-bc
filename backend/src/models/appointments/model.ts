@@ -20,5 +20,6 @@ export default interface Model {
     getOneAppByCompany(id: string): Promise<BookDTO>;
     addAppointment(app: BookDTO): Promise<BookDTO>;
     deleteAppointment(id: number): Promise<boolean>;
+    updateAppointment(app: BookDTO): Promise<BookDTO>;
 
 }
