@@ -9,10 +9,10 @@ import { ReactComponent as instagramIcon } from "../../../assets/socialMedia/ico
 import { ReactComponent as linkedinIcon } from "../../../assets/socialMedia/icons8-linkedin.svg";
 import { ReactComponent as twitterIcon } from "../../../assets/socialMedia/icons8-x.svg";
 import { ReactComponent as whatsApp } from "../../../assets/socialMedia/icons8-whatsapp.svg";
-// import email from "../../../assets/socialMedia/mail.png";
+import { ReactComponent as email } from "../../../assets/socialMedia/email-svgrepo-com.svg";
 import { ReactComponent as MapIcon } from "../../../assets/socialMedia/icons8-waze.svg";
 import { ReactComponent as phone } from "../../../assets/socialMedia/icons8-phone.svg";
-import { ReactComponent as tikTok } from "../../../assets/socialMedia/icons8-tiktok.svg";
+import { ReactComponent as tiktok } from "../../../assets/socialMedia/icons8-tiktok.svg";
 import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
 import AddToContactsButton from "../../../utils/addToContact";
@@ -37,8 +37,9 @@ function CardDisplay(): JSX.Element {
         linkedin: linkedinIcon,
         twitter: twitterIcon,
         whatsapp: whatsApp,
-        tikTok: tikTok,
+        tiktok: tiktok,
         phone: phone,
+        email: email,
     };
 
     const socialLabels: { [key: string]: string } = {
@@ -47,10 +48,10 @@ function CardDisplay(): JSX.Element {
         linkedin: "לינקדאין",
         twitter: "טוויטר",
         whatsapp: "וואטסאפ",
+        tiktok: "טיקטוק",
         email: "אימייל",
         map: "נווט",
-        phone: "טלפון",
-        tiktok: "טיקטוק"
+        phone: "טלפון"
     };
 
     const renderSocialLink = (platform: string) => {
