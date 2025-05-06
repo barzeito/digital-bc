@@ -8,9 +8,11 @@ interface AddToContactsButtonProps {
         email?: string;
         company?: string;
     };
+    themeColor?: string;
+    textColor?: string;
 }
 
-const AddToContactsButton: React.FC<AddToContactsButtonProps> = ({ user }) => {
+const AddToContactsButton: React.FC<AddToContactsButtonProps> = ({ user, themeColor, textColor }) => {
     const downloadVCard = () => {
         const { firstName, lastName, phone, email, company } = user;
 
@@ -42,7 +44,7 @@ const AddToContactsButton: React.FC<AddToContactsButtonProps> = ({ user }) => {
     };
 
     return (
-        <button className="SaveContact" onClick={downloadVCard}>שמירת איש קשר <i className="fa-solid fa-plus"></i></button>
+        <button className="SaveContact" style={{ border: `1px solid ${themeColor}`, color: textColor }} onClick={downloadVCard}>שמירת איש קשר <i className="fa-solid fa-plus"></i></button>
     );
 };
 

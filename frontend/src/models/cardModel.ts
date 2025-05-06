@@ -1,3 +1,4 @@
+import SocialModel from './socialModel';
 import UserModel from './userModel';
 
 export default class CardModel {
@@ -23,4 +24,6 @@ export default class CardModel {
     firstName?: string;
     lastName?: string;
     user?: UserModel;
+
+    social?: SocialModel;
 }

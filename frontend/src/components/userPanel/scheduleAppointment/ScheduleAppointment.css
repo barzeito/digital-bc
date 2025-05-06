@@ -54,6 +54,26 @@
     width: 500px;
 }
 
+.submitApp-btn {
+    font-family: inherit;
+    display: inline-block;
+    width: 8em;
+    height: 2.6em;
+    line-height: 2.5em;
+    margin: 20px auto;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.5s;
+    z-index: 1;
+    font-size: 17px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.submitApp-btn:hover {
+    scale: 1.1;
+}
 
 @media (max-width: 500px) {
     .ScheduleAppointment {

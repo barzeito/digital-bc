@@ -33,16 +33,15 @@ function EditCard(): JSX.Element {
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
     const [loading, setLoading] = useState(false);
 
-
     useEffect(() => {
-        console.log('EditCard component mounted');
+        async function fetchData() {
+            try {
+                const [cardFromServer, socialFromServer] = await Promise.all([
+                    cardsService.getOne(cardId),
+                    socialService.getOneByCompanyId(socialCompanyId)
+                ]);
 
-        cardsService.getOne(cardId)
-            .then(cardFromServer => {
-                console.log('Card data:', cardFromServer);
                 setValue('company', cardFromServer?.company);
-                setCoverSrc(cardFromServer?.coverImageUrl || '');
-                setProfileSrc(cardFromServer?.profileImageUrl || '');
                 setValue('name', cardFromServer?.name);
                 setValue('description', cardFromServer?.description);
                 setValue('about', cardFromServer?.about);
@@ -53,17 +52,25 @@ function EditCard(): JSX.Element {
                 setValue('themeColor', cardFromServer?.themeColor);
                 setValue('backgroundColor', cardFromServer?.backgroundColor);
                 setValue('textColor', cardFromServer?.textColor);
-            })
-            .catch(error => notify.error(error))
-    }, [cardId, userId, setValue]);
+                setCoverSrc(cardFromServer?.coverImageUrl || '');
+                setProfileSrc(cardFromServer?.profileImageUrl || '');
 
-    const handleSocialLinkChange = (platform: string, value: string) => {
-        setSocialLinks(prevLinks => ({
-            ...prevLinks,
-            [platform]: value,
-        }));
-    };
+                setValue("social.facebook", socialFromServer?.facebook || "");
+                setValue("social.instagram", socialFromServer?.instagram || "");
+                setValue("social.linkedin", socialFromServer?.linkedin || "");
+                setValue("social.twitter", socialFromServer?.twitter || "");
+                setValue("social.whatsapp", socialFromServer?.whatsapp || "");
+                setValue("social.email", socialFromServer?.email || "");
+                setValue("social.map", socialFromServer?.map || "");
+                setValue("social.phone", socialFromServer?.phone || "");
+                setValue("social.tiktok", socialFromServer?.tiktok || "");
+            } catch (err) {
+                notify.error("שגיאה בטעינת נתונים");
+            }
+        }
 
+        fetchData();
+    }, [cardId, socialCompanyId, setValue]);
 
     async function submitCardUpdate(card: CardModel) {
         try {
@@ -83,10 +90,13 @@ function EditCard(): JSX.Element {
 
             const social = new SocialModel();
             social.company_id = socialCompanyId;
+            Object.assign(social, card.social);
 
-            if (selectedSocial && socialLinks[selectedSocial]) {
-                social[selectedSocial as keyof SocialModel] = socialLinks[selectedSocial];
-            }
+            Object.entries(social).forEach(([key, value]) => {
+                if (typeof value === "string" && value.trim() === "") {
+                    (social as any)[key] = null;
+                }
+            });
 
             await socialService.editSocial(social);
             {
@@ -105,6 +115,18 @@ function EditCard(): JSX.Element {
             setLoading(false);
         }
     }
+
+    const platformLabels: { [key: string]: string } = {
+        facebook: "קישור לפייסבוק:",
+        instagram: "קישור לאינסטגרם:",
+        linkedin: "קישור ללינקדאין:",
+        twitter: "קישור לטוויטר:",
+        whatsapp: "קישור לוואטסאפ:",
+        email: "קישור לאימייל:",
+        map: "כתובת:",
+        phone: "מספר טלפון:",
+        tiktok: "קישור לטיקטוק:"
+    };
 
 
     return (
@@ -230,37 +252,46 @@ function EditCard(): JSX.Element {
                     </div>
                     <div className="edit-row">
                         <div className="edit-group">
-                            <div className="social-media">
-                                <label>רשת חברתית: </label>
-                                <select
-                                    className="edit-social"
-                                    value={selectedSocial}
-                                    onChange={(e) => setSelectedSocial(e.target.value)}
-                                >
-                                    <option value="" defaultValue={""}>בחר רשת חברתית</option>
-                                    <option value="facebook">פייסבוק</option>
-                                    <option value="instagram">אינסטגרם</option>
-                                    <option value="linkedin">לינקדאין</option>
-                                    <option value="twitter">טוויטר</option>
-                                    <option value="whatsapp">וואטסאפ</option>
-                                    <option value="email">אימייל</option>
-                                    <option value="map">נווט</option>
-                                    <option value="phone">טלפון</option>
-                                    <option value="tiktok">טיקטוק</option>
-                                </select>
-                            </div>
-                            {selectedSocial && (
-                                <div className="edit-group">
-                                    <label>קישור ל-{selectedSocial}:</label>
-                                    <input
-                                        type="text"
-                                        value={socialLinks[selectedSocial] || ""}
-                                        onChange={(e) =>
-                                            handleSocialLinkChange(selectedSocial, e.target.value)
-                                        }
-                                    />
-                                </div>
-                            )}
+                            <label>קישור לפייסבוק:</label>
+                            <input type="text" {...register("social.facebook")} />
+                        </div>
+                        <div className="edit-group">
+                            <label>קישור לאינסטגרם:</label>
+                            <input type="text" {...register("social.instagram")} />
+                        </div>
+                        <div className="edit-group">
+                            <label>קישור ללינקדאין:</label>
+                            <input type="text" {...register("social.linkedin")} />
+                        </div>
+                    </div>
+
+                    <div className="edit-row">
+                        <div className="edit-group">
+                            <label>קישור לטוויטר:</label>
+                            <input type="text" {...register("social.twitter")} />
+                        </div>
+                        <div className="edit-group">
+                            <label>קישור לווטסאפ:</label>
+                            <input type="text" {...register("social.whatsapp")} />
+                        </div>
+                        <div className="edit-group">
+                            <label>קישור לטיקטוק:</label>
+                            <input type="text" {...register("social.tiktok")} />
+                        </div>
+                    </div>
+
+                    <div className="edit-row">
+                        <div className="edit-group">
+                            <label>כתובת:</label>
+                            <input type="text" {...register("social.map")} />
+                        </div>
+                        <div className="edit-group">
+                            <label>אימייל ליצירת קשר:</label>
+                            <input type="text" {...register("social.email")} />
+                        </div>
+                        <div className="edit-group">
+                            <label>טלפון ליצירת קשר:</label>
+                            <input type="text" {...register("social.phone")} />
                         </div>
                     </div>
                     <div className="edit-buttons">

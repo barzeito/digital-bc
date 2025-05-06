@@ -10,8 +10,8 @@ import { ReactComponent as linkedinIcon } from "../../../assets/socialMedia/icon
 import { ReactComponent as twitterIcon } from "../../../assets/socialMedia/icons8-x.svg";
 import { ReactComponent as whatsApp } from "../../../assets/socialMedia/icons8-whatsapp.svg";
 // import email from "../../../assets/socialMedia/mail.png";
-// import map from "../../../assets/socialMedia/map.png";
-// import phone from "../../../assets/socialMedia/telephone.png";
+import { ReactComponent as MapIcon } from "../../../assets/socialMedia/icons8-waze.svg";
+import { ReactComponent as phone } from "../../../assets/socialMedia/icons8-phone.svg";
 import { ReactComponent as tikTok } from "../../../assets/socialMedia/icons8-tiktok.svg";
 import socialService from "../../../services/socialService";
 import SocialModel from "../../../models/socialModel";
@@ -29,6 +29,7 @@ function CardDisplay(): JSX.Element {
     const [companyId, setCompanyId] = useState<string>();
     const [socialLinks, setSocialLinks] = useState<{ [key: string]: string }>({});
     const [colors, setColors] = useState({ backgroundColor: '', themeColor: '', textColor: '' });
+    const [isMapPopupOpen, setIsMapPopupOpen] = useState(false);
 
     const socialIcons: { [key: string]: React.FC<React.SVGProps<SVGSVGElement>> } = {
         facebook: facebookIcon,
@@ -37,6 +38,7 @@ function CardDisplay(): JSX.Element {
         twitter: twitterIcon,
         whatsapp: whatsApp,
         tikTok: tikTok,
+        phone: phone,
     };
 
     const socialLabels: { [key: string]: string } = {
@@ -49,6 +51,51 @@ function CardDisplay(): JSX.Element {
         map: "נווט",
         phone: "טלפון",
         tiktok: "טיקטוק"
+    };
+
+    const renderSocialLink = (platform: string) => {
+        const value = socialLinks[platform];
+        if (!value) return null;
+
+        if (platform === "map") {
+            return (
+                <button
+                    key="map"
+                    className="social-item"
+                    onClick={() => setIsMapPopupOpen(true)}
+                    style={{ background: "none", border: "none", cursor: "pointer" }}
+                >
+                    <MapIcon className="social-icon" style={{ fill: colors.themeColor }} />
+                    <p style={{ color: colors.textColor }}>{socialLabels["map"]}</p>
+                </button>
+            );
+        }
+
+        const IconComponent = socialIcons[platform];
+        if (!IconComponent) return null;
+
+        // קביעת href לפי סוג
+        let href = value;
+        if (platform === "phone") {
+            href = `tel:${value}`;
+        } else if (platform === "email") {
+            href = `mailto:${value}`;
+        } else if (!value.startsWith("http")) {
+            href = `https://${value}`;
+        }
+
+        return (
+            <a
+                key={platform}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-item"
+            >
+                <IconComponent className="social-icon" style={{ fill: colors.themeColor }} />
+                <p style={{ color: colors.textColor }}>{socialLabels[platform]}</p>
+            </a>
+        );
     };
 
     useEffect(() => {
@@ -117,16 +164,26 @@ function CardDisplay(): JSX.Element {
 
     return (
         <div className="CardDisplay">
-            <div className="Card-Main" style={{ backgroundColor: `${colors.backgroundColor}`, color: `${colors.textColor}` }}>
+            <div
+                className="Card-Main"
+                style={{
+                    backgroundColor: colors.backgroundColor,
+                    color: colors.textColor,
+                }}
+            >
                 <div className="cd-Header">
-                    <img className="cd-CoverImage" src={card?.coverImageUrl ? card.coverImageUrl : noImage}
+                    <img
+                        className="cd-CoverImage"
+                        src={card?.coverImageUrl || noImage}
                         alt="Cover"
                         onError={(e) => {
                             const image = e.target as HTMLImageElement;
                             image.src = noImage;
                         }}
                     />
-                    <img className="cd-ProfileImage" src={card?.profileImageUrl ? card.profileImageUrl : noImage}
+                    <img
+                        className="cd-ProfileImage"
+                        src={card?.profileImageUrl || noImage}
                         alt="Profile"
                         onError={(e) => {
                             const image = e.target as HTMLImageElement;
@@ -134,59 +191,73 @@ function CardDisplay(): JSX.Element {
                         }}
                     />
                 </div>
+
                 <div className="cd-details">
                     <h2 className="cd-CompanyName">{card?.name}</h2>
                     <p className="cd-CompanyDesc">{card?.description}</p>
                 </div>
+
                 <div className="cd-body">
                     <div className="cd-social">
                         <div className="cd-item">
-                            {Object.keys(socialIcons).map((platform) => {
-                                if (!socialLinks[platform]) return null;
-
-                                const href = socialLinks[platform].startsWith("http")
-                                    ? socialLinks[platform]
-                                    : "https://" + socialLinks[platform];
-
-                                const IconComponent = socialIcons[platform];
-
-                                return (
-                                    <a
-                                        key={platform}
-                                        href={href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="social-item"
-                                    >
-                                        <IconComponent className="social-icon" style={{ fill: `${colors.themeColor}` }} />
-                                        <p>{socialLabels[platform]}</p>
-                                    </a>
-                                );
-                            })}
+                            {Object.keys(socialLinks).map((platform) =>
+                                renderSocialLink(platform)
+                            )}
                         </div>
                     </div>
-                    <div className="cd-SaveContact">
-                        <AddToContactsButton user={{
+                </div>
+
+                <div className="cd-SaveContact">
+                    <AddToContactsButton
+                        user={{
                             firstName: card?.firstName || "",
                             lastName: card?.lastName || "",
                             phone: card?.phone || "",
                             email: card?.email || "",
-                            company: card?.company || ""
-                        }} />
-                    </div>
+                            company: card?.company || "",
+                        }}
+                        themeColor={colors.themeColor}
+                        textColor={colors.textColor}
+                    />
                 </div>
+
                 <div className="cd-About">
-                    <p style={{ color: `${colors.themeColor}` }}>קצת עליי</p>
+                    <p style={{ color: colors.themeColor }}>קצת עליי</p>
                     <span>{card?.about}</span>
                 </div>
-                <div className="cardDisplay-info">
-                </div>
+
+                <div className="cardDisplay-info"></div>
+
                 {appAvailable && card?.id && (
                     <ScheduleAppointment companyId={card.id} />
                 )}
+
+                {/* Map Popup */}
+                {isMapPopupOpen && (
+                    <div className="mapPopup" onClick={() => setIsMapPopupOpen(false)}>
+                        <div
+                            className="mapPopup-content"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <h3>כתובת העסק</h3>
+                            <p>{socialLinks["map"]}</p>
+                            <a
+                                href={`https://maps.google.com/?q=${encodeURIComponent(
+                                    socialLinks["map"]
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                פתיחה במפה
+                            </a>
+                            <button onClick={() => setIsMapPopupOpen(false)}>סגור</button>
+                        </div>
+                    </div>
+                )}
             </div>
-        </div >
+        </div>
     );
+
 }
 
 export default CardDisplay;

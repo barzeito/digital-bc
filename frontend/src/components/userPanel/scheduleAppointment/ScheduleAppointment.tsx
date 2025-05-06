@@ -157,7 +157,7 @@ function ScheduleAppointment({ companyId }: { companyId: string }): JSX.Element 
                     {...register("message")}
                     placeholder="הזן הערות"
                 />
-                <button type="submit" className="submit-btn" style={{ color: `${colors.themeColor}`, border: `1px solid ${colors.themeColor}` }}>הזמן תור</button>
+                <button type="submit" className="submitApp-btn" style={{ color: `${colors.themeColor}`, border: `1px solid ${colors.themeColor}` }}>הזמן תור</button>
             </form>
         </div>
     );

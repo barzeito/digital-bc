@@ -27,6 +27,11 @@ class SocialService {
         return card;
     }
 
+    public async getOneByCompanyId(companyId: string): Promise<SocialModel> {
+        const response = await axios.get<SocialModel>(`${appConfig.socialUrl}/${companyId}`);
+        return response.data;
+    }
+
     public async getByCompanyPlatform(company_id: string, platform: string): Promise<SocialModel | undefined> {
         try {
             const response = await axios.get(appConfig.socialUrl + `/check/${company_id}/${platform}`);
