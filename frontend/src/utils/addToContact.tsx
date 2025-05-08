@@ -21,17 +21,25 @@ const AddToContactsButton: React.FC<AddToContactsButtonProps> = ({ user, themeCo
             return;
         }
 
-        const vcard = `
-            BEGIN:VCARD
-            VERSION:3.0
-            N:${lastName};${firstName};;;
-            FN:${firstName} ${lastName}
-            ORG:${company || ""}
-            TEL;TYPE=CELL:${phone || ""}
-            EMAIL:${email || ""}
-            END:VCARD`.trim();
+        const vcardLines = [
+            "BEGIN:VCARD",
+            "VERSION:3.0",
+            `N:${lastName};${firstName};;;`,
+            `FN:${firstName} ${lastName}`,
+            `ORG:${company || ""}`,
+        ];
 
-        const blob = new Blob([vcard], { type: "text/vcard" });
+        if (phone) {
+            vcardLines.push(`TEL;TYPE=CELL:${phone}`);
+        }
+
+        if (email) {
+            vcardLines.push(`EMAIL:${email}`);
+        }
+
+        vcardLines.push("END:VCARD");
+
+        const blob = new Blob([vcardLines.join("\n")], { type: "text/vcard" });
         const url = URL.createObjectURL(blob);
 
         const link = document.createElement("a");
@@ -42,6 +50,7 @@ const AddToContactsButton: React.FC<AddToContactsButtonProps> = ({ user, themeCo
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
     };
+
 
     return (
         <button className="SaveContact" style={{ border: `1px solid ${themeColor}`, color: textColor }} onClick={downloadVCard}>שמירת איש קשר <i className="fa-solid fa-plus"></i></button>

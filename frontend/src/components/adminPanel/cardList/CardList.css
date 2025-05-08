@@ -39,7 +39,7 @@
     border-collapse: collapse;
     margin-top: 20px;
     direction: rtl;
-    background-color: #fff;
+    background-color: var(--Background-Color);
     border: 1px solid #ddd;
 }
 

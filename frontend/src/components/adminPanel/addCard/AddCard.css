@@ -9,7 +9,7 @@
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
-    color: #333;
+    color: var(--Black-Text-Color);;
   }
   
   form {
@@ -34,7 +34,7 @@
   .add-group label {
     margin-bottom: 0.5rem;
     font-weight: bold;
-    color: #444;
+    color: var(--Black-Text-Color);;
   }
   
   .add-group input,

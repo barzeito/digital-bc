@@ -3,7 +3,7 @@ import CardModel from "../../../models/cardModel";
 import "./CardDisplay.css";
 import cardsService from "../../../services/cardsService";
 import { useNavigate, useParams } from "react-router-dom";
-import noImage from "../../../assets/images/image-not-found.jpeg"
+import noImage from "../../../assets/images/image-not-found-new.png"
 import { ReactComponent as facebookIcon } from "../../../assets/socialMedia/icons8-facebook.svg";
 import { ReactComponent as instagramIcon } from "../../../assets/socialMedia/icons8-instagram.svg";
 import { ReactComponent as linkedinIcon } from "../../../assets/socialMedia/icons8-linkedin.svg";
@@ -211,10 +211,10 @@ function CardDisplay(): JSX.Element {
                 <div className="cd-SaveContact">
                     <AddToContactsButton
                         user={{
-                            firstName: card?.firstName || "",
-                            lastName: card?.lastName || "",
-                            phone: card?.phone || "",
-                            email: card?.email || "",
+                            firstName: card?.name?.split(" ")[0] || "",
+                            lastName: card?.name?.split(" ")[1] || "",
+                            phone: socialLinks?.phone ?? "",
+                            email: socialLinks?.email ?? "",
                             company: card?.company || "",
                         }}
                         themeColor={colors.themeColor}

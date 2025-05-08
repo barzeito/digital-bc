@@ -136,7 +136,7 @@ function EditCard(): JSX.Element {
                 <form onSubmit={handleSubmit(submitCardUpdate)}>
                     <div className="edit-row">
                         <div className="edit-group">
-                            <label>שם החברה:</label>
+                            <label>שם החברה באנגלית (ישמש ככתובת הכרטיס):</label>
                             <input type="text" {...register('company', {
                                 minLength: { value: 2, message: 'שם החברה חייב להיות מינימום 2 תווים.' },
                                 required: { value: true, message: 'שדה חובה!' }
@@ -282,7 +282,7 @@ function EditCard(): JSX.Element {
 
                     <div className="edit-row">
                         <div className="edit-group">
-                            <label>כתובת:</label>
+                            <label>כתובת לניווט:</label>
                             <input type="text" {...register("social.map")} />
                         </div>
                         <div className="edit-group">

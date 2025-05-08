@@ -1,13 +1,9 @@
 .Card-Main {
-    /* background-color: #e9ecf3; */
     color: var(--Black-Text-Color);
     width: 100%;
-    /* max-width: 1200px; */
     margin: 0 auto;
     padding: 20px;
 }
-
-/* Assistant Heebo */
 
 .cd-Header {
     position: relative;
@@ -31,7 +27,7 @@
     bottom: -50px;
     left: 50%;
     transform: translateX(-50%);
-    border: 1px solid var(--Tertiary-Color);
+    border: none;
     background-color: var(--Primary-Color);
 }
 
