@@ -52,7 +52,7 @@ form {
 }
 
 .edit-group .error {
-    color: red;
+    color: #ff4040;
     font-size: 0.875rem;
     margin-top: 0.3rem;
 }

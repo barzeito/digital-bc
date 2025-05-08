@@ -19,6 +19,7 @@ import PremiumRoute from "./ProtectedPremiumRoute";
 import Loader from "../loader/Loader";
 import ForgotPassword from "../../auth/forgotPassword/ForgotPassword";
 import ResetPassword from "../../auth/resetPassword /ResetPassword";
+import AddUser from "../../adminPanel/addUser/AddUser";
 function Routing(): JSX.Element {
 
     return (
@@ -45,8 +46,10 @@ function Routing(): JSX.Element {
             <Route path="/panel/admin/cards" element={<AdminRoute element={<CardList />} />} />
             <Route path="/panel/admin/cards/add-card" element={<AdminRoute element={<AddCard />} />} />
             <Route path="/panel/admin/edit/:id" element={<AdminRoute element={<EditCard />} />} />
-            <Route path="/panel/admin/edit-user/:id" element={<AdminRoute element={<EditUser />} />} />
+
             <Route path="/panel/admin/users" element={<AdminRoute element={<UserList />} />} />
+            <Route path="/panel/admin/users/add-user" element={<AdminRoute element={<AddUser />} />} />
+            <Route path="/panel/admin/edit-user/:id" element={<AdminRoute element={<EditUser />} />} />
 
 
             <Route path="/" element={<Home />} />

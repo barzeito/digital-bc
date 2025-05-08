@@ -17,7 +17,9 @@ export const signUpValidator = Joi.object<userDTO>({
         'string.empty': 'Last Name is required',
         'any.required': 'Last Name is required',
         'string.min': 'Last Name must be at least {#limit} characters long',
-    })
+    }),
+    password: Joi.string().min(4).optional(),
+    roleId: Joi.number().optional()
 });
 
 export const signInValidator = Joi.object<CredentialsDTO>({

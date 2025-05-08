@@ -36,28 +36,12 @@
     margin-bottom: 20px;
 }
 
-.newCard-btn {
-    display: flex;
-    align-items: center;
-    padding: 10px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color 0.2s ease;
-}
-
-.newCard-btn:hover {
-    background-color: #388e3c;
-}
-
 .NavIcon {
     margin-left: 8px;
 }
 
-.DisplayCards {
-    background-color: #ffffff;
+.userDisplayCards {
+    background-color: var(--Background-Color);
     padding: 24px;
     margin-top: 20px;
     border-radius: 8px;

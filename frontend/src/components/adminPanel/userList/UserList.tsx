@@ -6,6 +6,7 @@ import authService from "../../../services/authService";
 import notify from "../../../services/popupMessage";
 import { authStore } from "../../../redux/authState";
 import DashboardLayout from "../dashboardLayout/DashboardLayout";
+import { NavLink } from "react-router-dom";
 
 function UserList(): JSX.Element {
 
@@ -28,6 +29,12 @@ function UserList(): JSX.Element {
                 <div >
                     <h2>ניהול משתמשים</h2>
                     <p>ניהול משתמשים וגישות</p>
+                </div>
+                <div className="cards-options">
+                    <NavLink to="/panel/admin/users/add-user" className="newCard-btn">
+                        <div className="NavIcon"><i className="fa-solid fa-plus"></i></div>
+                        <div className="NavText">יצירת משתמש חדש</div>
+                    </NavLink>
                 </div>
                 <div className="DisplayUsers">
                     <div className="table-container">

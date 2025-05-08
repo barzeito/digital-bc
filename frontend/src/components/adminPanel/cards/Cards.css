@@ -114,6 +114,9 @@ button.action-btn {
     flex-direction: row;
 }
 
+.attach-buttons{
+    justify-content: space-around;
+}
 .PopUpContainer {
     position: fixed;
     top: 0;

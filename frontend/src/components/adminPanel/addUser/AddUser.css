@@ -1,93 +1,88 @@
-.AddCard {
+.AddUser {
     background-color: var(--Background-Color);
     border-radius: 16px;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
     direction: rtl;
-  }
-  
-  .AddCard h2 {
+    padding: 2rem;
+}
+
+.AddUser h2 {
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
     color: #333;
-  }
-  
-  form {
+}
+
+form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-  }
-  
-  .add-row {
+}
+
+.add-row {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-  }
-  
-  .add-group {
+}
+
+.add-group {
     flex: 1;
     min-width: 250px;
     display: flex;
     flex-direction: column;
-  }
-  
-  .add-group label {
+}
+
+.add-group label {
     margin-bottom: 0.5rem;
     font-weight: bold;
     color: #444;
-  }
-  
-  .add-group input,
-  .add-group textarea {
+}
+
+.add-group input {
     padding: 0.7rem 1rem;
     border: 1px solid var(--Tertiary-Color);
     border-radius: 10px;
     font-size: 1rem;
     transition: border 0.3s;
-  }
-  
-  .add-group input:focus,
-  .add-group textarea:focus {
+}
+
+.add-group input:focus {
     border-color: var(--Secondary-Color);
     outline: none;
-  }
-  
-  textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  .error {
+}
+
+.add-group select {
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--Tertiary-Color);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border 0.3s;
+    background-color: var(--Background-Color);
+    appearance: none;
+    direction: rtl;
+}
+
+.add-group select:focus {
+    border-color: var(--Secondary-Color);
+    outline: none;
+}
+
+.error {
     color: #ff4040;
     font-size: 0.9rem;
     margin-top: 0.3rem;
-  }
-  
-  .checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1rem;
-  }
-  
-  .user-fields {
-    background-color: #f9f9f9;
-    padding: 1rem;
-    border-radius: 12px;
-    border: 1px solid #ddd;
-  }
-  
-  .buttons {
+}
+
+.buttons {
     display: flex;
     justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
-  }
-  
-  
-  @media (max-width: 768px) {
+}
+
+
+@media (max-width: 768px) {
     .add-row {
-      flex-direction: column;
+        flex-direction: column;
     }
-  }
-  
+}

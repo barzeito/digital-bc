@@ -37,7 +37,7 @@ function UserDash(): JSX.Element {
                     <h2>הכרטיסים שלי</h2>
                     <p>ניהול הכרטיסים שברשותך</p>
                 </div>
-                <div className="DisplayCards">
+                <div className="userDisplayCards">
                     {userCards.length === 0 && (
                         <div className="NoCardsMessage">
                             <p>לא נמצאו כרטיסים המשויכים למשתמש שלך.</p>

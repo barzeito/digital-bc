@@ -57,7 +57,7 @@
 }
 
 .NavCard.active {
-    background-color: #dffae9;
+    background-color: #d2f2f6;
     color: var(--Secondary-Color);
     font-weight: 600;
 }
@@ -85,7 +85,7 @@
 }
 
 .UserCircle {
-    background-color: #dffae9;
+    background-color: #d2f2f6;
     color: var(--Secondary-Color);
     font-weight: 600;
     border-radius: 9999px;

@@ -172,7 +172,7 @@
 }
 
 .mapPopup-content button {
-    background-color: #d32f2f;
+    background-color: #ff4040;
     color: var(--White-Text-Color);
     padding: 0.6rem 1.2rem;
     border: none;
@@ -183,7 +183,7 @@
 }
 
 .mapPopup-content button:hover {
-    background-color: #b71c1c;
+    background-color: #cc3b3b;
 }
 
 @keyframes fadeIn {
