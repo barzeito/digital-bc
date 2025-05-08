@@ -85,7 +85,18 @@ class SocialService {
         SocialsStore.dispatch(action);
         return updatedCard;
     }
+    public async sendContactEmail(name: string, email: string, message: string): Promise<void> {
+        try {
+            await axios.post(appConfig.contactUrl, {
+                name,
+                email,
+                message
+            });
+        } catch (error) {
+            console.log(error);
+        }
 
+    }
 }
 
 const socialService = new SocialService();

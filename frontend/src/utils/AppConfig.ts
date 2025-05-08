@@ -11,6 +11,7 @@ class AppConfig {
     public resetPasswordUrl = `${this.apiBaseUrl}/api/reset-password`;
     public isAdminUrl = `${this.apiBaseUrl}/api/role`;
     public isPremiumUrl = `${this.apiBaseUrl}/api/premium`;
+    public contactUrl = `${this.apiBaseUrl}/api/contact`;
 
 }
 

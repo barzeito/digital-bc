@@ -186,7 +186,7 @@ export const sendAppointmentToCompanyEmail = async (
     appointmentDate: string,
     appointmentTime: string,
     phone: string,
-    message?: string // הודעה אופציונלית
+    message?: string 
 ) => {
     const mailOptions = {
         from: '"Digital Business Cards" <dbc@gmail.com>',
@@ -242,5 +242,53 @@ export const sendAppointmentToCompanyEmail = async (
         console.log(`📧 Email sent successfully to company: ${companyEmail}`);
     } catch (error) {
         console.error("❌ Error sending appointment email to company", error);
+    }
+};
+
+export const sendContactEmail = async (
+    adminEmail: string,
+    fullName: string,
+    senderEmail: string,
+    subject: string,
+    message: string
+) => {
+    const mailOptions = {
+        from: `"Digital Business Cards" <dbc@gmail.com>`,
+        to: adminEmail,
+        subject: `פנייה חדשה - ${subject}`,
+        html: `
+        <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto;">
+            <h2 style="color: #333;">פנייה חדשה מהאתר</h2>
+            
+            <p style="font-size: 16px; color: #444;">
+                התקבלה פנייה חדשה מטופס צור קשר באתר <strong>Digital Business Cards</strong>.
+            </p>
+        
+            <ul style="font-size: 16px; color: #444; list-style-type: none; padding: 0;">
+                <li><strong>שם מלא:</strong> ${fullName}</li>
+                <li><strong>אימייל:</strong> ${senderEmail}</li>
+                <li><strong>נושא הפנייה:</strong> ${subject}</li>
+            </ul>
+        
+            <p style="font-size: 16px; color: #444; margin-top: 20px;">
+                <strong>הודעה:</strong><br>
+                ${message.replace(/\n/g, "<br>")}
+            </p>
+        
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+        
+            <p style="font-size: 14px; color: #666;">
+                בברכה,<br>
+                מערכת <strong>Digital Business Cards</strong>
+            </p>
+        </div>
+        `
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log(`📧 Contact email sent successfully from ${senderEmail}`);
+    } catch (error) {
+        console.error("❌ Error sending contact email", error);
     }
 };

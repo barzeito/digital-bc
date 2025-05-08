@@ -1,6 +1,8 @@
 import { useState } from "react";
 import AuthMenu from "../auth/authMenu/AuthMenu";
 import "./Home.css";
+import socialService from "../../services/socialService";
+import notify from "../../services/popupMessage";
 
 function Home(): JSX.Element {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -9,16 +11,16 @@ function Home(): JSX.Element {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleContactSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            alert("ההודעה נשלחה בהצלחה!");
+            await socialService.sendContactEmail(formData.name, formData.email, formData.message);
+            notify.success("ההודעה נשלחה בהצלחה!");
             setFormData({ name: "", email: "", message: "" });
         } catch {
-            alert("אירעה שגיאה. נסה שוב.");
+            notify.error("אירעה שגיאה. נסה שוב.");
         }
     };
-
     return (
         <div className="Home">
             <AuthMenu />
@@ -105,7 +107,7 @@ function Home(): JSX.Element {
                 <section className="home-contact-form-section" id="home-contact-form-section">
                     <div className="home-container">
                         <h2>צור קשר</h2>
-                        <form onSubmit={handleSubmit} className="home-contact-form">
+                        <form onSubmit={handleContactSubmit} className="home-contact-form">
                             <input
                                 type="text"
                                 name="name"
@@ -129,7 +131,7 @@ function Home(): JSX.Element {
                                 onChange={handleChange}
                                 required
                             />
-                            <button type="submit" className="home-cta-button"></button>
+                            <button type="submit" className="home-cta-button">שלח</button>
                         </form>
                     </div>
                 </section>

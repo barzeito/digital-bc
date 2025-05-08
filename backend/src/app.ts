@@ -3,6 +3,7 @@ import cardsRouter from './routers/cards';
 import socialRouter from './routers/socialLinks'
 import authRouter from './routers/auth'
 import appsRouter from './routers/appointments'
+import contactRouter from './routers/contact'
 import { notFound } from "./middlewares/not-found";
 import { errorHandler } from "./middlewares/error-handler";
 import cors from 'cors';
@@ -24,6 +25,7 @@ server.use('/api/cards', cardsRouter)
 server.use('/api/social', socialRouter)
 server.use('/api/apps', appsRouter)
 server.use('/images', express.static(path.resolve(config.get<string>('app.images.path'))))
+server.use('/api/contact', contactRouter)
 
 server.use(notFound)
 
