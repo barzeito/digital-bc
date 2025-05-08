@@ -241,6 +241,21 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 
+.reset-time-btn {
+    margin-right: 10px;
+    background-color: #eee;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    transition: background 0.2s ease;
+}
+
+.reset-time-btn:hover {
+    background-color: #ddd;
+}
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {

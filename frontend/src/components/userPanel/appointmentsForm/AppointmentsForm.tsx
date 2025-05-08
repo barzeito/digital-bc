@@ -23,8 +23,7 @@ function AppointmentForm(): JSX.Element {
     const uId = String(params.userId);
     const { handleSubmit, register, formState } = useForm<AppointmentsModel>();
     const [appointmentData, setAppointmentData] = useState<AppointmentsModel | null>(null);
-    const [isAvailable, setIsAvailable] = useState<boolean>(false);  // state למעקב אחרי המצב של הזמינות
-    // const [appAvailable, setAppAvailable] = useState<boolean>(false);
+    const [isAvailable, setIsAvailable] = useState<boolean>(false);
 
     const [daysSchedule, setDaysSchedule] = useState<Record<string, { start: string; end: string }>>(
         Object.fromEntries(Object.keys(daysMap).map(day => [day, { start: "", end: "" }]))
@@ -32,7 +31,7 @@ function AppointmentForm(): JSX.Element {
 
     const toggleAvailability = async () => {
         try {
-            setIsAvailable(prevState => !prevState);  // משנה את המצב של הזמינות
+            setIsAvailable(prevState => !prevState); 
             const status = !isAvailable;
 
             await appointmentsService.setAppAvailable(companyId, status);
@@ -171,6 +170,18 @@ function AppointmentForm(): JSX.Element {
                                             }))
                                         }
                                     />
+                                    <button
+                                        type="button"
+                                        className="reset-time-btn"
+                                        onClick={() =>
+                                            setDaysSchedule((prev) => ({
+                                                ...prev,
+                                                [dayKey]: { start: "", end: "" },
+                                            }))
+                                        }
+                                    >
+                                        איפוס
+                                    </button>
                                 </div>
                             </div>
                         ))}
