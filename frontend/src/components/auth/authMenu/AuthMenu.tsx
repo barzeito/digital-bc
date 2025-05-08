@@ -67,8 +67,8 @@ function AuthMenu(): JSX.Element {
             </div>
 
             {/* Mobile menu toggle button */}
-            <div 
-                className="mobileMenuToggle" 
+            <div
+                className="mobileMenuToggle"
                 onClick={() => setMenuOpen(!menuOpen)}
             >
                 {menuOpen ? (
@@ -80,12 +80,12 @@ function AuthMenu(): JSX.Element {
 
             <div className={`navigationItems ${menuOpen ? "open" : ""}`}>
                 <ul>
-                    <li><a href="#" onClick={handleNavClick}>בית</a></li>
-                    <li><a href="#" onClick={handleNavClick}>אודות</a></li>
-                    <li><a href="#" onClick={handleNavClick}>שירותים</a></li>
+                    <li><a href="#home-section" onClick={handleNavClick}>בית</a></li>
+                    <li><a href="#who-are-we" onClick={handleNavClick}>אודות</a></li>
+                    <li><a href="#services" onClick={handleNavClick}>שירותים</a></li>
                     <li><a href="#home-contact-form-section" onClick={handleNavClick}>צור קשר</a></li>
                 </ul>
-                
+
                 {/* Mobile user menu - appears inside the navigation on mobile */}
                 <div className="mobileUserMenu">
                     <div className="userDiv">
@@ -104,16 +104,16 @@ function AuthMenu(): JSX.Element {
                     </div>
                     {user && (
                         <div className="NavLogged">
-                            <NavLink 
-                                className="action" 
+                            <NavLink
+                                className="action"
                                 to={isAdmin ? "/panel/admin" : `/panel/user/${user.userId}`}
                                 onClick={handleNavClick}
                             >
                                 <div>{isAdmin ? "פאנל ניהול" : "פאנל משתמש"}</div>
                             </NavLink>
-                            <NavLink 
-                                to="/home" 
-                                className="action" 
+                            <NavLink
+                                to="/home"
+                                className="action"
                                 onClick={() => logOut()}
                             >
                                 <div>התנתק</div>
@@ -141,16 +141,16 @@ function AuthMenu(): JSX.Element {
                 </div>
                 {user && (
                     <div className="NavLogged">
-                        <NavLink 
-                            className="action" 
+                        <NavLink
+                            className="action"
                             to={isAdmin ? "/panel/admin" : `/panel/user/${user.userId}`}
                             onClick={handleNavClick}
                         >
                             <div>{isAdmin ? "פאנל ניהול" : "פאנל משתמש"}</div>
                         </NavLink>
-                        <NavLink 
-                            to="/home" 
-                            className="action" 
+                        <NavLink
+                            to="/home"
+                            className="action"
                             onClick={() => logOut()}
                         >
                             <div>התנתק</div>

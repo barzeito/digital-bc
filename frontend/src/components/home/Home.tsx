@@ -24,7 +24,7 @@ function Home(): JSX.Element {
     return (
         <div className="Home">
             <AuthMenu />
-            <div className="HomePage">
+            <div className="HomePage" id="home-section">
                 <section className="home-hero">
                     <div className="home-container">
                         <h1>הכרטיס הדיגיטלי שימקם את העסק שלך בחזית</h1>
@@ -35,12 +35,24 @@ function Home(): JSX.Element {
                     </div>
                 </section>
 
+                <section className="home-about home-container" id="who-are-we">
+                    <h2>מי אנחנו?</h2>
+                    <p>
+                        אנחנו צוות מומחים בשיווק דיגיטלי, עיצוב ופיתוח עם חזון אחד ברור: לאפשר לכל עסק, בכל גודל,
+                        להיראות כמו מותג מוביל. בעידן שבו הרושם הראשוני קובע – אנחנו כאן כדי לוודא שאתה בולט,
+                        מובן ונגיש ללקוחות שלך.
+                    </p>
+                    <p>
+                        הכרטיס הדיגיטלי שפיתחנו הוא תוצאה של ניסיון, הבנה עמוקה של צרכי עסקים קטנים, ורצון לתת כלי
+                        אפקטיבי, פשוט לשימוש, ומקצועי – בלי כאב ראש ובלי עלויות מיותרות.
+                    </p>
+                </section>
                 <section className="home-how-it-works home-container">
                     <h2>איך זה עובד?</h2>
                     <div className="home-steps">
                         <div className="home-step">
-                            <h3>1. נרשמים</h3>
-                            <p>נכנסים למערכת, יוצרים משתמש, ומתחילים את המסע הדיגיטלי שלך.</p>
+                            <h3>1. יוצרים קשר</h3>
+                            <p>יוצרים קשר דרך טופס יצירת הקשר, ונציג יחזור אלייך בהקדם.</p>
                         </div>
                         <div className="home-step">
                             <h3>2. בונים את הכרטיס</h3>
@@ -53,7 +65,7 @@ function Home(): JSX.Element {
                     </div>
                 </section>
 
-                <section className="home-who-is-it-for home-container">
+                <section className="home-who-is-it-for home-container" id="services">
                     <h2>למי זה מתאים?</h2>
                     <p>
                         הכרטיס הדיגיטלי מתאים לעצמאים, עסקים קטנים, נותני שירותים, מטפלים, מאמנים,
@@ -101,7 +113,7 @@ function Home(): JSX.Element {
                     <p>
                         אל תחכה – העולם עובר לדיגיטל. תן לנו לעזור לך להפוך את העסק שלך לנגיש, מרשים, ומקצועי תוך דקות.
                     </p>
-                    <a href="#contact-form-section"> <button className="home-cta-button">התחל עכשיו</button></a>
+                    <a href="#home-contact-form-section"> <button className="home-cta-button">התחל עכשיו</button></a>
                 </section>
 
                 <section className="home-contact-form-section" id="home-contact-form-section">
