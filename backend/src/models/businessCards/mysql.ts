@@ -154,6 +154,8 @@ class BusinessCards implements Model {
             FROM    business_cards  
             WHERE   ownedBy = ?
         `, [id]));
+
+        console.log(cards)
         return cards;
     }
 

@@ -16,8 +16,10 @@ import config from "config";
 const server = express();
 server.use(cors());
 server.use(express.json());
-server.use(expressFileUpload());
-server.use(authentication);
+server.use(expressFileUpload({
+    useTempFiles: true,
+    tempFileDir: path.resolve(__dirname, 'SavedImages'),
+})); server.use(authentication);
 server.use(stripTags);
 
 server.use('/api', authRouter)

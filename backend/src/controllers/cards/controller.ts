@@ -4,17 +4,28 @@ import { StatusCodes, ReasonPhrases } from "http-status-codes";
 import createHttpError, { BadRequest, NotFound, Unauthorized } from "http-errors";
 import config from 'config';
 import DTO from "../../models/businessCards/dto";
+import cloudinary from "../../utils/cloudinary";
 
 
 function convertCardToImageUrl(card: DTO) {
     const cardWithImageUrl = {
         ...card,
-        coverImageUrl: `${config.get<string>('app.protocol')}://${config.get<string>('app.host')}:${config.get<number>('app.port')}/images/${card.coverImage}`,
-        profileImageUrl: `${config.get<string>('app.protocol')}://${config.get<string>('app.host')}:${config.get<number>('app.port')}/images/${card.profileImage}`
+        coverImageUrl: `${card.coverImage}`,
+        profileImageUrl: `${card.profileImage}`
     }
     delete cardWithImageUrl.coverImage;
     delete cardWithImageUrl.profileImage;
     return cardWithImageUrl;
+}
+
+async function uploadToCloudinary(file: any) {
+    try {
+        const uploadResult = await cloudinary.uploader.upload(file.tempFilePath);
+        return uploadResult.secure_url;
+    } catch (error) {
+        console.log('Cloudinary Upload Error:', error);
+        throw new Error('Error uploading to Cloudinary');
+    }
 }
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
@@ -52,6 +63,14 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
         if (existingCard) {
             return res.status(400).json({ message: 'Company name already exists.', code: 'COMPANY_EXISTS' });
         }
+        if (req.files?.coverImageFile) {
+            req.body.coverImage = await uploadToCloudinary(req.files.coverImageFile);
+        }
+
+        if (req.files?.profileImageFile) {
+            req.body.profileImage = await uploadToCloudinary(req.files.profileImageFile);
+        }
+
         const card = await getModel().add(req.body);
         res.status(StatusCodes.CREATED).json(convertCardToImageUrl(card))
     } catch (err) {
@@ -73,6 +92,15 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
     try {
         const id = req.params.id;
         const updatedCard = { id, ...req.body }
+
+        if (req.files?.coverImageFile) {
+            updatedCard.coverImage = await uploadToCloudinary(req.files.coverImageFile);
+        }
+
+        if (req.files?.profileImageFile) {
+            updatedCard.profileImage = await uploadToCloudinary(req.files.profileImageFile);
+        }
+
         const card = await getModel().update(updatedCard);
         console.log(card)
         res.json(convertCardToImageUrl(card));

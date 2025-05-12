@@ -112,3 +112,42 @@ form {
     appearance: none;
     margin: 0 auto;
 }
+
+.image-preview-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.preview-image {
+    width: 160px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.delete-image-icon {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background-color: rgba(255, 0, 0, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.delete-image-icon:hover {
+    background-color: rgba(200, 0, 0, 1);
+}

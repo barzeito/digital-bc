@@ -55,10 +55,6 @@ function AdminPanel(): JSX.Element {
                             <h3>כרטיסים פעילים</h3>
                             <p>{cards.length} כרטיסים פעילים</p>
                         </div>
-                        <div className="status-card">
-                            <h3>פניות אחרונות</h3>
-                            <p>3 פניות חדשות</p>
-                        </div>
                     </section>
 
                     <section className="quick-links">
