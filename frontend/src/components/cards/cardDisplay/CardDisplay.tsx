@@ -18,7 +18,7 @@ import SocialModel from "../../../models/socialModel";
 import AddToContactsButton from "../../../utils/addToContact";
 import ScheduleAppointment from "../../userPanel/ScheduleAppointment/ScheduleAppointment";
 import appointmentsService from "../../../services/appointmentsService";
-
+import { QRCodeSVG } from "qrcode.react";
 
 function CardDisplay(): JSX.Element {
 
@@ -97,6 +97,11 @@ function CardDisplay(): JSX.Element {
                 <p style={{ color: colors.textColor }}>{socialLabels[platform]}</p>
             </a>
         );
+    };
+
+    const getQRCodeUrl = () => {
+        const domain = window.location.origin;
+        return `${domain}/cards/${card?.company}`;
     };
 
     useEffect(() => {
@@ -233,6 +238,23 @@ function CardDisplay(): JSX.Element {
                     <ScheduleAppointment companyId={card.id} />
                 )}
 
+                <div className="cd-share">
+                    <div className="cd-QRCode">
+                        {card && (
+                            <div className="qrcode-container">
+                                <h3 style={{ color: colors.themeColor }}>סרוק לשיתוף כרטיס הביקור</h3>
+                                <QRCodeSVG
+                                    value={getQRCodeUrl()}
+                                    size={150}
+                                    bgColor={"#ffffff"}
+                                    fgColor={colors.themeColor || "#000000"}
+                                    level={"H"}
+                                    includeMargin={true}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
                 {/* Map Popup */}
                 {isMapPopupOpen && (
                     <div className="mapPopup" onClick={() => setIsMapPopupOpen(false)}>

@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 function UserRoute({ element }: { element: JSX.Element }) {
     const [isOwner, setIsOwner] = useState<boolean | null>(null);
     const params = useParams();
-    const routeUserId = params.userId || params.id;
+    const routeUserId = params.userId || params.ownedBy || params.id;
 
     useEffect(() => {
         const token = authStore.getState().token;

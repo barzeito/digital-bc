@@ -5,13 +5,17 @@ import authService from "../../../services/authService";
 import notify from "../../../services/popupMessage";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../dashboardLayout/DashboardLayout";
+import { useState } from "react";
+import Loader from "../../layout/loader/Loader";
 
 function AddUser(): JSX.Element {
     const { register, handleSubmit, formState, reset } = useForm<SignUpModel>();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     async function submitNewUser(data: SignUpModel) {
         try {
+            setLoading(true);
             await authService.signUp(data);
             notify.success("המשתמש נוצר בהצלחה!");
             reset();
@@ -24,6 +28,8 @@ function AddUser(): JSX.Element {
             } else {
                 notify.error("אירעה שגיאה. נסה שוב.");
             }
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -76,12 +82,15 @@ function AddUser(): JSX.Element {
                             <span className="error">{formState.errors.roleId?.message}</span>
                         </div>
                     </div>
-
                     <div className="buttons">
-                        <button className="submit-btn">שמירה</button>
-                        <button type="button" className="cancel-btn" onClick={() => navigate("/panel/admin/users")}>
-                            ביטול
-                        </button>
+                        {!loading ? (
+                            <>
+                                <button className="submit-btn">שמירה</button>
+                                <button type="button" className="cancel-btn" onClick={() => navigate("/panel/admin/users")}>ביטול</button>
+                            </>
+                        ) : (
+                            <Loader />
+                        )}
                     </div>
                 </form>
             </DashboardLayout>

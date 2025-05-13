@@ -38,7 +38,7 @@ function Routing(): JSX.Element {
 
 
             <Route path="/panel/user/:id" element={<UserRoute element={<UserDash />} />} />
-            <Route path="/panel/user/edit-card/:userId/:id" element={<UserRoute element={<EditCard />} />} />
+            <Route path="/panel/user/edit-card/:ownedBy/:id" element={<UserRoute element={<EditCard />} />} />
             <Route path="/panel/user/appointments/edit/:userId/:id" element={<PremiumRoute element={<AppointmentsForm />} />} />
             <Route path="/panel/user/appointments/list/:userId/:id" element={<PremiumRoute element={<AppointmentList />} />} />
 

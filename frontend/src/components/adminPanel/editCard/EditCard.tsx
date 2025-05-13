@@ -137,6 +137,7 @@ function EditCard(): JSX.Element {
                                     minLength: { value: 2, message: 'שם החברה חייב להיות מינימום 2 תווים.' },
                                     required: { value: true, message: 'שדה חובה!' }
                                 })} />
+                                <span>ללא רווחי, ישמש ככתובת הכרטיס</span>
                                 <span className="error">{formState.errors.company?.message}</span>
                             </div>
 
