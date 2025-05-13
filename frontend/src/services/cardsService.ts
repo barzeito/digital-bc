@@ -66,12 +66,41 @@ class CardsService {
     }
 
     public async editCard(card: CardModel): Promise<CardModel> {
+        const formData = new FormData();
+
+        // Check through the 'card' object and add each field to formdata
+        Object.entries(card).forEach(([key, value]) => {
+            // Check if the value is defined and not one of the file or social fields
+            if (
+                value !== undefined &&
+                key !== 'coverImageFile' &&
+                key !== 'profileImageFile' &&
+                key !== 'social'
+            ) {
+                // Append each field to the formdata, converting null to a string
+                formData.append(key, value === null ? 'null' : String(value));
+            }
+        });
+
+        // Check if a cover image file is provided and append it to the FormData
+        if (card.coverImageFile) {
+            formData.append("coverImageFile", card.coverImageFile);
+        } else if ((card as any).deleteCoverImage) {
+            // If no new cover image is provided, delete the existing one, add delete flag
+            formData.append("deleteCoverImage", "true");
+        }
+
+        if (card.profileImageFile) {
+            formData.append("profileImageFile", card.profileImageFile);
+        } else if ((card as any).deleteProfileImage) {
+            formData.append("deleteProfileImage", "true");
+        }
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         };
-        const response = await axios.patch<CardModel>(appConfig.cardsUrl + `/${card.id}`, card, config)
+        const response = await axios.patch<CardModel>(appConfig.cardsUrl + `/${card.id}`, formData, config);
         if (response.status === 400) {
             throw response.data;
         }
@@ -80,6 +109,7 @@ class CardsService {
             type: CardsActionType.updateCard,
             payload: updatedCard
         };
+
         CardsStore.dispatch(action);
         return updatedCard;
     }

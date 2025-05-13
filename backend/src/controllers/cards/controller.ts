@@ -114,13 +114,31 @@ export const patch = async (req: Request, res: Response, next: NextFunction) => 
     try {
         const id = req.params.id;
         const existingCard = await getModel().getOneById(id);
-        const updatedCard = { ...existingCard, ...req.body };
+
+        const updatedCard: any = { ...existingCard, ...req.body, id };
+
+        // Handle cover image upload / delete
+        if (req.files?.coverImageFile) {
+            updatedCard.coverImage = await uploadToCloudinary(req.files.coverImageFile);
+        } else if (req.body.coverImageUrl === 'null' || req.body.coverImageUrl === null) {
+            updatedCard.coverImage = null;
+        }
+
+        // Handle profile image upload / delete
+        if (req.files?.profileImageFile) {
+            updatedCard.profileImage = await uploadToCloudinary(req.files.profileImageFile);
+        } else if (req.body.profileImageUrl === 'null' || req.body.profileImageUrl === null) {
+            updatedCard.profileImage = null;
+        }
+
         const card = await getModel().update(updatedCard);
-        res.status(StatusCodes.OK).json(convertCardToImageUrl(card))
+        res.status(StatusCodes.OK).json(convertCardToImageUrl(card));
+
     } catch (err) {
-        next(err)
+        next(err);
     }
-}
+};
+
 
 export const getUserCards = async (req: Request, res: Response, next: NextFunction) => {
     try {

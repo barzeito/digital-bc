@@ -82,14 +82,18 @@ function EditCard(): JSX.Element {
             card.coverImageFile = (card.coverImageFile as unknown as FileList)?.[0] || null;
             card.profileImageFile = (card.profileImageFile as unknown as FileList)?.[0] || null;
 
-            if (card.coverImageFile === null) {
-                card.coverImageFile = null
-                card.coverImageUrl = null;
-            }
-            if (card.profileImageFile === null) {
-                card.profileImageFile = null;
-                card.profileImageUrl = null;
-            }
+            // if there's no new file set delete...Image to true else it will be false
+            const deleteCoverImage = !card.coverImageFile && !coverSrc;
+            const deleteProfileImage = !card.profileImageFile && !profileSrc;
+
+            // set the image file of the card means doesn't do anything new
+            card.coverImageFile = card.coverImageFile;
+            card.profileImageFile = card.profileImageFile;
+
+            //add the "flag" delete to the card if needed
+            (card as any).deleteCoverImage = deleteCoverImage;
+            (card as any).deleteProfileImage = deleteProfileImage;
+
             card.id = cardId;
             await cardsService.editCard(card);
 
