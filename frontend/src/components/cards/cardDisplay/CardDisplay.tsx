@@ -54,6 +54,23 @@ function CardDisplay(): JSX.Element {
         phone: "טלפון"
     };
 
+    const handleWhatsAppShare = () => {
+        const url = getQRCodeUrl();
+        const text = `היי, אני חושב שזה יעניין אותך: כרטיס ביקור דיגיטלי של ${card?.name} - ${url}`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(whatsappUrl, '_blank');
+    };
+
+    // Share via Email
+    const handleEmailShare = () => {
+        const url = getQRCodeUrl();
+        const subject = `כרטיס ביקור דיגיטלי - ${card?.name}`;
+        const body = `היי,\n\nרציתי לשתף איתך את כרטיס הביקור הדיגיטלי של ${card?.name}.\n\nקישור לכרטיס: ${url}\n\nבברכה,`;
+        const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.open(mailtoUrl, '_blank');
+    };
+
+
     const renderSocialLink = (platform: string) => {
         const value = socialLinks[platform];
         if (!value) return null;
