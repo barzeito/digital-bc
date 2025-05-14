@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import { authStore } from "../../../redux/authState";
 import authService from "../../../services/authService";
 import notify from "../../../services/popupMessage";
+import logo from "../../../assets/images/wjs-logo.png"
 
 function AuthMenu(): JSX.Element {
     type User = {
@@ -63,7 +64,8 @@ function AuthMenu(): JSX.Element {
     return (
         <div className="AuthMenu">
             <div className="companyLogo">
-                <p>כרטיסי ביקור דיגיטלים</p>
+                <img src={logo} alt="" />
+                {/* <p>כרטיסי ביקור דיגיטלים</p> */}
             </div>
 
             {/* Mobile menu toggle button */}

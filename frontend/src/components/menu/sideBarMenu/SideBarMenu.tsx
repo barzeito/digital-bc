@@ -72,7 +72,7 @@ function SideBarMenu(): JSX.Element | null {
                     <div className="SideTitle">
                         <div className="companyLogo">
                             <i className="fas fa-id-card-alt"></i>
-                            <span>DigitalCards</span>
+                            <span>WJS Innovations</span>
                         </div>
                     </div>
 

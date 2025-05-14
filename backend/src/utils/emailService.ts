@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 export const sendWelcomeEmail = async (email: string, firstName: string, password: string) => {
     const mailOptions = {
-        from: '"Digital Business Cards" <dbc@gmail.com>',
+        from: '"WJS Innovations" <dbc@gmail.com>',
         to: email,
         subject: "ברוך הבא! הפרטים שלך למערכת",
         html: `
@@ -19,7 +19,7 @@ export const sendWelcomeEmail = async (email: string, firstName: string, passwor
             <h2 style="color: #333;">שלום ${firstName},</h2>
             
             <p style="font-size: 16px; color: #444;">
-                ברוך הבא למערכת <strong>Digital Business Cards</strong>!
+                ברוך הבא למערכת <strong>WJS Innovations</strong>!
             </p>
         
             <p style="font-size: 16px; color: #444;">
@@ -50,7 +50,7 @@ export const sendWelcomeEmail = async (email: string, firstName: string, passwor
         
             <p style="font-size: 14px; color: #666;">
                 בברכה,<br>
-                צוות <strong>Digital Business Cards</strong>
+                צוות <strong>WJS Innovations</strong>
             </p>
         </div>
     `
@@ -66,7 +66,7 @@ export const sendWelcomeEmail = async (email: string, firstName: string, passwor
 
 export const sendResetEmail = async (email: string, resetLink: string) => {
     const mailOptions = {
-        from: '"Digital Business Cards" <dbc@gmail.com>',
+        from: '"WJS Innovations" <dbc@gmail.com>',
         to: email,
         subject: "איפוס סיסמה",
         html: `
@@ -112,7 +112,7 @@ export const sendResetEmail = async (email: string, resetLink: string) => {
     
                 <p style="font-size: 14px; color: #666;">
                     בברכה,<br>
-                    צוות <strong>Digital Business Cards</strong>
+                    צוות <strong>WJS Innovations</strong>
                 </p>
             </div>
         `
@@ -131,15 +131,15 @@ export const sendAppointmentConfirmationEmail = async (
     message?: string
 ) => {
     const mailOptions = {
-        from: '"Digital Business Cards" <dbc@gmail.com>',
+        from: '"WJS Innovations" <dbc@gmail.com>',
         to: email,
-        subject: "אישור קביעת תור - Digital Business Cards",
+        subject: "אישור קביעת תור - WJS Innovations",
         html: `
         <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto;">
             <h2 style="color: #333;">שלום ${firstName},</h2>
             
             <p style="font-size: 16px; color: #444;">
-                תורך נקבע בהצלחה במערכת <strong>Digital Business Cards</strong>!
+                תורך נקבע בהצלחה במערכת <strong>WJS Innovations</strong>!
             </p>
         
             <p style="font-size: 16px; color: #444;">
@@ -165,7 +165,7 @@ export const sendAppointmentConfirmationEmail = async (
         
             <p style="font-size: 14px; color: #666;">
                 בברכה,<br>
-                צוות <strong>Digital Business Cards</strong>
+                צוות <strong>WJS Innovations</strong>
             </p>
         </div>
     `
@@ -186,18 +186,18 @@ export const sendAppointmentToCompanyEmail = async (
     appointmentDate: string,
     appointmentTime: string,
     phone: string,
-    message?: string 
+    message?: string
 ) => {
     const mailOptions = {
-        from: '"Digital Business Cards" <dbc@gmail.com>',
+        from: '"WJS Innovations" <dbc@gmail.com>',
         to: companyEmail,
-        subject: "תור חדש נקבע - Digital Business Cards",
+        subject: "תור חדש נקבע - WJS Innovations",
         html: `
         <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto;">
             <h2 style="color: #333;">שלום,</h2>
             
             <p style="font-size: 16px; color: #444;">
-                לקוח חדש קבע תור במערכת <strong>Digital Business Cards</strong>.
+                לקוח חדש קבע תור במערכת <strong>WJS Innovations</strong>.
             </p>
         
             <p style="font-size: 16px; color: #444;">
@@ -231,7 +231,7 @@ export const sendAppointmentToCompanyEmail = async (
         
             <p style="font-size: 14px; color: #666;">
                 בברכה,<br>
-                צוות <strong>Digital Business Cards</strong>
+                צוות <strong>WJS Innovations</strong>
             </p>
         </div>
     `
@@ -253,7 +253,7 @@ export const sendContactEmail = async (
     message: string
 ) => {
     const mailOptions = {
-        from: `"Digital Business Cards" <dbc@gmail.com>`,
+        from: `"WJS Innovations" <dbc@gmail.com>`,
         to: adminEmail,
         subject: `פנייה חדשה - ${subject}`,
         html: `
@@ -261,7 +261,7 @@ export const sendContactEmail = async (
             <h2 style="color: #333;">פנייה חדשה מהאתר</h2>
             
             <p style="font-size: 16px; color: #444;">
-                התקבלה פנייה חדשה מטופס צור קשר באתר <strong>Digital Business Cards</strong>.
+                התקבלה פנייה חדשה מטופס צור קשר באתר <strong>WJS Innovations</strong>.
             </p>
         
             <ul style="font-size: 16px; color: #444; list-style-type: none; padding: 0;">
@@ -279,7 +279,7 @@ export const sendContactEmail = async (
         
             <p style="font-size: 14px; color: #666;">
                 בברכה,<br>
-                מערכת <strong>Digital Business Cards</strong>
+                מערכת <strong>WJS Innovations</strong>
             </p>
         </div>
         `

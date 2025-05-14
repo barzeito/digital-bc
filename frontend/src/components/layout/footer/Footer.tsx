@@ -7,7 +7,7 @@ const getYear = (): number => {
 function Footer(): JSX.Element {
     return (
         <div className="Footer">
-            <p>&copy; {getYear()} Digital Business Cards</p>
+            <p>&copy; {getYear()} WJS Digital Innovations Ltd</p>
         </div>
     );
 }

@@ -3,9 +3,11 @@ import AuthMenu from "../auth/authMenu/AuthMenu";
 import "./Home.css";
 import socialService from "../../services/socialService";
 import notify from "../../services/popupMessage";
+import Loader from "../layout/loader/Loader";
 
 function Home(): JSX.Element {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,11 +16,14 @@ function Home(): JSX.Element {
     const handleContactSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            setLoading(true)
             await socialService.sendContactEmail(formData.name, formData.email, formData.message);
             notify.success("ההודעה נשלחה בהצלחה!");
             setFormData({ name: "", email: "", message: "" });
         } catch {
             notify.error("אירעה שגיאה. נסה שוב.");
+        } finally {
+            setLoading(false)
         }
     };
     return (
@@ -143,7 +148,13 @@ function Home(): JSX.Element {
                                 onChange={handleChange}
                                 required
                             />
-                            <button type="submit" className="home-cta-button">שלח</button>
+                            {!loading ? (
+                                <>
+                                    <button type="submit" className="home-cta-button">שלח</button>
+                                </>
+                            ) : (
+                                <Loader />
+                            )}
                         </form>
                     </div>
                 </section>
