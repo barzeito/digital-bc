@@ -1,151 +1,470 @@
+/* ====== Global Styles for Home Page ====== */
 .HomePage {
-    font-family: "Assistant", sans-serif;
-    background: linear-gradient(to bottom, #f9f9f9, #ffffff);
-    color: #333;
-    animation: fadeIn 0.6s ease-in;
+    font-family: 'Assistant', sans-serif;
+    background: linear-gradient(to bottom, #f8f9fb, #ffffff);
+    color: #2c3e50;
+    animation: smoothFadeIn 0.8s ease-in;
+    overflow-x: hidden;
 }
 
+/* Main container layout */
 .home-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
-    padding: 80px 20px;
+    padding: 100px 40px;
 }
 
-.HomePage  a{
+/* ====== Links ====== */
+.HomePage a {
     text-decoration: none;
+    color: #1e3a8a;
+    transition: color 0.3s ease;
 }
-.HomePage  h1,
-.HomePage  h2 {
-    font-weight: bold;
+
+.HomePage a:hover {
+    color: #3b82f6;
+}
+
+/* ====== Headings ====== */
+.HomePage h1,
+.HomePage h2 {
+    font-weight: 700;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    position: relative;
 }
 
-.HomePage  h1 {
-    font-size: 3rem;
-    color: #0b0c4c;
+.HomePage h1 {
+    font-size: 3.5rem;
+    color: #1e3a8a;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
 }
 
-.HomePage  h2 {
-    font-size: 2.2rem;
-    color: #181861;
+.HomePage h2 {
+    font-size: 2.5rem;
+    color: #1e3a8a;
+    letter-spacing: -0.02em;
 }
 
-.HomePage  p {
-    font-size: 1.2rem;
+/* Decorative underline for h2 */
+.HomePage h2::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #3b82f6, #1e3a8a);
+    margin: 20px auto 0;
+    border-radius: 2px;
+}
+
+/* Smaller headings */
+.HomePage h3 {
+    font-size: 1.6rem;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.HomePage h4 {
+    font-size: 1.3rem;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* ====== Paragraphs ====== */
+.HomePage p {
+    font-size: 1.25rem;
     text-align: center;
     max-width: 800px;
     margin: 0 auto 40px auto;
-    line-height: 1.7;
+    line-height: 1.8;
+    color: #475569;
 }
 
+/* ====== Features List ====== */
 ul.home-features-list {
     list-style: none;
     padding: 0;
     font-size: 1.2rem;
-    line-height: 2;
+    line-height: 2.2;
     text-align: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 40px auto;
+    max-width: 1000px;
 }
 
+ul.home-features-list li {
+    background-color: #f8fafc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    padding-right: 35px;
+    text-align: right;
+    
+}
+
+/* Hover animation for feature item */
+ul.home-features-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkmark icon before feature text */
 ul.home-features-list li::before {
-    content: "✔";
-    color: #00c853;
-    margin-left: 10px;
+    content: "✓";
+    color: #fff;
+    background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: -10px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    font-weight: bold;
 }
 
+/* ====== Contact Button ====== */
 .home-cta-button {
-    background-color: #181861;
+    background: linear-gradient(135deg, #3b82f6, #1e3a8a);
     color: white;
-    padding: 14px 32px;
+    padding: 16px 40px;
     border: none;
-    border-radius: 30px;
-    font-size: 1.1rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
     display: block;
-    margin: 20px auto;
+    margin: 30px auto;
+    box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3);
+    position: relative;
+    overflow: hidden;
 }
 
 .home-cta-button:hover {
-    background-color: #33339b;
-    transform: scale(1.05);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
 }
 
+.home-cta-button:active {
+    transform: translateY(1px);
+}
+
+.home-cta-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+    z-index: 1;
+}
+
+.home-cta-button:hover::after {
+    transform: translateX(0);
+}
+
+/* ====== Hero Section ====== */
 .home-hero {
-    background: linear-gradient(135deg, #e3f2fd, #fff);
+    background: radial-gradient(ellipse at top, #e0f2fe, transparent),
+        radial-gradient(ellipse at bottom, #e1effe, transparent),
+        linear-gradient(135deg, #f0f9ff, #dbeafe);
     text-align: center;
-    padding: 100px 20px;
-    animation: fadeInUp 1s ease;
+    padding: 150px 20px;
+    animation: fadeInUp 1.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Decorative dots in hero background */
+.home-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+}
+
+.home-hero .home-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Hero heading and text */
+.home-hero h1 {
+    margin-bottom: 30px;
+    display: inline-block;
+}
+
+.home-hero p {
+    font-size: 1.4rem;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    color: #334155;
+    line-height: 1.6;
+}
+
+/* ====== Steps Section ====== */
 .home-steps {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
-}
-
-@media (min-width: 768px) {
-    .steps {
-        flex-direction: row;
-        justify-content: space-between;
-    }
+    margin-top: 50px;
 }
 
 .home-step {
     background-color: #ffffff;
     border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border: 1px solid #f1f5f9;
 }
 
-.step:hover {
-    transform: translateY(-5px);
+.home-step:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
-.home-faq-item {
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: #f1f1f1;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.home-contact-form-section {
-    background: #f0f8ff;
-    padding: 100px 20px;
+/* Step title with animation background */
+.home-step h3 {
+    color: #1e3a8a;
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
+.home-step h3::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+    opacity: 0.1;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.4s ease;
+    z-index: -1;
+}
+
+.home-step:hover h3::before {
+    transform: scale(5);
+}
+
+.home-step p {
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    color: #475569;
+}
+
+/* ====== FAQ Section ====== */
+.home-faq-item {
+    margin-bottom: 20px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    border-left: 4px solid #3b82f6;
+}
+
+.home-faq-item:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+/* FAQ title */
+.home-faq-item h4 {
+    margin-bottom: 15px;
+    color: #1e3a8a;
+    font-weight: 600;
+    position: relative;
+    padding-right: 30px;
+}
+
+/* Plus icon with animation */
+.home-faq-item h4::before {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #3b82f6;
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+
+.home-faq-item:hover h4::before {
+    transform: rotate(45deg);
+}
+
+.home-faq-item p {
+    margin-bottom: 0;
+    text-align: right;
+    color: #475569;
+}
+
+/* ====== Contact Form Section ====== */
+.home-contact-form-section {
+    background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%);
+    padding: 120px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.home-contact-form-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Contact form box */
 .home-contact-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .home-contact-form input,
 .home-contact-form textarea {
-    padding: 14px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
+    padding: 18px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
 }
 
 .home-contact-form input:focus,
 .home-contact-form textarea:focus {
-    border-color: #181861;
+    border-color: #3b82f6;
     outline: none;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
 .home-contact-form textarea {
     resize: vertical;
-    min-height: 120px;
+    min-height: 150px;
 }
 
-@keyframes fadeIn {
+.home-contact-form .home-cta-button {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* ====== Final CTA Section ====== */
+.home-final-cta {
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
+    color: white;
+    padding: 100px 20px;
+    margin: 80px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.home-final-cta::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    top: -150px;
+    right: -150px;
+}
+
+.home-final-cta h2 {
+    color: white;
+    font-size: 2.8rem;
+}
+
+.home-final-cta p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.3rem;
+    margin-bottom: 50px;
+}
+
+.home-final-cta .home-cta-button {
+    background: white;
+    color: #1e3a8a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.home-final-cta .home-cta-button:hover {
+    background: white;
+    transform: translateY(-5px);
+}
+
+/* Responsive improvements */
+@media (min-width: 768px) {
+    .home-steps {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .home-faq-item {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    .HomePage h1 {
+        font-size: 2.5rem;
+    }
+
+    .HomePage h2 {
+        font-size: 2rem;
+    }
+
+    .home-container {
+        padding: 60px 20px;
+    }
+
+    .home-hero {
+        padding: 100px 20px;
+    }
+
+    .home-contact-form {
+        padding: 30px;
+    }
+}
+
+/* Smooth animations */
+@keyframes smoothFadeIn {
     from {
         opacity: 0;
     }
@@ -158,11 +477,26 @@ ul.home-features-list li::before {
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(50px);
     }
 
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* Additional animations for enterprise feel */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
     }
 }
