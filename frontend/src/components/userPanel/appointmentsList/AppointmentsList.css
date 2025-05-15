@@ -1,12 +1,12 @@
 .AppointmentList {
-    background-color: #f7f7f7;
+    background-color: var(--Background-Color);
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .AppointmentList h2 {
     font-size: 24px;
-    color: #333;
+    color: var(--Black-Text-Color);
     margin-bottom: 20px;
     text-align: center;
 }
@@ -17,7 +17,7 @@
 }
 
 .AppointmentList li {
-    background-color: #fff;
+    background-color: var(--Background-Color);
     border: 1px solid #ddd;
     border-radius: 8px;
     margin-bottom: 15px;
@@ -29,18 +29,18 @@
 
 .AppointmentList li strong {
     font-size: 18px;
-    color: #333;
+    color: var(--Black-Text-Color);
 }
 
 .AppointmentList li .phone,
 .AppointmentList li .date-time {
     font-size: 14px;
-    color: #777;
+    color: var(--Black-Text-Color);
 }
 
 .AppointmentList li .note {
     font-size: 14px;
-    color: #555;
+    color: var(--Black-Text-Color);
     margin-top: 10px;
 }
 
@@ -83,7 +83,7 @@
 .edit-appointment-form h3 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: #333;
+    color: var(--Black-Text-Color);
 }
 
 .edit-appointment-form .form-group {
@@ -94,7 +94,7 @@
     display: block;
     margin-bottom: 0.4rem;
     font-weight: 500;
-    color: #444;
+    color: var(--Black-Text-Color);
 }
 
 .edit-appointment-form input,

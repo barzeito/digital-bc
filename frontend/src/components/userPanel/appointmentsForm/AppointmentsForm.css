@@ -75,12 +75,12 @@
 
 .availability-btn.available {
     background-color: var(--Cancel-Button);
-    color: #fff;
+    color: var(--White-Text-Color);
 }
 
 .availability-btn.unavailable {
     background-color: #4CAF50;
-    color: #fff;
+    color: var(--White-Text-Color);
 }
 
 .appOptions {

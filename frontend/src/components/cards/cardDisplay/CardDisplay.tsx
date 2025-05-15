@@ -19,6 +19,7 @@ import AddToContactsButton from "../../../utils/addToContact";
 import ScheduleAppointment from "../../userPanel/ScheduleAppointment/ScheduleAppointment";
 import appointmentsService from "../../../services/appointmentsService";
 import { QRCodeSVG } from "qrcode.react";
+import Footer from "../../layout/footer/Footer";
 
 function CardDisplay(): JSX.Element {
 
@@ -54,6 +55,7 @@ function CardDisplay(): JSX.Element {
         phone: "טלפון"
     };
 
+
     const handleWhatsAppShare = () => {
         const url = getQRCodeUrl();
         const text = `היי, אני חושב שזה יעניין אותך: כרטיס ביקור דיגיטלי של ${card?.name} - ${url}`;
@@ -61,7 +63,6 @@ function CardDisplay(): JSX.Element {
         window.open(whatsappUrl, '_blank');
     };
 
-    // Share via Email
     const handleEmailShare = () => {
         const url = getQRCodeUrl();
         const subject = `כרטיס ביקור דיגיטלי - ${card?.name}`;
@@ -69,7 +70,6 @@ function CardDisplay(): JSX.Element {
         const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.open(mailtoUrl, '_blank');
     };
-
 
     const renderSocialLink = (platform: string) => {
         const value = socialLinks[platform];
@@ -119,6 +119,25 @@ function CardDisplay(): JSX.Element {
     const getQRCodeUrl = () => {
         const domain = window.location.origin;
         return `${domain}/cards/${card?.company}`;
+    };
+
+    const renderShareIcon = (platform: "whatsapp" | "email") => {
+        const IconComponent = socialIcons[platform];
+        if (!IconComponent) return null;
+
+        const handleClick =
+            platform === "whatsapp" ? handleWhatsAppShare : handleEmailShare;
+
+        return (
+            <button key={`share-${platform}`} onClick={handleClick} className="social-item"
+                style={{ background: "none", border: "none", cursor: "pointer" }}>
+
+                <IconComponent className="social-icon" style={{ fill: colors.themeColor }} />
+                <p style={{ color: colors.textColor }}>
+                    {platform === "whatsapp" ? "שתף בווטסאפ" : "שלח באימייל"}
+                </p>
+            </button>
+        );
     };
 
     useEffect(() => {
@@ -271,6 +290,13 @@ function CardDisplay(): JSX.Element {
                             </div>
                         )}
                     </div>
+                    <div className="cd-share-options">
+                        <h4 style={{ color: colors.themeColor }}>שתפו אותנו</h4>
+                        <div className="cd-share-icons">
+                            {renderShareIcon("whatsapp")}
+                            {renderShareIcon("email")}
+                        </div>
+                    </div>
                 </div>
                 {/* Map Popup */}
                 {isMapPopupOpen && (
@@ -295,6 +321,12 @@ function CardDisplay(): JSX.Element {
                     </div>
                 )}
             </div>
+            <footer className="cd-footer" style={{
+                backgroundColor: colors.backgroundColor,
+                color: colors.textColor,
+            }}>
+                <Footer />
+            </footer>
         </div>
     );
 

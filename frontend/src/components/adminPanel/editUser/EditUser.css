@@ -1,5 +1,5 @@
 .EditUser {
-    background-color: #fff;
+    background-color: var(--Background-Color);
     border-radius: 1rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     direction: rtl;
@@ -40,7 +40,7 @@ form {
 .edit-group select {
     padding: 0.75rem;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--Tertiary-Color);
     border-radius: 0.5rem;
     transition: border-color 0.3s;
 }
