@@ -15,10 +15,11 @@
     text-decoration: none;
     font-weight: 600;
     transition: background-color 0.2s ease;
+    gap: 5px;
 }
 
 .newCard-btn:hover {
-    background-color: #56a2aa;
+    background-color: var(--Sub-Color);
 }
 
 .NavIcon {

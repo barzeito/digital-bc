@@ -32,8 +32,8 @@ function UserList(): JSX.Element {
                 </div>
                 <div className="cards-options">
                     <NavLink to="/panel/admin/users/add-user" className="newCard-btn">
-                        <div className="NavIcon"><i className="fa-solid fa-plus"></i></div>
-                        <div className="NavText">יצירת משתמש חדש</div>
+                        <div className="newCard-icon"><i className="fa-solid fa-plus"></i></div>
+                        <div className="newCard-text">יצירת משתמש חדש</div>
                     </NavLink>
                 </div>
                 <div className="DisplayUsers">

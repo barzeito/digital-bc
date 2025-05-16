@@ -1,161 +1,363 @@
+/* ====== AuthMenu Styles ====== */
 .AuthMenu {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 20px;
+    padding: 15px 40px;
     direction: rtl;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+/* Logo styling */
+.companyLogo {
+    display: flex;
+    align-items: center;
 }
 
 .companyLogo img {
-    width: 150px;
+    width: 130px;
     height: 100px;
+    transition: transform 0.3s ease;
+}
+
+.companyLogo img:hover {
+    transform: scale(1.05);
+}
+
+/* Navigation items styling */
+.navigationItems {
+    display: flex;
+    align-items: center;
 }
 
 .navigationItems ul {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 30px;
     padding: 0;
     margin: 0;
 }
 
+.navigationItems li {
+    position: relative;
+}
+
 .navigationItems a {
     text-decoration: none;
-    color: var(--Black-Text-Color);
+    color: var(--Sub-Color);
     display: inline-block;
-    font-size: 22px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 8px 0;
+    position: relative;
+}
+
+/* Hover effect with animated underline */
+.navigationItems a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, var(--Secondary-Color), var(--Sub-Color));
+    transition: width 0.3s ease;
+}
+
+.navigationItems a:hover::after {
+    width: 100%;
 }
 
 .navigationItems a:hover {
     color: var(--Secondary-Color);
-    transform: scale(1.2);
+    transform: translateY(-2px);
 }
 
+/* Special styling for contact link */
+.navigationItems a[href="#home-contact-form-section"] {
+    background: linear-gradient(135deg, var(--Secondary-Color), var(--Sub-Color));
+    color: white;
+    padding: 8px 18px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.navigationItems a[href="#home-contact-form-section"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.navigationItems a[href="#home-contact-form-section"]::after {
+    display: none;
+}
+
+/* User menu styling */
 .menuItems {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    font-size: 18px;
+    align-items: flex-start;
+    font-size: 1rem;
+}
+
+.menuItems .userDiv {
+    margin-bottom: 5px;
 }
 
 .menuItems .userItem {
-    font-size: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--Sub-Color);
+    display: flex;
+    align-items: center;
 }
 
 .menuItems .loginButton {
     display: flex;
-    text-decoration: none;
     align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
 }
 
 .loginButton .NavLogin {
-    color: var(--Black-Text-Color);
+    color: var(--Sub-Color);
     text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
-.NavLogged .action,
-.NavLogin {
-    text-decoration: none;
-    color: var(--Black-Text-Color);
-}
-
-.NavLogged .action:hover,
-.NavLogin:hover,
-.UserLogin:hover {
+.NavLoginIcon {
     color: var(--Secondary-Color);
-    text-decoration: underline;
+    margin-right: 8px;
+    transition: all 0.3s ease;
 }
 
+.loginButton:hover .NavLogin {
+    color: var(--Secondary-Color);
+}
+
+.loginButton:hover .NavLoginIcon {
+    transform: translateX(-5px);
+}
+
+/* User logged-in menu styling */
 .NavLogged {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     margin-top: 5px;
 }
 
+.NavLogged .action {
+    text-decoration: none;
+    color: #475569;
+    position: relative;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.NavLogged .action:hover {
+    color: var(--Secondary-Color);
+}
+
+.NavLogged .action::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(135deg, var(--Secondary-Color), var(--Sub-Color));
+    transition: width 0.3s ease;
+}
+
+.NavLogged .action:hover::after {
+    width: 100%;
+}
+
+/* Mobile menu toggle styling */
 .mobileMenuToggle {
     display: none;
     cursor: pointer;
     font-size: 24px;
+    color: var(--Sub-Color);
     z-index: 100;
+    transition: all 0.3s ease;
 }
 
-/* Contact link underline */
-.navigationItems a[href="#home-contact-form-section"] {
-    border-bottom: 2px solid var(--Secondary-Color);
-    padding-bottom: 2px;
+.mobileMenuToggle:hover {
+    color: var(--Secondary-Color);
 }
 
+/* Mobile user menu (hidden by default) */
 .mobileUserMenu {
     display: none;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 992px) {
+    .AuthMenu {
+        padding: 15px 20px;
+    }
+    
+    .navigationItems ul {
+        gap: 20px;
+    }
 }
 
 @media screen and (max-width: 768px) {
     .AuthMenu {
         flex-wrap: wrap;
-        padding: 10px;
+        padding: 12px 15px;
     }
 
-    .companyLogo {
-        font-size: 20px;
-        flex: 1;
+    .companyLogo img {
+        width: 110px;
     }
 
+    /* Show mobile menu toggle */
     .mobileMenuToggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(59, 130, 246, 0.1);
     }
 
+    /* Mobile navigation styling */
     .navigationItems {
         width: 100%;
         height: 0;
         overflow: hidden;
-        transition: height 0.3s ease;
+        transition: all 0.4s ease;
+        opacity: 0;
+        visibility: hidden;
         order: 3;
+        display: flex;
+        flex-direction: column;
     }
 
     .navigationItems.open {
         height: auto;
+        opacity: 1;
+        visibility: visible;
+        margin-top: 15px;
     }
 
     .navigationItems ul {
         flex-direction: column;
-        gap: 15px;
+        gap: 5px;
         margin-top: 15px;
+        width: 100%;
+        order: 1;
+    }
+    
+    .navigationItems li {
+        width: 100%;
+        border-bottom: 1px solid rgba(30, 58, 138, 0.1);
+        padding: 10px 0;
+    }
+    
+    .navigationItems li:last-child {
+        border-bottom: none;
     }
 
+    .navigationItems a {
+        display: block;
+        width: 100%;
+        padding: 8px 0;
+    }
+    
+    /* Special styling for contact link on mobile */
+    .navigationItems a[href="#home-contact-form-section"] {
+        display: inline-block;
+        margin-top: 5px;
+        text-align: center;
+        width: auto;
+    }
+
+    /* Hide desktop user menu */
     .menuItems {
         display: none;
     }
 
+    /* Show mobile user menu */
     .mobileUserMenu {
         display: block;
         margin-top: 20px;
-        border-top: 1px solid #eee;
+        border-top: 1px solid rgba(30, 58, 138, 0.1);
         padding-top: 15px;
+        width: 100%;
+        order: 2;
     }
 
     .mobileUserMenu .userItem {
         margin-bottom: 10px;
-        font-size: 18px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--Sub-Color);
+        display: block;
     }
 
-    .NavLogged {
-        flex-direction: column;
+    .mobileUserMenu .loginButton {
+        display: flex;
         align-items: center;
-        gap: 15px;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(30, 58, 138, 0.1);
+    }
+
+    .mobileUserMenu .NavLogged {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+    }
+    
+    .mobileUserMenu .NavLogged .action {
+        display: block;
+        width: 100%;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(30, 58, 138, 0.1);
+    }
+    
+    .mobileUserMenu .NavLogged .action:last-child {
+        border-bottom: none;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .companyLogo {
-        font-size: 18px;
+    .companyLogo img {
+        width: 100px;
     }
-
-    .menuItems .userItem {
-        font-size: 16px;
+    
+    .mobileUserMenu .userItem {
+        font-size: 1rem;
     }
-
+    
     .navigationItems a {
-        font-size: 18px;
+        font-size: 1rem;
+    }
+}
+
+/* Add scroll animation for fixed navbar */
+@media screen and (min-width: 769px) {
+    .AuthMenu.scrolled {
+        padding: 10px 40px;
+        background-color: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .AuthMenu.scrolled .companyLogo img {
+        width: 110px;
     }
 }

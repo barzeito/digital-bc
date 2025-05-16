@@ -33,8 +33,8 @@ function CardList(): JSX.Element {
                 </div>
                 <div className="cards-options">
                     <NavLink to="/panel/admin/cards/add-card" className="newCard-btn">
-                        <div className="NavIcon"><i className="fa-solid fa-plus"></i></div>
-                        <div className="NavText">יצירת כרטיס חדש</div>
+                        <div className="newCard-icon"><i className="fa-solid fa-plus"></i></div>
+                        <div className="newCard-text">יצירת כרטיס חדש</div>
                     </NavLink>
                 </div>
                 <div className="DisplayCards">

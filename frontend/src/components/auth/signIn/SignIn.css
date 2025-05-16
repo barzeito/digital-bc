@@ -60,7 +60,7 @@
 }
 
 .SignIn button:hover {
-  background-color: #56a2aa;
+  background-color: var(--Sub-Color);
 }
 
 .SignIn span {

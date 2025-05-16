@@ -25,12 +25,13 @@ body,
 
 :root {
     --Primary-Color: #F8F9FD;
-    --Secondary-Color: #67D3DF;
+    --Secondary-Color: #3b82f6;
+    --Sub-Color: #1e3a8a;
     --Tertiary-Color: #171D29;
     --Background-color: #FCFCFC;
     --Black-Text-Color: #2C2D33;
     --White-Text-Color: #F4F5F6;
-    --Submit-Button: #67D3DF;
+    --Submit-Button: #3b82f6;
     --Cancel-Button: #ff4040;
 }
 
